@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- Font awesome -->
+    <link
+      href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.css"
+      rel="stylesheet"
+      type="text/css"
+    />
+
+    <!-- Google fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;600;800&display=swap"
+      rel="stylesheet"
+    />
+
+    <link rel="stylesheet" href="css/main.css" />
+    <script defer src="src/controller.js"></script>
+
+    <title>Countries Of The World</title>
+  </head>
+  <body class="dark">
+    <!-- Header Section -->
+    <section class="header">
+      <div class="header__container">
+        <div class="header__logo">
+          <img src="" alt="Where In The World" />
+        </div>
+        <div class="header__darkmode">
+          <button class="header_darkmode_btn">Dark Mode</button>
+        </div>
+      </div>
+    </section>
+
+    <!--Nav Section -->
+    <section class="container">
+      <section class="nav">
+        <div class="nav__where-am-i">
+          <button class="button button--orange nav__whereami_btn">
+            Where Am I ?
+          </button>
+        </div>
+        <div class="button button--input nav__searchCountry">
+          <span class="icon">
+            <i class="fa fa-search"></i>
+          </span>
+          <input
+            class="nav__searchCountry__input"
+            type="text"
+            value="Search for a country ..."
+          />
+        </div>
+        <div class="nav__filterRegion">
+          <button class="button nav_filterRegion_btn">
+            Filter by Region
+            <span class="icon"><i class="fa fa-angle-down"></i></span>
+          </button>
+          <div class="nav__filterRegion__dropdwon">
+            <a href="">Asia</a>
+            <a href="">Europe</a>
+            <a href="">Africa</a>
+            <a href="">America</a>
+            <a href="">Oceania</a>
+          </div>
+        </div>
+      </section>
+    </section>
+
+    <!-- <section class="displayCountries">
+      <button class="button button--orange whereAmI">Where Am I?</button>
+    </section> -->
+
+    <div class="countryCard">
+      <div class="countryCard__flag"></div>
+      <div class="countryCard__info">
+        <div class="countryCard__info__name">
+          <h4>Bangladesh</h4>
+        </div>
+        <div class="countryCard__info__more">
+          <p>
+            <span class="countryCard__info__more__title">Population: </span>
+            1.6M
+          </p>
+          <p>
+            <span class="countryCard__info__more__title">Language: </span>
+            Bangla
+          </p>
+          <p>
+            <span class="countryCard__info__more__title">Region: </span>
+            Bangla
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <section class="countryDetail">
+      <div class="countrydetail__Flag"></div>
+      <div class="countryDetail__info">
+        <div class="countryDetail__info__name">
+          <h4>Bangladesh</h4>
+        </div>
+        <div class="countryDetail__info__more">
+          <div class="countryDetail__info__more__cl1">
+            <p>
+              <span class="countryDetail__info__more__cl1__title"
+                >Native Name:
+              </span>
+              Bangla
+            </p>
+            <p>
+              <span class="countryDetail__info__more__cl1__title"
+                >Population:
+              </span>
+              1.6M
+            </p>
+            <p>
+              <span class="countryDetail__info__more__cl1__title"
+                >Region:
+              </span>
+              Asia
+            </p>
+            <p>
+              <span class="countryDetail__info__more__cl1__title"
+                >Sub Region:
+              </span>
+              South Asia
+            </p>
+          </div>
+          <div class="countryDetail__info__more__cl2">
+            <p>
+              <span class="countryDetail__info__more__cl1__title"
+                >Capital:
+              </span>
+              Dhaka
+            </p>
+            <p>
+              <span class="countryDetail__info__more__cl1__title"
+                >Currencies:
+              </span>
+              Taka
+            </p>
+            <p>
+              <span class="countryDetail__info__more__cl1__title"
+                >Language:
+              </span>
+              Bangla
+            </p>
+            <p>
+              <span class="countryDetail__info__more__cl1__title"
+                >Top Level Domain:
+              </span>
+              BD
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+    <i class="fa fa-linkedin" aria-hidden="true"></i>
+  </body>
+</html>

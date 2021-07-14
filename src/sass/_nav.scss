@@ -1,0 +1,55 @@
+.nav {
+  display: grid;
+  grid-template-columns: 1fr 2fr 0.8fr;
+  width: 80.3125rem;
+  margin-top: 3.125rem;
+
+  &__where-am-i {
+  }
+
+  &__searchCountry {
+    max-width: 35rem;
+    cursor: pointer;
+
+    .icon {
+      margin-right: 1.5rem;
+    }
+  }
+
+  &__filterRegion {
+    position: relative;
+    justify-self: end;
+
+    &:hover {
+      .nav__filterRegion__dropdwon {
+        display: flex;
+      }
+    }
+
+    &__dropdwon {
+      position: absolute;
+      width: 9.6rem;
+      padding: 1.3125rem 1.5625rem;
+      display: none;
+      flex-direction: column;
+      background: $dark-blue;
+      box-shadow: rgba(78, 82, 85, 0.15) 0px 8px 24px;
+      border-radius: 4px;
+      margin-top: 5px;
+      z-index: 3;
+
+      a:not(:first-child) {
+        padding-top: 1rem;
+      }
+
+      a:hover {
+        transition: 0.5s ease-in;
+        color: orange;
+      }
+    }
+
+    .icon {
+      margin-left: 2.8rem;
+    }
+  }
+}

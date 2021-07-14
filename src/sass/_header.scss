@@ -1,0 +1,23 @@
+.header {
+  display: grid;
+  justify-content: center;
+  box-shadow: rgba(78, 82, 85, 0.15) 0px 8px 24px;
+
+  &__container {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: 1fr;
+    align-items: center;
+
+    width: 80.3125rem;
+    height: 3rem;
+    padding: 1rem;
+  }
+
+  &__logo {
+  }
+
+  &__darkmode {
+    justify-self: end;
+  }
+}

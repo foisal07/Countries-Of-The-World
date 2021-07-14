@@ -1,0 +1,155 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+button,
+input[type="submit"],
+input[type="reset"],
+input[type="text"] {
+  background: 0;
+  color: inherit;
+  border: 0;
+  padding: 0;
+  font: inherit;
+  cursor: pointer;
+  outline: inherit;
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+  outline: none;
+  border: none;
+}
+
+a {
+  color: inherit;
+  text-decoration: inherit;
+}
+
+body {
+  font-family: "Nunito Sans", sans-serif;
+  font-size: 14px;
+  color: white;
+}
+
+.container {
+  display: grid;
+  justify-content: center;
+}
+
+.button {
+  background: #2B3743;
+  color: white;
+  width: 12.75rem;
+  padding: 1.3125rem 1.5625rem;
+  border-radius: 5px;
+}
+
+.button:hover {
+  transition: 0.3s ease-in;
+  box-shadow: rgba(78, 82, 85, 0.15) 0px 8px 24px;
+}
+
+.button--input {
+  width: 100%;
+}
+
+.button--orange {
+  background-image: linear-gradient(315deg, #ee9617 0%, #fe5858 74%);
+}
+
+.icon {
+  color: orange;
+}
+
+.hidden {
+  display: none;
+}
+
+.show {
+  display: block;
+}
+
+.dark {
+  background: #202d36;
+  color: white;
+}
+
+.light {
+  background: #fafafa;
+  color: #202d36;
+}
+
+.header {
+  display: grid;
+  justify-content: center;
+  box-shadow: rgba(78, 82, 85, 0.15) 0px 8px 24px;
+}
+
+.header__container {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: 1fr;
+  align-items: center;
+  width: 80.3125rem;
+  height: 3rem;
+  padding: 1rem;
+}
+
+.header__darkmode {
+  justify-self: end;
+}
+
+.nav {
+  display: grid;
+  grid-template-columns: 1fr 2fr 0.8fr;
+  width: 80.3125rem;
+  margin-top: 3.125rem;
+}
+
+.nav__searchCountry {
+  max-width: 35rem;
+  cursor: pointer;
+}
+
+.nav__searchCountry .icon {
+  margin-right: 1.5rem;
+}
+
+.nav__filterRegion {
+  position: relative;
+  justify-self: end;
+}
+
+.nav__filterRegion:hover .nav__filterRegion__dropdwon {
+  display: flex;
+}
+
+.nav__filterRegion__dropdwon {
+  position: absolute;
+  width: 9.6rem;
+  padding: 1.3125rem 1.5625rem;
+  display: none;
+  flex-direction: column;
+  background: #2B3743;
+  box-shadow: rgba(78, 82, 85, 0.15) 0px 8px 24px;
+  border-radius: 4px;
+  margin-top: 5px;
+  z-index: 3;
+}
+
+.nav__filterRegion__dropdwon a:not(:first-child) {
+  padding-top: 1rem;
+}
+
+.nav__filterRegion__dropdwon a:hover {
+  transition: 0.5s ease-in;
+  color: orange;
+}
+
+.nav__filterRegion .icon {
+  margin-left: 2.8rem;
+}
+/*# sourceMappingURL=main.css.map */
