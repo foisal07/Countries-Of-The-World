@@ -21,7 +21,7 @@
     />
 
     <link rel="stylesheet" href="css/main.css" />
-    <script defer src="src/controller.js"></script>
+    <script defer type="module"  src="src/controller.js"></script>
 
     <title>Countries Of The World</title>
   </head>
@@ -39,13 +39,8 @@
     </section>
 
     <!--Nav Section -->
-    <section class="container">
+    <section class="grid-container">
       <section class="nav">
-        <div class="nav__where-am-i">
-          <button class="button button--orange nav__whereami_btn">
-            Where Am I ?
-          </button>
-        </div>
         <div class="button button--input nav__searchCountry">
           <span class="icon">
             <i class="fa fa-search"></i>
@@ -56,6 +51,13 @@
             value="Search for a country ..."
           />
         </div>
+
+        <div class="nav__where-am-i">
+          <button class="button button--orange nav__whereami_btn">
+            <strong>Where Am I Now?</strong>
+          </button>
+        </div>
+
         <div class="nav__filterRegion">
           <button class="button nav_filterRegion_btn">
             Filter by Region
@@ -72,95 +74,480 @@
       </section>
     </section>
 
-    <!-- <section class="displayCountries">
-      <button class="button button--orange whereAmI">Where Am I?</button>
-    </section> -->
-
-    <div class="countryCard">
-      <div class="countryCard__flag"></div>
-      <div class="countryCard__info">
-        <div class="countryCard__info__name">
-          <h4>Bangladesh</h4>
-        </div>
-        <div class="countryCard__info__more">
-          <p>
-            <span class="countryCard__info__more__title">Population: </span>
-            1.6M
-          </p>
-          <p>
-            <span class="countryCard__info__more__title">Language: </span>
-            Bangla
-          </p>
-          <p>
-            <span class="countryCard__info__more__title">Region: </span>
-            Bangla
-          </p>
-        </div>
-      </div>
-    </div>
-
-    <section class="countryDetail">
-      <div class="countrydetail__Flag"></div>
-      <div class="countryDetail__info">
-        <div class="countryDetail__info__name">
-          <h4>Bangladesh</h4>
-        </div>
-        <div class="countryDetail__info__more">
-          <div class="countryDetail__info__more__cl1">
-            <p>
-              <span class="countryDetail__info__more__cl1__title"
-                >Native Name:
-              </span>
-              Bangla
-            </p>
-            <p>
-              <span class="countryDetail__info__more__cl1__title"
-                >Population:
-              </span>
-              1.6M
-            </p>
-            <p>
-              <span class="countryDetail__info__more__cl1__title"
-                >Region:
-              </span>
-              Asia
-            </p>
-            <p>
-              <span class="countryDetail__info__more__cl1__title"
-                >Sub Region:
-              </span>
-              South Asia
-            </p>
+    <!-- Display countries -->
+    <section class="grid-container">
+      <div class="display-countries">
+        <!-- <button class="button button--orange whereAmI">Where Am I?</button> -->
+        <div class="country-card">
+          <div class="country-card__flag">
+            <img src="https://restcountries.eu/data/bgd.svg" alt="" />
           </div>
-          <div class="countryDetail__info__more__cl2">
-            <p>
-              <span class="countryDetail__info__more__cl1__title"
-                >Capital:
-              </span>
-              Dhaka
-            </p>
-            <p>
-              <span class="countryDetail__info__more__cl1__title"
-                >Currencies:
-              </span>
-              Taka
-            </p>
-            <p>
-              <span class="countryDetail__info__more__cl1__title"
-                >Language:
-              </span>
-              Bangla
-            </p>
-            <p>
-              <span class="countryDetail__info__more__cl1__title"
-                >Top Level Domain:
-              </span>
-              BD
-            </p>
+          <div class="country-card__info">
+            <div class="country-card__info__name">
+              <strong><h4>Bangladesh</h4></strong>
+            </div>
+            <ul class="country-card__info__detail">
+              <li>
+                Population:
+                <strong>1.6M</strong>
+              </li>
+              <li>
+                Language:
+                <strong>Bangla</strong>
+              </li>
+              <li>
+                Region:
+                <strong>Asia</strong>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="country-card">
+          <div class="country-card__flag">
+            <img src="https://restcountries.eu/data/bgd.svg" alt="" />
+          </div>
+          <div class="country-card__info">
+            <div class="country-card__info__name">
+              <strong><h4>Bangladesh</h4></strong>
+            </div>
+            <ul class="country-card__info__detail">
+              <li>
+                Population:
+                <strong>1.6M</strong>
+              </li>
+              <li>
+                Language:
+                <strong>Bangla</strong>
+              </li>
+              <li>
+                Region:
+                <strong>Asia</strong>
+                <span class="country-card__info__more__title"> </span>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="country-card">
+          <div class="country-card__flag">
+            <img src="https://restcountries.eu/data/bgd.svg" alt="" />
+          </div>
+          <div class="country-card__info">
+            <div class="country-card__info__name">
+              <strong><h4>Bangladesh</h4></strong>
+            </div>
+            <ul class="country-card__info__detail">
+              <li>
+                Population:
+                <strong>1.6M</strong>
+              </li>
+              <li>
+                Language:
+                <strong>Bangla</strong>
+              </li>
+              <li>
+                Region:
+                <strong>Asia</strong>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="country-card">
+          <div class="country-card__flag">
+            <img src="https://restcountries.eu/data/bgd.svg" alt="" />
+          </div>
+          <div class="country-card__info">
+            <div class="country-card__info__name">
+              <strong><h4>Bangladesh</h4></strong>
+            </div>
+            <ul class="country-card__info__detail">
+              <li>
+                Population:
+                <strong>1.6M</strong>
+              </li>
+              <li>
+                Language:
+                <strong>Bangla</strong>
+              </li>
+              <li>
+                Region:
+                <strong>Asia</strong>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="country-card">
+          <div class="country-card__flag">
+            <img src="https://restcountries.eu/data/bgd.svg" alt="" />
+          </div>
+          <div class="country-card__info">
+            <div class="country-card__info__name">
+              <strong><h4>Bangladesh</h4></strong>
+            </div>
+            <ul class="country-card__info__detail">
+              <li>
+                Population:
+                <strong>1.6M</strong>
+              </li>
+              <li>
+                Language:
+                <strong>Bangla</strong>
+              </li>
+              <li>
+                Region:
+                <strong>Asia</strong>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="country-card">
+          <div class="country-card__flag">
+            <img src="" alt="" />
+          </div>
+          <div class="country-card__info">
+            <div class="country-card__info__name">
+              <strong><h4>Bangladesh</h4></strong>
+            </div>
+            <ul class="country-card__info__detail">
+              <li>
+                Population:
+                <strong>1.6M</strong>
+              </li>
+              <li>
+                Language:
+                <strong>Bangla</strong>
+              </li>
+              <li>
+                Region:
+                <strong>Asia</strong>
+                <span class="country-card__info__more__title"> </span>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="country-card">
+          <div class="country-card__flag">
+            <img src="" alt="" />
+          </div>
+          <div class="country-card__info">
+            <div class="country-card__info__name">
+              <strong><h4>Bangladesh</h4></strong>
+            </div>
+            <ul class="country-card__info__detail">
+              <li>
+                Population:
+                <strong>1.6M</strong>
+              </li>
+              <li>
+                Language:
+                <strong>Bangla</strong>
+              </li>
+              <li>
+                Region:
+                <strong>Asia</strong>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="country-card">
+          <div class="country-card__flag">
+            <img src="" alt="" />
+          </div>
+          <div class="country-card__info">
+            <div class="country-card__info__name">
+              <strong><h4>Bangladesh</h4></strong>
+            </div>
+            <ul class="country-card__info__detail">
+              <li>
+                Population:
+                <strong>1.6M</strong>
+              </li>
+              <li>
+                Language:
+                <strong>Bangla</strong>
+              </li>
+              <li>
+                Region:
+                <strong>Asia</strong>
+              </li>
+            </ul>
           </div>
         </div>
       </div>
     </section>
-    <i class="fa fa-linkedin" aria-hidden="true"></i>
+
+    <!-- Country Details  -->
+    <!-- <section class="grid-container">
+      <div class="country-detail">
+        <div class="country-detail__Flag">
+          <button class ='button button--med button--back'>
+            <span class='icon'><i class="fa fa-angle-left"></i></span>
+            Back
+          </button>
+          <img src="" alt="" />
+        </div>
+
+        <div class="country-detail__info">
+          <div class="country-detail__info__name">
+            <h2>Bangladesh</h2>
+          </div>
+          <div class="country-detail__info__detail">
+            <div class="column-one">
+              <li>
+                <strong>Native Name: </strong>
+                Bangla
+              </li>
+              <li>
+                <strong>Population: </strong>
+                1.6M
+              </li>
+              <li>
+                <strong>Region: </strong>
+                Asia
+              </li>
+              <li>
+                <strong>Sub Region: </strong>
+                South Asia
+              </li>
+            </div>
+
+            <div class="column-two">
+              <li>
+                <strong>Capital: </strong>
+                Dhaka
+              </li>
+              <li>
+                <strong>Currencies: </strong>
+                Taka
+              </li>
+              <li>
+                <strong>Language: </strong>
+                Bangla
+              </li>
+              <li>
+                <strong>Top Level Domain: </strong>
+                BD
+              </li>
+            </div>
+          </div>
+        </div>
+        </div>
+      </div>
+      <div class="country-neighbours">
+        <div class="country-neighbours__title">
+          <h2>Your Neighbours</h2>
+        </div>
+         <div class="display-countries">
+        <div class="country-card">
+          <div class="country-card__flag">
+            <img src="" alt="" />
+          </div>
+          <div class="country-card__info">
+            <div class="country-card__info__name">
+              <strong><h4>Bangladesh</h4></strong>
+            </div>
+            <ul class="country-card__info__detail">
+              <li>
+                Population:
+                <strong>1.6M</strong>
+              </li>
+              <li>
+                Language:
+                <strong>Bangla</strong>
+              </li>
+              <li>
+                Region:
+                <strong>Asia</strong>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="country-card">
+          <div class="country-card__flag">
+            <img src="" alt="" />
+          </div>
+          <div class="country-card__info">
+            <div class="country-card__info__name">
+              <strong><h4>Bangladesh</h4></strong>
+            </div>
+            <ul class="country-card__info__detail">
+              <li>
+                Population:
+                <strong>1.6M</strong>
+              </li>
+              <li>
+                Language:
+                <strong>Bangla</strong>
+              </li>
+              <li>
+                Region:
+                <strong>Asia</strong>
+                <span class="country-card__info__more__title"> </span>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="country-card">
+          <div class="country-card__flag">
+            <img src="" alt="" />
+          </div>
+          <div class="country-card__info">
+            <div class="country-card__info__name">
+              <strong><h4>Bangladesh</h4></strong>
+            </div>
+            <ul class="country-card__info__detail">
+              <li>
+                Population:
+                <strong>1.6M</strong>
+              </li>
+              <li>
+                Language:
+                <strong>Bangla</strong>
+              </li>
+              <li>
+                Region:
+                <strong>Asia</strong>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="country-card">
+          <div class="country-card__flag">
+            <img src="" alt="" />
+          </div>
+          <div class="country-card__info">
+            <div class="country-card__info__name">
+              <strong><h4>Bangladesh</h4></strong>
+            </div>
+            <ul class="country-card__info__detail">
+              <li>
+                Population:
+                <strong>1.6M</strong>
+              </li>
+              <li>
+                Language:
+                <strong>Bangla</strong>
+              </li>
+              <li>
+                Region:
+                <strong>Asia</strong>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="country-card">
+          <div class="country-card__flag">
+            <img src="" alt="" />
+          </div>
+          <div class="country-card__info">
+            <div class="country-card__info__name">
+              <strong><h4>Bangladesh</h4></strong>
+            </div>
+            <ul class="country-card__info__detail">
+              <li>
+                Population:
+                <strong>1.6M</strong>
+              </li>
+              <li>
+                Language:
+                <strong>Bangla</strong>
+              </li>
+              <li>
+                Region:
+                <strong>Asia</strong>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="country-card">
+          <div class="country-card__flag">
+            <img src="" alt="" />
+          </div>
+          <div class="country-card__info">
+            <div class="country-card__info__name">
+              <strong><h4>Bangladesh</h4></strong>
+            </div>
+            <ul class="country-card__info__detail">
+              <li>
+                Population:
+                <strong>1.6M</strong>
+              </li>
+              <li>
+                Language:
+                <strong>Bangla</strong>
+              </li>
+              <li>
+                Region:
+                <strong>Asia</strong>
+                <span class="country-card__info__more__title"> </span>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="country-card">
+          <div class="country-card__flag">
+            <img src="" alt="" />
+          </div>
+          <div class="country-card__info">
+            <div class="country-card__info__name">
+              <strong><h4>Bangladesh</h4></strong>
+            </div>
+            <ul class="country-card__info__detail">
+              <li>
+                Population:
+                <strong>1.6M</strong>
+              </li>
+              <li>
+                Language:
+                <strong>Bangla</strong>
+              </li>
+              <li>
+                Region:
+                <strong>Asia</strong>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="country-card">
+          <div class="country-card__flag">
+            <img src="" alt="" />
+          </div>
+          <div class="country-card__info">
+            <div class="country-card__info__name">
+              <strong><h4>Bangladesh</h4></strong>
+            </div>
+            <ul class="country-card__info__detail">
+              <li>
+                Population:
+                <strong>1.6M</strong>
+              </li>
+              <li>
+                Language:
+                <strong>Bangla</strong>
+              </li>
+              <li>
+                Region:
+                <strong>Asia</strong>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      </div>
+    </section> -->
   </body>
 </html>

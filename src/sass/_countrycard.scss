@@ -1,0 +1,31 @@
+.display-countries {
+  margin-top: 3rem;
+  width: 80.3125rem;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-gap: 4.6875rem;
+}
+
+.country-card {
+  background: $dark-blue;
+  border-radius: 5px;
+  box-shadow: rgba(78, 82, 85, 0.15) 0px 8px 24px;
+
+  &__flag img {
+    width: 270px;
+    height: 10rem;
+  }
+
+  &__info {
+    padding: 35px 25px 45px 25px;
+
+    &__name {
+      padding-bottom: 25px;
+      font-size: $font-med;
+    }
+  }
+}
+
+li:not(:last-child) {
+  padding-bottom: 10px;
+}

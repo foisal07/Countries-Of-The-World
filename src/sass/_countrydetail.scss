@@ -1,0 +1,31 @@
+.country-detail {
+  margin-top: 4.6875rem;
+  width: 80.3125rem;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  justify-items: center;
+  margin-bottom: 10rem;
+
+  &__flag {
+    width: 100%;
+  }
+
+  &__info {
+    margin-top: 4.6875rem;
+    margin-left: 8.5rem;
+
+    &__name {
+    }
+
+    &__detail {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      column-gap: 10.9375rem;
+      margin-top: 2.75rem;
+    }
+  }
+}
+
+.country-neighbours {
+  margin-bottom: 10rem;
+}

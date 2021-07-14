@@ -5,10 +5,12 @@
   margin-top: 3.125rem;
 
   &__where-am-i {
+    width: 100%;
+    justify-self: center;
   }
 
   &__searchCountry {
-    max-width: 35rem;
+    width: fit-content;
     cursor: pointer;
 
     .icon {

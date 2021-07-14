@@ -24,32 +24,37 @@ select:focus {
 }
 
 a {
-  color: inherit; 
-  text-decoration: inherit; 
+  color: inherit;
+  text-decoration: inherit;
 }
 
 body {
   font-family: "Nunito Sans", sans-serif;
-  font-size: 14px;
+  font-size: 1rem;
   color: $white;
 }
 
-.container {
+.grid-container {
   display: grid;
   justify-content: center;
 }
 
 .button {
   background: $dark-blue;
+  font-size: .85rem;
   color: $white;
   width: 12.75rem;
   padding: 1.3125rem 1.5625rem;
   border-radius: 5px;
-  
 
   &:hover {
     transition: 0.3s ease-in;
     box-shadow: rgba(78, 82, 85, 0.15) 0px 8px 24px;
+  }
+
+  &--med {
+    width: 8.75rem;
+    padding: .6rem 1rem;
   }
 
   &--input {
@@ -58,7 +63,13 @@ body {
 
   &--orange {
     background-image: linear-gradient(315deg, #ee9617 0%, #fe5858 74%);
+    width: 100%;
+    border-radius: 50px;
   }
+}
+
+li {
+  list-style-type: none;
 }
 
 .icon {

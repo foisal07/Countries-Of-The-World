@@ -30,17 +30,18 @@ a {
 
 body {
   font-family: "Nunito Sans", sans-serif;
-  font-size: 14px;
+  font-size: 1rem;
   color: white;
 }
 
-.container {
+.grid-container {
   display: grid;
   justify-content: center;
 }
 
 .button {
   background: #2B3743;
+  font-size: .85rem;
   color: white;
   width: 12.75rem;
   padding: 1.3125rem 1.5625rem;
@@ -52,12 +53,23 @@ body {
   box-shadow: rgba(78, 82, 85, 0.15) 0px 8px 24px;
 }
 
+.button--med {
+  width: 8.75rem;
+  padding: .6rem 1rem;
+}
+
 .button--input {
   width: 100%;
 }
 
 .button--orange {
   background-image: linear-gradient(315deg, #ee9617 0%, #fe5858 74%);
+  width: 100%;
+  border-radius: 50px;
+}
+
+li {
+  list-style-type: none;
 }
 
 .icon {
@@ -109,8 +121,13 @@ body {
   margin-top: 3.125rem;
 }
 
+.nav__where-am-i {
+  width: 100%;
+  justify-self: center;
+}
+
 .nav__searchCountry {
-  max-width: 35rem;
+  width: fit-content;
   cursor: pointer;
 }
 
@@ -151,5 +168,66 @@ body {
 
 .nav__filterRegion .icon {
   margin-left: 2.8rem;
+}
+
+.display-countries {
+  margin-top: 3rem;
+  width: 80.3125rem;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-gap: 4.6875rem;
+}
+
+.country-card {
+  background: #2B3743;
+  border-radius: 5px;
+  box-shadow: rgba(78, 82, 85, 0.15) 0px 8px 24px;
+}
+
+.country-card__flag img {
+  width: 270px;
+  height: 10rem;
+}
+
+.country-card__info {
+  padding: 35px 25px 45px 25px;
+}
+
+.country-card__info__name {
+  padding-bottom: 25px;
+  font-size: 1.2rem;
+}
+
+li:not(:last-child) {
+  padding-bottom: 10px;
+}
+
+.country-detail {
+  margin-top: 4.6875rem;
+  width: 80.3125rem;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  justify-items: center;
+  margin-bottom: 10rem;
+}
+
+.country-detail__flag {
+  width: 100%;
+}
+
+.country-detail__info {
+  margin-top: 4.6875rem;
+  margin-left: 8.5rem;
+}
+
+.country-detail__info__detail {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  column-gap: 10.9375rem;
+  margin-top: 2.75rem;
+}
+
+.country-neighbours {
+  margin-bottom: 10rem;
 }
 /*# sourceMappingURL=main.css.map */
