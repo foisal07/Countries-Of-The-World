@@ -41,7 +41,7 @@ body {
 
 .button {
   background: $dark-blue;
-  font-size: .85rem;
+  font-size: 0.85rem;
   color: $white;
   width: 12.75rem;
   padding: 1.3125rem 1.5625rem;
@@ -54,7 +54,7 @@ body {
 
   &--med {
     width: 8.75rem;
-    padding: .6rem 1rem;
+    padding: 0.6rem 1rem;
   }
 
   &--input {
@@ -74,6 +74,11 @@ li {
 
 .icon {
   color: orange;
+
+  &--logo {
+    padding-right: 7px;
+    font-size: 2rem;
+  }
 }
 
 .hidden {

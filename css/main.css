@@ -41,7 +41,7 @@ body {
 
 .button {
   background: #2B3743;
-  font-size: .85rem;
+  font-size: 0.85rem;
   color: white;
   width: 12.75rem;
   padding: 1.3125rem 1.5625rem;
@@ -55,7 +55,7 @@ body {
 
 .button--med {
   width: 8.75rem;
-  padding: .6rem 1rem;
+  padding: 0.6rem 1rem;
 }
 
 .button--input {
@@ -74,6 +74,11 @@ li {
 
 .icon {
   color: orange;
+}
+
+.icon--logo {
+  padding-right: 7px;
+  font-size: 2rem;
 }
 
 .hidden {
@@ -108,6 +113,12 @@ li {
   width: 80.3125rem;
   height: 3rem;
   padding: 1rem;
+}
+
+.header__logo {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
 }
 
 .header__darkmode {
