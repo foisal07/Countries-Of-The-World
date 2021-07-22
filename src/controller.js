@@ -2,10 +2,13 @@ import {
   ALL__COUNTRIES__API,
   SEARCH__COUNTRY__API,
   REGION__COUNTRIES__API,
+  BORDER__COUNTIRES__API,
+  TRACK__IP__API,
 } from "./config.js";
 import * as model from "../src/model.js";
 import CountryCardView from "./view/countryCardView.js";
 import CountryPageView from "./view/countryPageView.js";
+import countryNeighbourView from "./view/countryNeighbourView.js";
 
 // import "core-js/stable";
 // import "regenerator-runtime/runtime";
@@ -19,35 +22,65 @@ modeBtn.addEventListener("click", () => {
   body.classList.toggle("light");
 });
 
+// All countries
 const controlAllCountries = async function () {
   //Get all countries data
   await model.getAllCountries(ALL__COUNTRIES__API);
 
-  // Render all countries
-  CountryCardView.render(model.state.countriesAll);
+  // Render all countries card
+  // model.state.countriesAll.forEach((country) =>
+  //   CountryCardView.render(country)
+  // );
 };
 
+//Detail Page
 const controlSearchCountry = async function () {
   // Get country
-  await model.getSearchedCountry(SEARCH__COUNTRY__API, "Bangladesh");
+  await model.getCountry(SEARCH__COUNTRY__API, "Bangladesh");
 
-  //Render country
-  CountryPageView.render(model.state.searchedCountry);
+  let countryBorders;
+
+  //Render country details
+  model.state.countriesAll.forEach((country) => {
+    if (country.name === "Bangladesh") {
+      CountryPageView.render(country);
+      countryBorders = country.borders;
+    }
+  });
+
+  //Render neighbours card
+  countryBorders.forEach((countryCode) => {
+    model.state.countriesAll.forEach((country) => {
+      if (country.alpha3Code === countryCode) {
+        countryNeighbourView.render(country);
+      }
+    });
+  });
 };
 
+// Display current country
+const controlWhereAmI = async function () {
+  // Get country [lat,lng]
+  await model.getLatLng(TRACK__IP__API);
+  
+
+  // Create map
+};
+
+// Countries filter by region
 const controlFilterByRegion = async function () {
   // Get countries by region
-  await model.getCountriesByRegion(REGION__COUNTRIES__API, "Europe");
+  await model.getCountriesByRegion(REGION__COUNTRIES__API, "Asia");
 
-  // Render regional country
-  CountryCardView.render(model.state.countriesByRegion);
+  // Render regional country card
+  model.state.countriesAll.forEach((country) => {
+    if (country.region === "Asia") {
+      CountryCardView.renderCard(country);
+    }
+  });
 };
 
-// const controlDetailPage = async function (data) {
-//   //Get all countries data
-//   DetailPageView.render(data);
-// };
-
-// controlAllCountries();
+controlAllCountries();
+controlWhereAmI();
 // controlFilterByRegion();
 controlSearchCountry();
