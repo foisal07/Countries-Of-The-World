@@ -6,6 +6,8 @@ export const state = {
   countriesByRegion: [],
   borders: [],
   borderCoutnries: [],
+  ipTrackedCountry: {},
+  latlng: [],
 };
 
 export const getAllCountries = async function (url) {
@@ -55,11 +57,14 @@ export const getCountry = async function (url, country) {
 export const getLatLng = async function (url) {
   try {
     // Get IP Adress from browser
-    const {ip} = await AJAX('https://api.ipify.org/?format=json')
-    
+    const { ip } = await AJAX("https://api.ipify.org/?format=json");
+
     // Get lat lng
     const data = await AJAX(`${url}${ip}`);
     console.log(data);
+    console.log(data.location.country);
+    state.ipTrackedCountry = data.location.country;
+    state.latlng = [data.location.lat, data.location.lng];
   } catch (err) {
     console.log(err);
   }

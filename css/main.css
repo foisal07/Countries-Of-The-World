@@ -245,4 +245,9 @@ li:not(:last-child) {
   grid-template-columns: repeat(4, 1fr);
   grid-gap: 4.6875rem;
 }
+
+div#map {
+  height: 50vh;
+  width: 67vw;
+}
 /*# sourceMappingURL=main.css.map */
