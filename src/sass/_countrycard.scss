@@ -8,11 +8,12 @@
 
 .country-card {
   background: $dark-blue;
+  max-width: 270px;
   border-radius: 5px;
   box-shadow: rgba(78, 82, 85, 0.15) 0px 8px 24px;
 
   &__flag img {
-    width: 270px;
+    width: 100%;
     height: 10rem;
   }
 
@@ -23,6 +24,11 @@
       padding-bottom: 25px;
       font-size: $font-med;
     }
+  }
+
+  &:hover {
+    cursor: pointer;
+    scale: 1.1;
   }
 }
 

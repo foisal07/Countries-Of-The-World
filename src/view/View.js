@@ -4,23 +4,27 @@ export default class View {
 
   _generateCountryCardMarkup(country) {
     return `
-    <div class="country-card">
-        <div class="country-card__flag">
-            <img src="${country.flag}" alt="${country.name}" />
-        </div>
-        <div class="country-card__info">
-            <div class="country-card__info__name">
-                <strong><h4>${country.name}</h4></strong>
+    <div class="country-card" data-country-name="${country.name}">
+        
+            <div class="country-card__flag">
+                <img src="${country.flag}" alt="${country.name}" />
             </div>
-            <ul class="country-card__info__detail">
-                <li> Population:<strong>${(
-                  country.population / 1000000
-                ).toFixed(2)} M</strong></li>
-                <li>Language:<strong>${country.name}</strong></li>
-                <li>Region:<strong>${country.region}</strong></li>
-            </ul>
-        </div>
-    </div>
+            <div class="country-card__info">
+                <div class="country-card__info__name">
+                    <strong><h4>${country.name}</h4></strong>
+                </div>
+                <ul class="country-card__info__detail">
+                    <li> Population: <strong>${(
+                      country.population / 1000000
+                    ).toFixed(2)} M</strong></li>
+                    <li>Language: <strong>${country.languages
+                      .map((lang) => lang.name)
+                      .join(" , ")}</strong></li>
+                    <li>Region: <strong>${country.region}</strong></li>
+                </ul>
+            </div>
+
+    </div
     `;
   }
 
@@ -93,5 +97,9 @@ export default class View {
     this._data = data;
     const markup = this._generateCountryPageMarkup(data);
     this._displayContainer.insertAdjacentHTML("beforeend", markup);
+  }
+
+  _clear() {
+    this._displayContainer.innerHTML = "";
   }
 }

@@ -28,18 +28,18 @@ const controlAllCountries = async function () {
   await model.getAllCountries(ALL__COUNTRIES__API);
 
   //render all countries card
-  // model.state.countriesAll.forEach((country) =>
-  //   CountryView.renderCard(country)
-  // );
+  model.state.countriesAll.forEach((country) =>
+    CountryView.renderCard(country)
+  );
 };
 
 //Display Country Detail Page
-const controlSearchCountry = function () {
+const controlSearchCountry = function (countryName) {
   let countryBorders, countryLatLng;
 
   //render country details
   model.state.countriesAll.forEach((country) => {
-    if (country.name === "Bangladesh") {
+    if (country.name === countryName) {
       CountryPageView.renderPage(country);
       countryBorders = country.borders;
       countryLatLng = country.latlng;
@@ -47,13 +47,13 @@ const controlSearchCountry = function () {
   });
 
   // display country location on map
-  displayMap(...countryLatLng);
+  renderMap(...countryLatLng);
 
   //render neighbouring country card
-  displayNeighbourCountry(countryBorders, model.state.countriesAll);
+  renderNeighbourCountry(countryBorders, model.state.countriesAll);
 };
 
-// Display Current Country
+// render Current Country
 const controlWhereAmI = async function () {
   // get country [lat,lng]
   await model.getLatLng(TRACK__IP__API);
@@ -68,11 +68,11 @@ const controlWhereAmI = async function () {
     }
   });
 
-  // display country location on map
-  displayMap(...model.state.latlng);
+  // render country location on map
+  renderMap(...model.state.latlng);
 
   //Rrender neighbouring country card
-  displayNeighbourCountry(countryBorders, model.state.countriesAll);
+  renderNeighbourCountry(countryBorders, model.state.countriesAll);
 };
 
 // Display Filtered Countries By Region
@@ -86,7 +86,7 @@ const controlFilterByRegion = function (region) {
 };
 
 // Render negighbour country
-const displayNeighbourCountry = function (countryBorders, countriesAll) {
+const renderNeighbourCountry = function (countryBorders, countriesAll) {
   countryBorders.forEach((countryCode) => {
     countriesAll.forEach((country) => {
       if (country.alpha3Code === countryCode) {
@@ -97,7 +97,7 @@ const displayNeighbourCountry = function (countryBorders, countriesAll) {
 };
 
 // Create Display Map
-const displayMap = function (lat, lng) {
+const renderMap = function (lat, lng) {
   // Create leaflet map
   const mapView = L.map("map").setView([lat, lng], 5);
 
@@ -124,10 +124,64 @@ const displayMap = function (lat, lng) {
 
 window.addEventListener("load", controlAllCountries());
 
+const navContainer = document.querySelector(".nav");
+const navSearchCountry = document.querySelector(".nav__searchCountry");
+const navSearchCountryInput = document.querySelector(
+  ".nav__searchCountry__input"
+);
 const whereAmIBtn = document.querySelector(".nav__whereami_btn");
+const countriesContainer = document.querySelector(".display-countries");
 
-whereAmIBtn.addEventListener("click", function () {
-  // controlWhereAmI();
-  controlSearchCountry();
-  // controlFilterByRegion('Asia');
+// Handler search
+navContainer.addEventListener("click", function (e) {
+  e.preventDefault();
+
+  const search = e.target.closest(".navSearchCountryInput");
+  if (!search) return;
+
+  console.log(navSearchCountryInput.value());
+});
+
+// Handler WhereAmI
+navContainer.addEventListener("click", function (e) {
+  e.preventDefault();
+
+  const whereAmI = e.target.closest(".nav__whereami_btn");
+  if (!whereAmI) return;
+
+  // clear countries card
+  CountryView._clear();
+
+  //render tracked country
+  controlWhereAmI();
+});
+
+// Handler region
+navContainer.addEventListener("click", function (e) {
+  e.preventDefault();
+
+  const region = e.target.closest(".region");
+
+  if (!region) return;
+  const regionName = region.getAttribute("data-region");
+
+  // clear countries card
+  CountryView._clear();
+
+  //render regional countries
+  controlFilterByRegion(regionName);
+});
+
+// Handler country card
+countriesContainer.addEventListener("click", function (e) {
+  e.preventDefault();
+  const country = e.target.closest(".country-card");
+  if (!country) return;
+  const countryName = country.getAttribute("data-country-name");
+
+  // clear countries card
+  CountryView._clear();
+
+  //render country
+  controlSearchCountry(countryName);
 });

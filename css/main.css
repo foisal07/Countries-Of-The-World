@@ -191,12 +191,13 @@ li {
 
 .country-card {
   background: #2B3743;
+  max-width: 270px;
   border-radius: 5px;
   box-shadow: rgba(78, 82, 85, 0.15) 0px 8px 24px;
 }
 
 .country-card__flag img {
-  width: 270px;
+  width: 100%;
   height: 10rem;
 }
 
@@ -207,6 +208,11 @@ li {
 .country-card__info__name {
   padding-bottom: 25px;
   font-size: 1.2rem;
+}
+
+.country-card:hover {
+  cursor: pointer;
+  scale: 1.1;
 }
 
 li:not(:last-child) {
