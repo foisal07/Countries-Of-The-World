@@ -22,7 +22,81 @@ modeBtn.addEventListener("click", () => {
   body.classList.toggle("light");
 });
 
-// Display Map
+// Display All Countries Card
+const controlAllCountries = async function () {
+  //get all countries data
+  await model.getAllCountries(ALL__COUNTRIES__API);
+
+  //render all countries card
+  // model.state.countriesAll.forEach((country) =>
+  //   CountryView.renderCard(country)
+  // );
+};
+
+//Display Country Detail Page
+const controlSearchCountry = function () {
+  let countryBorders, countryLatLng;
+
+  //render country details
+  model.state.countriesAll.forEach((country) => {
+    if (country.name === "Bangladesh") {
+      CountryPageView.renderPage(country);
+      countryBorders = country.borders;
+      countryLatLng = country.latlng;
+    }
+  });
+
+  // display country location on map
+  displayMap(...countryLatLng);
+
+  //render neighbouring country card
+  displayNeighbourCountry(countryBorders, model.state.countriesAll);
+};
+
+// Display Current Country
+const controlWhereAmI = async function () {
+  // get country [lat,lng]
+  await model.getLatLng(TRACK__IP__API);
+
+  let countryBorders;
+
+  //render country details
+  model.state.countriesAll.forEach((country) => {
+    if (country.alpha2Code === model.state.ipTrackedCountry) {
+      CountryPageView.renderPage(country);
+      countryBorders = country.borders;
+    }
+  });
+
+  // display country location on map
+  displayMap(...model.state.latlng);
+
+  //Rrender neighbouring country card
+  displayNeighbourCountry(countryBorders, model.state.countriesAll);
+};
+
+// Display Filtered Countries By Region
+const controlFilterByRegion = function (region) {
+  // render regional country card
+  model.state.countriesAll.forEach((country) => {
+    if (country.region === region) {
+      CountryView.renderCard(country);
+    }
+  });
+};
+
+// Render negighbour country
+const displayNeighbourCountry = function (countryBorders, countriesAll) {
+  countryBorders.forEach((countryCode) => {
+    countriesAll.forEach((country) => {
+      if (country.alpha3Code === countryCode) {
+        countryNeighbourView.renderCard(country);
+      }
+    });
+  });
+};
+
+// Create Display Map
 const displayMap = function (lat, lng) {
   // Create leaflet map
   const mapView = L.map("map").setView([lat, lng], 5);
@@ -48,90 +122,12 @@ const displayMap = function (lat, lng) {
     .openOn(mapView);
 };
 
-// All countries
-const controlAllCountries = async function () {
-  //Get all countries data
-  await model.getAllCountries(ALL__COUNTRIES__API);
+window.addEventListener("load", controlAllCountries());
 
-  // Render all countries card
-  model.state.countriesAll.forEach((country) =>
-    CountryView.renderCard(country)
-  );
-};
+const whereAmIBtn = document.querySelector(".nav__whereami_btn");
 
-//Detail Page
-const controlSearchCountry = async function () {
-  // Get country
-  await model.getCountry(COUNTRY__API, "Bangladesh");
-
-  let countryBorders, countryLatLng;
-
-  //Render country details
-  model.state.countriesAll.forEach((country) => {
-    if (country.name === "Bangladesh") {
-      CountryPageView.renderPage(country);
-      countryBorders = country.borders;
-      countryLatLng = country.latlng;
-    }
-  });
-
-  displayMap(...countryLatLng);
-  console.log(model.state.borders);
-
-  //Render neighbours card
-  countryBorders.forEach((countryCode) => {
-    model.state.countriesAll.forEach((country) => {
-      if (country.alpha3Code === countryCode) {
-        countryNeighbourView.renderCard(country);
-      }
-    });
-  });
-};
-
-// Display current country
-const controlWhereAmI = async function () {
-  // Get country [lat,lng]
-  await model.getLatLng(TRACK__IP__API);
-
-  let countryBorders;
-
-  //Render country details
-  console.log(model.state.countriesAll);
-  model.state.countriesAll.forEach((country) => {
-    if (country.alpha2Code === model.state.ipTrackedCountry) {
-      CountryPageView.render(country);
-      countryBorders = country.borders;
-    }
-  });
-
-  countryBorders.forEach((countryCode) => {
-    model.state.countriesAll.forEach((country) => {
-      if (country.alpha3Code === countryCode) {
-        countryNeighbourView.render(country);
-      }
-    });
-  });
-  console.log(model.state.ipTrackedCountry);
-  console.log(model.state.latlng);
-
-  // Display Map
-  displayMap(...model.state.latlng);
-};
-
-// Countries filter by region
-const controlFilterByRegion = async function () {
-  // Get countries by region
-  await model.getCountriesByRegion(REGION__COUNTRIES__API, "Asia");
-
-  // Render regional country card
-  model.state.countriesAll.forEach((country) => {
-    if (country.region === "Asia") {
-      CountryCardView.renderCard(country);
-    }
-  });
-};
-
-controlAllCountries();
-// controlWhereAmI();
-// controlFilterByRegion();
-// controlSearchCountry();
+whereAmIBtn.addEventListener("click", function () {
+  // controlWhereAmI();
+  controlSearchCountry();
+  // controlFilterByRegion('Asia');
+});

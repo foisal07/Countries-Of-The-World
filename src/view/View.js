@@ -3,7 +3,6 @@ export default class View {
   _displayContainer = document.querySelector(".display-countries");
 
   _generateCountryCardMarkup(country) {
-    console.log(country);
     return `
     <div class="country-card">
         <div class="country-card__flag">
@@ -83,7 +82,7 @@ export default class View {
     </div>
     `;
   }
-  
+
   renderCard(data) {
     this._data = data;
     const markup = this._generateCountryCardMarkup(data);
