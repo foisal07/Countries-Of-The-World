@@ -1,12 +1,12 @@
 import {
   ALL__COUNTRIES__API,
-  SEARCH__COUNTRY__API,
+  COUNTRY__API,
   REGION__COUNTRIES__API,
   BORDER__COUNTIRES__API,
   TRACK__IP__API,
 } from "./config.js";
 import * as model from "../src/model.js";
-import CountryCardView from "./view/countryCardView.js";
+import CountryView from "./view/countryView.js";
 import CountryPageView from "./view/countryPageView.js";
 import countryNeighbourView from "./view/countryNeighbourView.js";
 
@@ -25,7 +25,7 @@ modeBtn.addEventListener("click", () => {
 // Display Map
 const displayMap = function (lat, lng) {
   // Create leaflet map
-  const mapView = L.map("map").setView([lat, lng], 3);
+  const mapView = L.map("map").setView([lat, lng], 5);
 
   L.tileLayer(
     "https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoiZm9pc2FsMDciLCJhIjoiY2txdnNxazRhMGhsMTJvbWg2OWlyODN6NyJ9.Tf_hHhpLFTpQPmbMl_wbSQ",
@@ -54,31 +54,35 @@ const controlAllCountries = async function () {
   await model.getAllCountries(ALL__COUNTRIES__API);
 
   // Render all countries card
-  // model.state.countriesAll.forEach((country) =>
-  //   CountryCardView.render(country)
-  // );
+  model.state.countriesAll.forEach((country) =>
+    CountryView.renderCard(country)
+  );
 };
 
 //Detail Page
 const controlSearchCountry = async function () {
   // Get country
-  await model.getCountry(SEARCH__COUNTRY__API, "Bangladesh");
+  await model.getCountry(COUNTRY__API, "Bangladesh");
 
-  let countryBorders;
+  let countryBorders, countryLatLng;
 
   //Render country details
   model.state.countriesAll.forEach((country) => {
-    if (country.name === "India") {
-      CountryPageView.render(country);
+    if (country.name === "Bangladesh") {
+      CountryPageView.renderPage(country);
       countryBorders = country.borders;
+      countryLatLng = country.latlng;
     }
   });
+
+  displayMap(...countryLatLng);
+  console.log(model.state.borders);
 
   //Render neighbours card
   countryBorders.forEach((countryCode) => {
     model.state.countriesAll.forEach((country) => {
       if (country.alpha3Code === countryCode) {
-        countryNeighbourView.render(country);
+        countryNeighbourView.renderCard(country);
       }
     });
   });
@@ -130,4 +134,4 @@ const controlFilterByRegion = async function () {
 controlAllCountries();
 // controlWhereAmI();
 // controlFilterByRegion();
-controlSearchCountry();
+// controlSearchCountry();

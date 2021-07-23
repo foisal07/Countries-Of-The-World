@@ -1,4 +1,4 @@
-class View {
+export default class View {
   _data;
   _displayContainer = document.querySelector(".display-countries");
 
@@ -83,15 +83,16 @@ class View {
     </div>
     `;
   }
-
-  render(data) {
+  
+  renderCard(data) {
     this._data = data;
-    let markup;
-    data.forEach((country) => {
-      markup = this._generateCountryCardMarkup(country);
-    });
+    const markup = this._generateCountryCardMarkup(data);
+    this._displayContainer.insertAdjacentHTML("beforeend", markup);
+  }
+
+  renderPage(data) {
+    this._data = data;
+    const markup = this._generateCountryPageMarkup(data);
     this._displayContainer.insertAdjacentHTML("beforeend", markup);
   }
 }
-
-export default new View();

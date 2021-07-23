@@ -1,6 +1,7 @@
 import { AJAX } from "./helper.js";
 
 export const state = {
+  countries: {},
   countriesAll: [],
   searchedCountry: [],
   countriesByRegion: [],
@@ -13,7 +14,6 @@ export const state = {
 export const getAllCountries = async function (url) {
   try {
     const data = await AJAX(url);
-    console.log(data);
     state.countriesAll = data;
   } catch (err) {
     console.log(err);
@@ -24,7 +24,7 @@ export const getCountry = async function (url, country) {
   try {
     const data = await AJAX(`${url}${country}`);
     state.searchedCountry = data;
-    state.borders = data[0].bordeirs;
+    state.borders = data[0].borders;
 
     // Returns Array of promise
     //     const borderCoutnriesData = state.borders.map(async (countryCode) => {

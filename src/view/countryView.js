@@ -1,8 +1,8 @@
 import View from "./View.js";
 
-class CountryPageView extends View {
+class CountryView extends View{
   _displayContainer = document.querySelector(".display-countries");
 }
 
-export default new CountryPageView();
+export default new CountryView();
 
