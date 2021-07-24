@@ -1,6 +1,7 @@
 import View from "./View.js";
+import CountryView from "./countryView.js";
 
-class CountryNeighbourView extends View {
+class CountryNeighbourView extends View{
   _displayContainer = document.querySelector(".country-neighbours");
 }
 

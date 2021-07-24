@@ -1,6 +1,7 @@
 import { AJAX } from "./helper.js";
 
 export const state = {
+  countries: {},
   countriesAll: [],
   ipTrackedCountry: {},
   latlng: [],

@@ -99,6 +99,8 @@ export default class View {
     this._displayContainer.insertAdjacentHTML("beforeend", markup);
   }
 
+  renderError(msg) {}
+
   _clear() {
     this._displayContainer.innerHTML = "";
   }

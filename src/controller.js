@@ -9,6 +9,8 @@ import * as model from "../src/model.js";
 import CountryView from "./view/countryView.js";
 import CountryPageView from "./view/countryPageView.js";
 import countryNeighbourView from "./view/countryNeighbourView.js";
+import countryView from "./view/countryView.js";
+import NavView from "./view/navView.js";
 
 // import "core-js/stable";
 // import "regenerator-runtime/runtime";
@@ -34,8 +36,10 @@ const controlAllCountries = async function () {
 };
 
 //Display Country Detail Page
-const controlSearchCountry = function (countryName) {
+const controlGetCountry = function (countryName) {
   let countryBorders, countryLatLng;
+
+  console.log(countryView);
 
   //render country details
   model.state.countriesAll.forEach((country) => {
@@ -122,66 +126,25 @@ const renderMap = function (lat, lng) {
     .openOn(mapView);
 };
 
-window.addEventListener("load", controlAllCountries());
-
-const navContainer = document.querySelector(".nav");
 const navSearchCountry = document.querySelector(".nav__searchCountry");
 const navSearchCountryInput = document.querySelector(
   ".nav__searchCountry__input"
 );
-const whereAmIBtn = document.querySelector(".nav__whereami_btn");
-const countriesContainer = document.querySelector(".display-countries");
 
 // Handler search
-navContainer.addEventListener("click", function (e) {
-  e.preventDefault();
+// navContainer.addEventListener("click", function (e) {
+//   e.preventDefault();
 
-  const search = e.target.closest(".navSearchCountryInput");
-  if (!search) return;
+//   const search = e.target.closest(".navSearchCountryInput");
+//   if (!search) return;
 
-  console.log(navSearchCountryInput.value());
-});
+//   console.log(navSearchCountryInput.value());
+// });
 
-// Handler WhereAmI
-navContainer.addEventListener("click", function (e) {
-  e.preventDefault();
-
-  const whereAmI = e.target.closest(".nav__whereami_btn");
-  if (!whereAmI) return;
-
-  // clear countries card
-  CountryView._clear();
-
-  //render tracked country
-  controlWhereAmI();
-});
-
-// Handler region
-navContainer.addEventListener("click", function (e) {
-  e.preventDefault();
-
-  const region = e.target.closest(".region");
-
-  if (!region) return;
-  const regionName = region.getAttribute("data-region");
-
-  // clear countries card
-  CountryView._clear();
-
-  //render regional countries
-  controlFilterByRegion(regionName);
-});
-
-// Handler country card
-countriesContainer.addEventListener("click", function (e) {
-  e.preventDefault();
-  const country = e.target.closest(".country-card");
-  if (!country) return;
-  const countryName = country.getAttribute("data-country-name");
-
-  // clear countries card
-  CountryView._clear();
-
-  //render country
-  controlSearchCountry(countryName);
-});
+const init = function () {
+  CountryView.addHandlerRenderCountryCard(controlAllCountries);
+  CountryView.addHandlerCountryCard(controlGetCountry);
+  NavView.addHandlerWhereAmI(controlWhereAmI);
+  NavView.addHandlerFilterRegion(controlFilterByRegion);
+};
+init();
