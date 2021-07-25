@@ -15,7 +15,7 @@ class CountryView extends View {
         e.preventDefault();
         const country = e.target.closest(".country-card");
         if (!country) return;
-        const countryName = country.getAttribute("data-country-name");
+        const countryName = country.getAttribute("data-country-name").toLowerCase();
 
         // clear countries card
         this._clear();

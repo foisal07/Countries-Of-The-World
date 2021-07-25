@@ -9,8 +9,8 @@ import * as model from "../src/model.js";
 import CountryView from "./view/countryView.js";
 import CountryPageView from "./view/countryPageView.js";
 import countryNeighbourView from "./view/countryNeighbourView.js";
-import countryView from "./view/countryView.js";
 import NavView from "./view/navView.js";
+import SearchView from "./view/countrySearchView.js";
 
 // import "core-js/stable";
 // import "regenerator-runtime/runtime";
@@ -39,11 +39,12 @@ const controlAllCountries = async function () {
 const controlGetCountry = function (countryName) {
   let countryBorders, countryLatLng;
 
-  console.log(countryView);
+  console.log(countryName);
 
   //render country details
   model.state.countriesAll.forEach((country) => {
-    if (country.name === countryName) {
+    const name = country.name.toLowerCase();
+    if (name === countryName) {
       CountryPageView.renderPage(country);
       countryBorders = country.borders;
       countryLatLng = country.latlng;
@@ -126,25 +127,20 @@ const renderMap = function (lat, lng) {
     .openOn(mapView);
 };
 
-const navSearchCountry = document.querySelector(".nav__searchCountry");
-const navSearchCountryInput = document.querySelector(
-  ".nav__searchCountry__input"
-);
-
-// Handler search
-// navContainer.addEventListener("click", function (e) {
-//   e.preventDefault();
-
-//   const search = e.target.closest(".navSearchCountryInput");
-//   if (!search) return;
-
-//   console.log(navSearchCountryInput.value());
-// });
-
 const init = function () {
   CountryView.addHandlerRenderCountryCard(controlAllCountries);
   CountryView.addHandlerCountryCard(controlGetCountry);
   NavView.addHandlerWhereAmI(controlWhereAmI);
   NavView.addHandlerFilterRegion(controlFilterByRegion);
+  SearchView.addHandlerSearchView(controlGetCountry);
 };
 init();
+
+// Search functionalities //
+// Fix bug: getcountry() map reinitialize
+// Back button
+// Render error
+// API request timeout
+// Fix bug: Neighbour country card > click go to the country
+// Fix big: Change neighbour country when clicked multiple countries
+// Theme switch

@@ -28,7 +28,7 @@ export default class View {
     `;
   }
 
-  _generateCountryPageMarkup(data) {
+  _generateCountryPageMarkup(country) {
     return `
     <div class="country-detail">
         <div class="country-detail__Flag">
@@ -36,48 +36,50 @@ export default class View {
                 <span class='icon'><i class="fa fa-angle-left"></i></span>
                 Back
             </button>
-            <img src="${data.flag}" alt="" />
+            <img src="${country.flag}" alt="" />
         </div>           
 
         <div class="country-detail__info">
 
             <div class="country-detail__info__name">
-                <h2>${data.name}</h2>
+                <h2>${country.name}</h2>
             </div>
 
             <div class="country-detail__info__detail">
                 <div class="column-one">
                     <li>
-                        <strong>Native Name: </strong> ${data.nativeName}
+                        <strong>Native Name: </strong> ${country.nativeName}
                     </li>
                     <li>
                         <strong>Population: </strong>${(
-                          data.population / 1000000
+                          country.population / 1000000
                         ).toFixed(2)} M
                     </li>
                     <li>
-                        <strong>Region: </strong>${data.region}
+                        <strong>Region: </strong>${country.region}
                     </li>
                     <li>
-                        <strong>Sub Region: </strong>${data.subregion}
+                        <strong>Sub Region: </strong>${country.subregion}
                     </li>
                 </div>
 
                 <div class="column-two">
                     <li>
-                        <strong>Capital: </strong>${data.capital}
+                        <strong>Capital: </strong>${country.capital}
                     </li>
                     <li>
                         <strong>Currencies: </strong>${
-                          data.currencies[0].name
-                        } (${data.currencies[0].symbol})
+                          country.currencies[0].name
+                        } (${country.currencies[0].symbol})
                     </li>
                     <li>
-                        <strong>Language: </strong>${data.languages[0].name}
+                        <strong>Language: </strong>${country.languages
+                          .map((lang) => lang.name)
+                          .join(" , ")}
                     </li>
                     <li>
                         <strong>Top Level Domain: </strong>${
-                          data.topLevelDomain
+                          country.topLevelDomain
                         }   
                     </li>
                 </div>
