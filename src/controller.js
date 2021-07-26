@@ -23,6 +23,7 @@ modeBtn.addEventListener("click", () => {
   body.classList.toggle("dark");
   body.classList.toggle("light");
 });
+const countryCardConatiner = document.querySelector(".countrycard__container");
 
 // Display All Countries Card
 const controlAllCountries = async function () {
@@ -39,12 +40,9 @@ const controlAllCountries = async function () {
 const controlGetCountry = function (countryName) {
   let countryBorders, countryLatLng;
 
-  console.log(countryName);
-
   //render country details
   model.state.countriesAll.forEach((country) => {
-    const name = country.name.toLowerCase();
-    if (name === countryName) {
+    if (country.name.toLowerCase() === countryName) {
       CountryPageView.renderPage(country);
       countryBorders = country.borders;
       countryLatLng = country.latlng;
@@ -127,20 +125,29 @@ const renderMap = function (lat, lng) {
     .openOn(mapView);
 };
 
+const showCountryCard = function () {
+  countryCardConatiner.classList.remove("hidden");
+};
+
 const init = function () {
   CountryView.addHandlerRenderCountryCard(controlAllCountries);
   CountryView.addHandlerCountryCard(controlGetCountry);
   NavView.addHandlerWhereAmI(controlWhereAmI);
   NavView.addHandlerFilterRegion(controlFilterByRegion);
-  SearchView.addHandlerSearchView(controlGetCountry);
+  SearchView.addHandlerSearch(controlGetCountry);
+  CountryPageView.addHandlerBackBtn(showCountryCard);
 };
 init();
 
 // Search functionalities //
-// Fix bug: getcountry() map reinitialize
 // Back button
+// Render spinner/loader
 // Render error
-// API request timeout
+// Fix bug: getcountry() map reinitialize
+// Fix bug: On map neighbours heading display on load
 // Fix bug: Neighbour country card > click go to the country
-// Fix big: Change neighbour country when clicked multiple countries
+// Fix bug: Change neighbour country when clicked multiple countries
+// Fix bug: Country card > Country deatil showing map "you are here now"
+// Fix bug: Nav spaacing
 // Theme switch
+// API request timeout

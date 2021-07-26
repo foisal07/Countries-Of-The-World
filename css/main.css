@@ -198,6 +198,7 @@ li {
 
 .country-card__flag img {
   width: 100%;
+  border-radius: 5px 5px 0 0;
   height: 10rem;
 }
 
@@ -228,20 +229,30 @@ li:not(:last-child) {
   margin-bottom: 10rem;
 }
 
-.country-detail__flag {
-  width: 100%;
+.country-detail__flag img {
+  border-radius: 5px;
+  width: 98%;
 }
 
 .country-detail__info {
-  margin-top: 4.6875rem;
   margin-left: 8.5rem;
+}
+
+.country-detail__info__name {
+  font-size: 1.5rem;
 }
 
 .country-detail__info__detail {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  column-gap: 10.9375rem;
+  column-gap: 7.9375rem;
   margin-top: 2.75rem;
+}
+
+.btn__container {
+  display: grid;
+  justify-content: end;
+  padding-bottom: 3.5rem;
 }
 
 .country-neighbours {
@@ -253,7 +264,7 @@ li:not(:last-child) {
 }
 
 div#map {
-  height: 50vh;
+  height: 60vh;
   width: 67vw;
 }
 /*# sourceMappingURL=main.css.map */

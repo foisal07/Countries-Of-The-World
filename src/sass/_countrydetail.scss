@@ -7,23 +7,32 @@
   margin-bottom: 10rem;
 
   &__flag {
-    width: 100%;
+    img {
+      border-radius: 5px;
+      width: 98%;
+    }
   }
 
   &__info {
-    margin-top: 4.6875rem;
     margin-left: 8.5rem;
 
     &__name {
+      font-size: 1.5rem;
     }
 
     &__detail {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
-      column-gap: 10.9375rem;
+      column-gap: 7.9375rem;
       margin-top: 2.75rem;
     }
   }
+}
+
+.btn__container {
+  display: grid;
+  justify-content: end;
+  padding-bottom: 3.5rem;
 }
 
 .country-neighbours {
@@ -35,6 +44,6 @@
 }
 
 div#map {
-  height: 50vh;
+  height: 60vh;
   width: 67vw;
 }

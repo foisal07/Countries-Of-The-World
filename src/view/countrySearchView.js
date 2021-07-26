@@ -3,9 +3,11 @@ import View from "./View.js";
 class SearchView extends View {
   _search = document.querySelector(".search");
   _navSearchCountryInput = document.querySelector(".nav__searchCountry__input");
+  _countryCardsConatiner = document.querySelector(".countrycard__container");
+  _detailPageContainer = document.querySelector(".detailpage__conatiner");
 
   // Handler search
-  addHandlerSearchView(handler) {
+  addHandlerSearch(handler) {
     this._search.addEventListener(
       "submit",
       function (e) {
@@ -14,8 +16,14 @@ class SearchView extends View {
         // get search query
         const searchedCountry = this._navSearchCountryInput.value.toLowerCase();
 
-        //clear country cards
-        this._clear();
+        //hide country cards
+        this._countryCardsConatiner.classList.add("hidden");
+
+        // clear detail page
+        this._detailPageContainer.innerHTML = "";
+
+        // clear search field
+        this._navSearchCountryInput.value = "";
 
         handler(searchedCountry);
       }.bind(this)
