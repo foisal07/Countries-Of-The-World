@@ -4,8 +4,7 @@ class SearchView extends View {
   _search = document.querySelector(".search");
   _navSearchCountryInput = document.querySelector(".nav__searchCountry__input");
   _countryCardsConatiner = document.querySelector(".countrycard__container");
-  _detailPageContainer = document.querySelector(".detailpage__conatiner");
-  _neighbourContainer = document.querySelector(".neighbour__container");
+  _detailPageContainer = document.querySelector(".detailpage__container");
 
   // Handler search
   addHandlerSearch(handler) {
@@ -14,7 +13,7 @@ class SearchView extends View {
       function (e) {
         e.preventDefault();
 
-        // get search query
+        //get searched query
         const searchedCountry = this._navSearchCountryInput.value.toLowerCase();
 
         //hide country cards

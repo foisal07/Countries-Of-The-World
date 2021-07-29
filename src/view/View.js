@@ -28,7 +28,6 @@ export default class View {
   }
 
   _generateCountryPageMarkup(country, borderCountry) {
-    console.log(country, borderCountry);
     return `
     <div class="country-detail">
         <div class="country-detail__flag">
@@ -97,7 +96,6 @@ export default class View {
     <div class="neighbour__container">
     ${borderCountry
       .map((country) => {
-        console.log(country);
         return this._generateCountryCardMarkup(country);
       })
       .join(" ")}

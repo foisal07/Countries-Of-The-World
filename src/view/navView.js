@@ -5,7 +5,7 @@ class NavView extends View {
   _navContainer = document.querySelector(".nav");
   _whereAmIBtn = document.querySelector(".nav__whereami_btn");
   _displayContainer = document.querySelector(".display-countries");
-  _detailPageContainer = document.querySelector(".detailpage__conatiner");
+  _detailPageContainer = document.querySelector(".detailpage__container");
   _neighbourContainer = document.querySelector(".neighbour__container");
 
   // Handler WhereAmI

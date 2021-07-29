@@ -43,22 +43,28 @@ const controlGetCountry = function (countryName) {
   //render country details
   model.state.countriesAll.forEach((country) => {
     if (country.name.toLowerCase() === countryName) {
-      countryBorders = country.borders;
+      // get country lat lng
       countryLatLng = country.latlng;
+      
+      // get bordering countries Alpha3Code
+      countryBorders = country.borders;
+
+      // get bordering countries
       renderNeighbourCountry(countryBorders, model.state.countriesAll);
+
+      // render country detail page
       CountryPageView.renderPage(country, borderCountry);
-      console.log(countryBorders);
+      
+      //remove previous border countries 
+      borderCountry = [];
     }
   });
 
   // display country location on map
   renderMap(...countryLatLng);
-
-  //render neighbouring country card
-  // renderNeighbourCountry(countryBorders, model.state.countriesAll);
 };
 
-// render Current Country
+// Render Current Country
 const controlWhereAmI = async function () {
   // get country [lat,lng]
   await model.getLatLng(TRACK__IP__API);
@@ -68,18 +74,19 @@ const controlWhereAmI = async function () {
   //render country details
   model.state.countriesAll.forEach((country) => {
     if (country.alpha2Code === model.state.ipTrackedCountry) {
-      // CountryPageView.renderPage(country);
+      // get bordering countries Alpha3Code
       countryBorders = country.borders;
+
+      // get bordering countries
       renderNeighbourCountry(countryBorders, model.state.countriesAll);
+
+      // render country detail page
       CountryPageView.renderPage(country, borderCountry);
     }
   });
 
   // render country location on map
   renderMap(...model.state.latlng);
-
-  //render neighbouring country card
-  // renderNeighbourCountry(countryBorders, model.state.countriesAll);
 };
 
 // Display Filtered Countries By Region
@@ -94,20 +101,16 @@ const controlFilterByRegion = function (region) {
 
 let borderCountry = [];
 
-// Render negighbour country
+//Get negighbouring country
 const renderNeighbourCountry = function (countryBorders, countriesAll) {
   countryBorders.forEach((countryCode) => {
     countriesAll.forEach((country) => {
       if (country.alpha3Code === countryCode) {
-        console.log(country);
         borderCountry.push(country);
-        // countryNeighbourView.renderCard(country);
       }
     });
   });
 };
-
-console.log(borderCountry);
 
 // Create Display Map
 const renderMap = function (lat, lng) {
@@ -156,7 +159,6 @@ init();
 // Render spinner/loader
 // Render error
 // Fix bug: getcountry() map reinitialize
-// Fix bug: On map neighbours heading display on load
 // Fix bug: Neighbour country card > click go to the country
 // Fix bug: Change neighbour country when clicked multiple countries
 // Fix bug: Country card > Country deatil showing map "you are here now"

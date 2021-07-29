@@ -1,7 +1,7 @@
 import View from "./View.js";
 
 class CountryPageView extends View {
-  _displayContainer = document.querySelector(".detailpage__conatiner");
+  _displayContainer = document.querySelector(".detailpage__container");
   _neighbourContainer = document.querySelector(".neighbour__container");
 
   addHandlerBackBtn(handler) {
@@ -13,7 +13,6 @@ class CountryPageView extends View {
 
         // clear detail page
         this._displayContainer.innerHTML = "";
-        // this._neighbourContainer.innerHTML = "";
 
         handler();
       }.bind(this)
