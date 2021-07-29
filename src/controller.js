@@ -8,7 +8,7 @@ import {
 import * as model from "../src/model.js";
 import CountryView from "./view/countryView.js";
 import CountryPageView from "./view/countryPageView.js";
-import countryNeighbourView from "./view/countryNeighbourView.js";
+import CountryNeighbourView from "./view/countryNeighbourView.js";
 import NavView from "./view/navView.js";
 import SearchView from "./view/countrySearchView.js";
 
@@ -43,9 +43,11 @@ const controlGetCountry = function (countryName) {
   //render country details
   model.state.countriesAll.forEach((country) => {
     if (country.name.toLowerCase() === countryName) {
-      CountryPageView.renderPage(country);
       countryBorders = country.borders;
       countryLatLng = country.latlng;
+      renderNeighbourCountry(countryBorders, model.state.countriesAll);
+      CountryPageView.renderPage(country, borderCountry);
+      console.log(countryBorders);
     }
   });
 
@@ -53,7 +55,7 @@ const controlGetCountry = function (countryName) {
   renderMap(...countryLatLng);
 
   //render neighbouring country card
-  renderNeighbourCountry(countryBorders, model.state.countriesAll);
+  // renderNeighbourCountry(countryBorders, model.state.countriesAll);
 };
 
 // render Current Country
@@ -66,16 +68,18 @@ const controlWhereAmI = async function () {
   //render country details
   model.state.countriesAll.forEach((country) => {
     if (country.alpha2Code === model.state.ipTrackedCountry) {
-      CountryPageView.renderPage(country);
+      // CountryPageView.renderPage(country);
       countryBorders = country.borders;
+      renderNeighbourCountry(countryBorders, model.state.countriesAll);
+      CountryPageView.renderPage(country, borderCountry);
     }
   });
 
   // render country location on map
   renderMap(...model.state.latlng);
 
-  //Rrender neighbouring country card
-  renderNeighbourCountry(countryBorders, model.state.countriesAll);
+  //render neighbouring country card
+  // renderNeighbourCountry(countryBorders, model.state.countriesAll);
 };
 
 // Display Filtered Countries By Region
@@ -88,16 +92,22 @@ const controlFilterByRegion = function (region) {
   });
 };
 
+let borderCountry = [];
+
 // Render negighbour country
 const renderNeighbourCountry = function (countryBorders, countriesAll) {
   countryBorders.forEach((countryCode) => {
     countriesAll.forEach((country) => {
       if (country.alpha3Code === countryCode) {
-        countryNeighbourView.renderCard(country);
+        console.log(country);
+        borderCountry.push(country);
+        // countryNeighbourView.renderCard(country);
       }
     });
   });
 };
+
+console.log(borderCountry);
 
 // Create Display Map
 const renderMap = function (lat, lng) {
@@ -121,7 +131,7 @@ const renderMap = function (lat, lng) {
   // Leaflet map marker
   L.popup()
     .setLatLng([lat, lng])
-    .setContent("You Are Here Now")
+    .setContent("Here's Your Country")
     .openOn(mapView);
 };
 
@@ -132,11 +142,13 @@ const showCountryCard = function () {
 const init = function () {
   CountryView.addHandlerRenderCountryCard(controlAllCountries);
   CountryView.addHandlerCountryCard(controlGetCountry);
+  CountryNeighbourView.addHandlerCountryCard(controlGetCountry);
   NavView.addHandlerWhereAmI(controlWhereAmI);
   NavView.addHandlerFilterRegion(controlFilterByRegion);
   SearchView.addHandlerSearch(controlGetCountry);
   CountryPageView.addHandlerBackBtn(showCountryCard);
 };
+
 init();
 
 // Search functionalities //

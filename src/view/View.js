@@ -1,5 +1,6 @@
 export default class View {
   _data;
+  _borderCountry;
   _displayContainer;
 
   _generateCountryCardMarkup(country) {
@@ -26,7 +27,8 @@ export default class View {
     `;
   }
 
-  _generateCountryPageMarkup(country) {
+  _generateCountryPageMarkup(country, borderCountry) {
+    console.log(country, borderCountry);
     return `
     <div class="country-detail">
         <div class="country-detail__flag">
@@ -92,10 +94,14 @@ export default class View {
 
     </div>
     <h2>The Neighbours</h2>
-    <div class="countries-neighbour">
-
-    </div>
-    `;
+    <div class="neighbour__container">
+    ${borderCountry
+      .map((country) => {
+        console.log(country);
+        return this._generateCountryCardMarkup(country);
+      })
+      .join(" ")}
+    </div>`;
   }
 
   renderCard(data) {
@@ -104,10 +110,12 @@ export default class View {
     this._displayContainer.insertAdjacentHTML("beforeend", markup);
   }
 
-  renderPage(data) {
+  renderPage(data, borderCountry) {
     this._data = data;
-    const markup = this._generateCountryPageMarkup(data);
-    this._displayContainer.insertAdjacentHTML("afterbegin", markup);
+    this._borderCountry = borderCountry;
+    console.log(borderCountry);
+    const markup = this._generateCountryPageMarkup(data, borderCountry);
+    this._displayContainer.insertAdjacentHTML("beforeend", markup);
   }
 
   renderError(msg) {}
