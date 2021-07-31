@@ -49,7 +49,10 @@ const controlGetCountry = async function (countryName) {
       (country) => country.name.toLowerCase() === countryName
     );
 
-    if (!country) throw new Error("country not found");
+    console.log(countryName);
+    if (!country) throw new Error(
+      ` Check spelling '${countryName.toUpperCase()}' isn't a country. You can also try to create country '${countryName.toUpperCase()}' country for yourself 😛`
+    );
 
     // get country lat lng
     const countryLatLng = country.latlng;
@@ -58,7 +61,7 @@ const controlGetCountry = async function (countryName) {
     const countryBorders = country.borders;
 
     // get bordering countries
-    getBorderingCountries(countryBorders, model.state.countriesAll);
+    getBorderingCountries(model.state.countriesAll, countryBorders);
 
     // render country detail page
     CountryPageView.renderPage(country, borderCountry);
@@ -69,11 +72,12 @@ const controlGetCountry = async function (countryName) {
     // display country location on map
     renderMap(...countryLatLng, countryName);
   } catch (err) {
-    alert(err);
+    console.log(err);
+    CountryPageView.renderError(err)
   }
 };
 
-// Render Current Country
+// Display Current Country
 const controlWhereAmI = async function () {
   try {
     // get country [lat,lng]
@@ -84,21 +88,21 @@ const controlWhereAmI = async function () {
       (country) => country.alpha2Code === model.state.ipTrackedCountry
     );
 
-    if (!country) throw new Error("country not found");
+    if (!country) throw new Error("You're a Jason Bourne 😛 couldn't find you at the moment");
 
     // get country borders
     const countryBorders = country.borders;
 
     // get bordering countries
-    getBorderingCountries(countryBorders, model.state.countriesAll);
+    getBorderingCountries(model.state.countriesAll, countryBorders);
 
     // render country detail page
-    CountryPageView.renderPage(country, borderCountry);
+    CountryPageView.renderPage(country, borderCountry, model.state.city);
 
     // render country location on map
     renderMap(...model.state.latlng, "You are here now!");
   } catch (err) {
-    alert(err)
+    CountryPageView.renderError(err);
   }
 };
 
@@ -115,12 +119,10 @@ const controlFilterByRegion = function (region) {
 //Get negighbouring country
 let borderCountry = [];
 
-const getBorderingCountries = function (countryBorders, countriesAll) {
+const getBorderingCountries = function (countriesAll, countryBorders) {
   countryBorders.forEach((countryCode) => {
     countriesAll.forEach((country) => {
-      if (country.alpha3Code === countryCode) {
-        borderCountry.push(country);
-      }
+      if (country.alpha3Code === countryCode) borderCountry.push(country);
     });
   });
 };
@@ -149,7 +151,7 @@ const renderMap = function (lat, lng, tooltip) {
 };
 
 const showCountryCard = function () {
-  countryCardConatiner.classList.remove("hidden");
+  countryCardContainer.classList.remove("hidden");
 };
 
 const init = function () {
@@ -167,14 +169,14 @@ init();
 // Search functionalities //
 // Back button //
 // Render spinner/loader
-// Render error 
+// Render error //
 // search get country //
 // request time out
 // Where am I now //
 // Fix bug: getcountry() map reinitialize //
 // Fix bug: Neighbour country card > click go to the country //
 // Fix bug: Change neighbour country when clicked multiple countries //
-// Fix bug: Country card > Country deatil showing map "you are here now" //
+// Fix bug: Country card > Country deatil showing map "you are here now"//
 // Fix bug: Nav spaacing
 // Theme switch
 // API request timeout

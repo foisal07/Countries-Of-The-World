@@ -266,11 +266,29 @@ li:not(:last-child) {
 div#map {
   height: 60vh;
   width: 67vw;
+  margin-top: 3rem;
   margin-bottom: 7rem;
 }
 
 .leaflet-popup-content-wrapper,
 .leaflet-popup-tip {
   background-image: linear-gradient(315deg, #ee9617 0%, #fe5858 74%);
+}
+
+.error {
+  display: grid;
+  justify-items: center;
+  height: 70vh;
+  align-content: center;
+  font-size: 1.5rem;
+  text-align: center;
+}
+
+.error .icon {
+  margin-right: 1rem;
+}
+
+.error__message {
+  margin-bottom: 2rem;
 }
 /*# sourceMappingURL=main.css.map */

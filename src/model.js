@@ -1,9 +1,10 @@
 import { AJAX } from "./helper.js";
 
-export const state = {
+export let state = {
   countriesAll: [],
   ipTrackedCountry: {},
   latlng: [],
+  city: {},
 };
 
 export const getAllCountries = async function (url) {
@@ -11,7 +12,7 @@ export const getAllCountries = async function (url) {
     const data = await AJAX(url);
     state.countriesAll = data;
   } catch (err) {
-    throw err
+    throw err;
   }
 };
 
@@ -21,8 +22,10 @@ export const getLatLng = async function (url) {
     const { ip } = await AJAX("https://api.ipify.org/?format=json");
 
     // Get lat lng
-    const data = await AJAX(`${url}${ip}`);
+    const data = await AJAX(`${url}${ipp}`);
+    console.log(data);
     state.ipTrackedCountry = data.location.country;
+    state.city = data.location.city;
     state.latlng = [data.location.lat, data.location.lng];
   } catch (err) {
     throw err;

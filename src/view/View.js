@@ -27,7 +27,8 @@ export default class View {
     `;
   }
 
-  _generateCountryPageMarkup(country, borderCountry) {
+  _generateCountryPageMarkup(country, borderCountry, city) {
+    console.log(city);
     return `
     <div class="country-detail">
         <div class="country-detail__flag">
@@ -42,7 +43,11 @@ export default class View {
             </div>
 
             <div class="country-detail__info__name">
-                <h1>${country.name}</h1>
+                <h1>${
+                  city
+                    ? `You are now in ${city}, ${country.name}`
+                    : `${country.name}`
+                }</h1>
             </div>
 
             <div class="country-detail__info__detail">
@@ -114,10 +119,10 @@ export default class View {
     this._displayContainer.insertAdjacentHTML("beforeend", markup);
   }
 
-  renderPage(data, borderCountry) {
+  renderPage(data, borderCountry, city) {
     this._data = data;
     this._borderCountry = borderCountry;
-    const markup = this._generateCountryPageMarkup(data, borderCountry);
+    const markup = this._generateCountryPageMarkup(data, borderCountry, city);
     this._displayContainer.insertAdjacentHTML("afterbegin", markup);
   }
 
@@ -126,7 +131,15 @@ export default class View {
   renderError(message = this._errorMessage) {
     const markup = `
       <div class="error">
-        <p>${message}</p>
+        <div class = "error__message">
+          <i class="icon fa fa-exclamation-triangle"></i>${message}
+        </div>
+        
+        <div class="btn__container">
+          <button class ='button button--med button--back'>
+            All Country
+          </button>
+        </div>
       </div>
     `;
     this._displayContainer.insertAdjacentHTML("afterbegin", markup);

@@ -5,6 +5,7 @@ class SearchView extends View {
   _navSearchCountryInput = document.querySelector(".nav__searchCountry__input");
   _countryCardsConatiner = document.querySelector(".countrycard__container");
   _detailPageContainer = document.querySelector(".detailpage__container");
+  _errorMessage = 'Country not found!'
 
   // Handler search
   addHandlerSearch(handler) {
