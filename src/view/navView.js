@@ -6,7 +6,6 @@ class NavView extends View {
   _whereAmIBtn = document.querySelector(".nav__whereami_btn");
   _displayContainer = document.querySelector(".display-countries");
   _detailPageContainer = document.querySelector(".detailpage__container");
-  _neighbourContainer = document.querySelector(".neighbour__container");
 
   // Handler WhereAmI
   addHandlerWhereAmI(handler) {
@@ -23,7 +22,6 @@ class NavView extends View {
 
         // clear detail page
         this._detailPageContainer.innerHTML = "";
-        // this._neighbourContainer.innerHTML = "";
 
         //render tracked country
         handler();
@@ -42,13 +40,14 @@ class NavView extends View {
         if (!region) return;
         const regionName = region.getAttribute("data-region");
 
-        // clear countries cards
+        // show countrycard container
         this._countryCardConatiner.classList.remove("hidden");
+
+        // clear country cards
         this._displayContainer.innerHTML = "";
 
         // clear detail page
         this._detailPageContainer.innerHTML = "";
-        // this._neighbourContainer.innerHTML = "";
 
         //render regional countries
         handler(regionName);

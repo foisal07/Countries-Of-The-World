@@ -37,8 +37,7 @@ export default class View {
         <div class="country-detail__info">
             <div class="btn__container">
                 <button class ='button button--med button--back'>
-                  <span class='icon'><i class="fa fa-angle-left"></i></span>
-                  Back
+                  All Country
                 </button>
             </div>
 
@@ -56,6 +55,11 @@ export default class View {
                         <strong>Population: </strong>${(
                           country.population / 1000000
                         ).toFixed(2)} M
+                    </li>
+                    <li>
+                        <strong>Area: </strong>${Math.round(
+                          country.area * 0.386102
+                        )} Sqm (approx)
                     </li>
                     <li>
                         <strong>Region: </strong>${country.region}
@@ -80,9 +84,7 @@ export default class View {
                           .join(" , ")}
                     </li>
                     <li>
-                        <strong>Top Level Domain: </strong>${
-                          country.topLevelDomain
-                        }   
+                        <strong>Timezone: </strong>${country.timezones}
                     </li>
                 </div>
             </div>
@@ -94,11 +96,15 @@ export default class View {
     </div>
     <h2>The Neighbours</h2>
     <div class="neighbour__container">
-    ${borderCountry
-      .map((country) => {
-        return this._generateCountryCardMarkup(country);
-      })
-      .join(" ")}
+    ${
+      borderCountry.length > 0
+        ? borderCountry
+            .map((country) => {
+              return this._generateCountryCardMarkup(country);
+            })
+            .join(" ")
+        : "No land borders"
+    }
     </div>`;
   }
 
@@ -111,12 +117,20 @@ export default class View {
   renderPage(data, borderCountry) {
     this._data = data;
     this._borderCountry = borderCountry;
-    console.log(borderCountry);
     const markup = this._generateCountryPageMarkup(data, borderCountry);
-    this._displayContainer.insertAdjacentHTML("beforeend", markup);
+    this._displayContainer.insertAdjacentHTML("afterbegin", markup);
   }
 
-  renderError(msg) {}
+  renderLoading() {}
+
+  renderError(message = this._errorMessage) {
+    const markup = `
+      <div class="error">
+        <p>${message}</p>
+      </div>
+    `;
+    this._displayContainer.insertAdjacentHTML("afterbegin", markup);
+  }
 
   _clear() {
     this._displayContainer.innerHTML = "";

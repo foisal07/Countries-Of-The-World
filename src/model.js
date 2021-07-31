@@ -1,7 +1,6 @@
 import { AJAX } from "./helper.js";
 
 export const state = {
-  countries: {},
   countriesAll: [],
   ipTrackedCountry: {},
   latlng: [],
@@ -12,7 +11,7 @@ export const getAllCountries = async function (url) {
     const data = await AJAX(url);
     state.countriesAll = data;
   } catch (err) {
-    console.log(err);
+    throw err
   }
 };
 
@@ -26,7 +25,7 @@ export const getLatLng = async function (url) {
     state.ipTrackedCountry = data.location.country;
     state.latlng = [data.location.lat, data.location.lng];
   } catch (err) {
-    console.log(err);
+    throw err;
   }
 };
 

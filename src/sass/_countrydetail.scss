@@ -38,17 +38,18 @@
   padding-bottom: 3.5rem;
 }
 
-.country-neighbours {
+.neighbour__container {
+  @extend .display-countries;
   margin-bottom: 10rem;
-  margin-top: 3rem;
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  grid-gap: 4.6875rem;
-  margin-bottom: 7rem;
 }
 
 div#map {
   height: 60vh;
   width: 67vw;
   margin-bottom: 7rem;
+}
+
+.leaflet-popup-content-wrapper,
+.leaflet-popup-tip {
+  background-image: linear-gradient(315deg, #ee9617 0%, #fe5858 74%);
 }

@@ -23,70 +23,83 @@ modeBtn.addEventListener("click", () => {
   body.classList.toggle("dark");
   body.classList.toggle("light");
 });
-const countryCardConatiner = document.querySelector(".countrycard__container");
+
+const countryCardContainer = document.querySelector(".countrycard__container");
 
 // Display All Countries Card
 const controlAllCountries = async function () {
-  //get all countries data
-  await model.getAllCountries(ALL__COUNTRIES__API);
+  try {
+    //get all countries data
+    await model.getAllCountries(ALL__COUNTRIES__API);
 
-  //render all countries card
-  model.state.countriesAll.forEach((country) =>
-    CountryView.renderCard(country)
-  );
+    //render all countries card
+    model.state.countriesAll.forEach((country) =>
+      CountryView.renderCard(country)
+    );
+  } catch (err) {
+    console.error(`${err} Yo`);
+  }
 };
 
 //Display Country Detail Page
-const controlGetCountry = function (countryName) {
-  let countryBorders, countryLatLng;
+const controlGetCountry = async function (countryName) {
+  try {
+    // get country
+    const [country] = model.state.countriesAll.filter(
+      (country) => country.name.toLowerCase() === countryName
+    );
 
-  //render country details
-  model.state.countriesAll.forEach((country) => {
-    if (country.name.toLowerCase() === countryName) {
-      // get country lat lng
-      countryLatLng = country.latlng;
-      
-      // get bordering countries Alpha3Code
-      countryBorders = country.borders;
+    if (!country) throw new Error("country not found");
 
-      // get bordering countries
-      renderNeighbourCountry(countryBorders, model.state.countriesAll);
+    // get country lat lng
+    const countryLatLng = country.latlng;
 
-      // render country detail page
-      CountryPageView.renderPage(country, borderCountry);
-      
-      //remove previous border countries 
-      borderCountry = [];
-    }
-  });
+    // get bordering countries Alpha3Code
+    const countryBorders = country.borders;
 
-  // display country location on map
-  renderMap(...countryLatLng);
+    // get bordering countries
+    getBorderingCountries(countryBorders, model.state.countriesAll);
+
+    // render country detail page
+    CountryPageView.renderPage(country, borderCountry);
+
+    //remove previous border countries
+    borderCountry = [];
+
+    // display country location on map
+    renderMap(...countryLatLng, countryName);
+  } catch (err) {
+    alert(err);
+  }
 };
 
 // Render Current Country
 const controlWhereAmI = async function () {
-  // get country [lat,lng]
-  await model.getLatLng(TRACK__IP__API);
+  try {
+    // get country [lat,lng]
+    await model.getLatLng(TRACK__IP__API);
 
-  let countryBorders;
+    // get country
+    const [country] = model.state.countriesAll.filter(
+      (country) => country.alpha2Code === model.state.ipTrackedCountry
+    );
 
-  //render country details
-  model.state.countriesAll.forEach((country) => {
-    if (country.alpha2Code === model.state.ipTrackedCountry) {
-      // get bordering countries Alpha3Code
-      countryBorders = country.borders;
+    if (!country) throw new Error("country not found");
 
-      // get bordering countries
-      renderNeighbourCountry(countryBorders, model.state.countriesAll);
+    // get country borders
+    const countryBorders = country.borders;
 
-      // render country detail page
-      CountryPageView.renderPage(country, borderCountry);
-    }
-  });
+    // get bordering countries
+    getBorderingCountries(countryBorders, model.state.countriesAll);
 
-  // render country location on map
-  renderMap(...model.state.latlng);
+    // render country detail page
+    CountryPageView.renderPage(country, borderCountry);
+
+    // render country location on map
+    renderMap(...model.state.latlng, "You are here now!");
+  } catch (err) {
+    alert(err)
+  }
 };
 
 // Display Filtered Countries By Region
@@ -99,10 +112,10 @@ const controlFilterByRegion = function (region) {
   });
 };
 
+//Get negighbouring country
 let borderCountry = [];
 
-//Get negighbouring country
-const renderNeighbourCountry = function (countryBorders, countriesAll) {
+const getBorderingCountries = function (countryBorders, countriesAll) {
   countryBorders.forEach((countryCode) => {
     countriesAll.forEach((country) => {
       if (country.alpha3Code === countryCode) {
@@ -113,7 +126,7 @@ const renderNeighbourCountry = function (countryBorders, countriesAll) {
 };
 
 // Create Display Map
-const renderMap = function (lat, lng) {
+const renderMap = function (lat, lng, tooltip) {
   // Create leaflet map
   const mapView = L.map("map").setView([lat, lng], 5);
 
@@ -132,10 +145,7 @@ const renderMap = function (lat, lng) {
   ).addTo(mapView);
 
   // Leaflet map marker
-  L.popup()
-    .setLatLng([lat, lng])
-    .setContent("Here's Your Country")
-    .openOn(mapView);
+  L.popup().setLatLng([lat, lng]).setContent(`${tooltip}`).openOn(mapView);
 };
 
 const showCountryCard = function () {
@@ -155,13 +165,16 @@ const init = function () {
 init();
 
 // Search functionalities //
-// Back button
+// Back button //
 // Render spinner/loader
-// Render error
-// Fix bug: getcountry() map reinitialize
-// Fix bug: Neighbour country card > click go to the country
-// Fix bug: Change neighbour country when clicked multiple countries
-// Fix bug: Country card > Country deatil showing map "you are here now"
+// Render error 
+// search get country //
+// request time out
+// Where am I now //
+// Fix bug: getcountry() map reinitialize //
+// Fix bug: Neighbour country card > click go to the country //
+// Fix bug: Change neighbour country when clicked multiple countries //
+// Fix bug: Country card > Country deatil showing map "you are here now" //
 // Fix bug: Nav spaacing
 // Theme switch
 // API request timeout
