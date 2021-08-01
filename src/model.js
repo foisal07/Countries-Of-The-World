@@ -22,8 +22,7 @@ export const getLatLng = async function (url) {
     const { ip } = await AJAX("https://api.ipify.org/?format=json");
 
     // Get lat lng
-    const data = await AJAX(`${url}${ipp}`);
-    console.log(data);
+    const data = await AJAX(`${url}${ip}`);
     state.ipTrackedCountry = data.location.country;
     state.city = data.location.city;
     state.latlng = [data.location.lat, data.location.lng];

@@ -28,7 +28,6 @@ export default class View {
   }
 
   _generateCountryPageMarkup(country, borderCountry, city) {
-    console.log(city);
     return `
     <div class="country-detail">
         <div class="country-detail__flag">

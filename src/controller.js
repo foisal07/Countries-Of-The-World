@@ -11,6 +11,7 @@ import CountryPageView from "./view/countryPageView.js";
 import CountryNeighbourView from "./view/countryNeighbourView.js";
 import NavView from "./view/navView.js";
 import SearchView from "./view/countrySearchView.js";
+import { AJAX } from "./helper.js";
 
 // import "core-js/stable";
 // import "regenerator-runtime/runtime";
@@ -48,11 +49,11 @@ const controlGetCountry = async function (countryName) {
     const [country] = model.state.countriesAll.filter(
       (country) => country.name.toLowerCase() === countryName
     );
-
-    console.log(countryName);
-    if (!country) throw new Error(
-      ` Check spelling '${countryName.toUpperCase()}' isn't a country. You can also try to create country '${countryName.toUpperCase()}' country for yourself 😛`
-    );
+    
+    if (!country)
+      throw new Error(
+        ` Check spelling '${countryName.toUpperCase()}' isn't a country. You can also try to create country '${countryName.toUpperCase()}' country for yourself 😛`
+      );
 
     // get country lat lng
     const countryLatLng = country.latlng;
@@ -61,7 +62,12 @@ const controlGetCountry = async function (countryName) {
     const countryBorders = country.borders;
 
     // get bordering countries
-    getBorderingCountries(model.state.countriesAll, countryBorders);
+    let borderCountry = await AJAX(
+      `https://restcountries.eu/rest/v2/alpha?codes=${countryBorders
+        .map((countrycode) => countrycode.toLowerCase())
+        .join(";")}`
+    );
+    // getBorderingCountries(model.state.countriesAll, countryBorders);
 
     // render country detail page
     CountryPageView.renderPage(country, borderCountry);
@@ -72,8 +78,7 @@ const controlGetCountry = async function (countryName) {
     // display country location on map
     renderMap(...countryLatLng, countryName);
   } catch (err) {
-    console.log(err);
-    CountryPageView.renderError(err)
+    CountryPageView.renderError(err);
   }
 };
 
@@ -88,7 +93,10 @@ const controlWhereAmI = async function () {
       (country) => country.alpha2Code === model.state.ipTrackedCountry
     );
 
-    if (!country) throw new Error("You're a Jason Bourne 😛 couldn't find you at the moment");
+    if (!country)
+      throw new Error(
+        "You're a Jason Bourne 😛 couldn't find you at the moment"
+      );
 
     // get country borders
     const countryBorders = country.borders;
@@ -180,3 +188,5 @@ init();
 // Fix bug: Nav spaacing
 // Theme switch
 // API request timeout
+// Fix bug: Where AM I multiple negibhours second time
+// Change getbordercountries functions to API call
