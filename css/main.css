@@ -181,6 +181,10 @@ li {
   margin-left: 2.8rem;
 }
 
+.countrycard__container {
+  margin-bottom: 7rem;
+}
+
 .display-countries, .neighbour__container {
   margin-top: 3rem;
   width: 80.3125rem;

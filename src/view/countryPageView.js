@@ -2,7 +2,6 @@ import View from "./View.js";
 
 class CountryPageView extends View {
   _displayContainer = document.querySelector(".detailpage__container");
-  _countryCardsConatiner = document.querySelector(".countrycard__container");
 
   addHandlerBackBtn(handler) {
     this._displayContainer.addEventListener(
@@ -15,7 +14,7 @@ class CountryPageView extends View {
         this._displayContainer.innerHTML = "";
 
         // show country card container
-        this._countryCardsConatiner.classList.remove("hidden");
+        this._showCountryCardContainer();
 
         handler();
       }.bind(this)

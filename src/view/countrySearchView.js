@@ -3,8 +3,6 @@ import View from "./View.js";
 class SearchView extends View {
   _search = document.querySelector(".search");
   _navSearchCountryInput = document.querySelector(".nav__searchCountry__input");
-  _countryCardsConatiner = document.querySelector(".countrycard__container");
-  _detailPageContainer = document.querySelector(".detailpage__container");
   _errorMessage = 'Country not found!'
 
   // Handler search
@@ -18,10 +16,10 @@ class SearchView extends View {
         const searchedCountry = this._navSearchCountryInput.value.toLowerCase();
 
         //hide country cards
-        this._countryCardsConatiner.classList.add("hidden");
+        this._hideCountryCardContainer();
 
         // clear detail page
-        this._detailPageContainer.innerHTML = "";
+        this._clearDetailPageContainer();
 
         // clear search field
         this._navSearchCountryInput.value = "";

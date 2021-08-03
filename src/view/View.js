@@ -1,7 +1,7 @@
 export default class View {
-  _data;
-  _borderCountry;
   _displayContainer;
+  _countryCardsContainer = document.querySelector(".countrycard__container");
+  _detailPageContainer = document.querySelector(".detailpage__container");
 
   _generateCountryCardMarkup(country) {
     return `
@@ -88,7 +88,9 @@ export default class View {
                           .join(" , ")}
                     </li>
                     <li>
-                        <strong>Timezone: </strong>${country.timezones}
+                        <strong>Country Domain: </strong>${
+                          country.topLevelDomain
+                        }
                     </li>
                 </div>
             </div>
@@ -113,19 +115,14 @@ export default class View {
   }
 
   renderCard(data) {
-    this._data = data;
     const markup = this._generateCountryCardMarkup(data);
     this._displayContainer.insertAdjacentHTML("beforeend", markup);
   }
 
   renderPage(data, borderCountry, city) {
-    this._data = data;
-    this._borderCountry = borderCountry;
     const markup = this._generateCountryPageMarkup(data, borderCountry, city);
     this._displayContainer.insertAdjacentHTML("afterbegin", markup);
   }
-
-  renderLoading() {}
 
   renderError(message = this._errorMessage) {
     const markup = `
@@ -144,7 +141,15 @@ export default class View {
     this._displayContainer.insertAdjacentHTML("afterbegin", markup);
   }
 
-  _clear() {
-    this._displayContainer.innerHTML = "";
+  _hideCountryCardContainer() {
+    this._countryCardsContainer.classList.add("hidden");
+  }
+
+  _showCountryCardContainer() {
+    this._countryCardsContainer.classList.remove("hidden");
+  }
+
+  _clearDetailPageContainer() {
+    this._detailPageContainer.innerHTML = "";
   }
 }

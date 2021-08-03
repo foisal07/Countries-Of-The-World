@@ -1,11 +1,11 @@
 import View from "./View.js";
 
 class NavView extends View {
-  _countryCardConatiner = document.querySelector(".countrycard__container");
+  // _countryCardConatiner = document.querySelector(".countrycard__container");
+  // _detailPageContainer = document.querySelector(".detailpage__container");
   _navContainer = document.querySelector(".nav");
   _whereAmIBtn = document.querySelector(".nav__whereami_btn");
   _displayContainer = document.querySelector(".display-countries");
-  _detailPageContainer = document.querySelector(".detailpage__container");
 
   // Handler WhereAmI
   addHandlerWhereAmI(handler) {
@@ -18,10 +18,12 @@ class NavView extends View {
         if (!whereAmI) return;
 
         // hide countries card
-        this._countryCardConatiner.classList.add("hidden");
+        this._hideCountryCardContainer();
+        // this._countryCardConatiner.classList.add("hidden");
 
         // clear detail page
-        this._detailPageContainer.innerHTML = "";
+        this._clearDetailPageContainer();
+        // this._detailPageContainer.innerHTML = "";
 
         //render tracked country
         handler();
@@ -41,13 +43,13 @@ class NavView extends View {
         const regionName = region.getAttribute("data-region");
 
         // show countrycard container
-        this._countryCardConatiner.classList.remove("hidden");
+        this._showCountryCardContainer();
 
         // clear country cards
         this._displayContainer.innerHTML = "";
 
         // clear detail page
-        this._detailPageContainer.innerHTML = "";
+        this._clearDetailPageContainer();
 
         //render regional countries
         handler(regionName);

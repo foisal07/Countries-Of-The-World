@@ -25,8 +25,6 @@ modeBtn.addEventListener("click", () => {
   body.classList.toggle("light");
 });
 
-const countryCardContainer = document.querySelector(".countrycard__container");
-
 // Display All Countries Card
 const controlAllCountries = async function () {
   try {
@@ -52,7 +50,7 @@ const controlGetCountry = async function (countryName) {
     
     if (!country)
       throw new Error(
-        ` Check spelling '${countryName.toUpperCase()}' isn't a country. You can also try to create country '${countryName.toUpperCase()}' country for yourself 😛`
+        ` Check spelling '${countryName.toUpperCase()}' isn't a country. You can also try to create country '${countryName.toUpperCase()}'for yourself 😛`
       );
 
     // get country lat lng
@@ -62,12 +60,12 @@ const controlGetCountry = async function (countryName) {
     const countryBorders = country.borders;
 
     // get bordering countries
-    let borderCountry = await AJAX(
-      `https://restcountries.eu/rest/v2/alpha?codes=${countryBorders
-        .map((countrycode) => countrycode.toLowerCase())
-        .join(";")}`
-    );
-    // getBorderingCountries(model.state.countriesAll, countryBorders);
+    // let borderCountry = await AJAX(
+    //   `https://restcountries.eu/rest/v2/alpha?codes=${countryBorders
+    //     .map((countrycode) => countrycode.toLowerCase())
+    //     .join(";")}`
+    // );
+    getBorderingCountries(model.state.countriesAll, countryBorders);
 
     // render country detail page
     CountryPageView.renderPage(country, borderCountry);
@@ -158,9 +156,6 @@ const renderMap = function (lat, lng, tooltip) {
   L.popup().setLatLng([lat, lng]).setContent(`${tooltip}`).openOn(mapView);
 };
 
-const showCountryCard = function () {
-  countryCardContainer.classList.remove("hidden");
-};
 
 const init = function () {
   CountryView.addHandlerRenderCountryCard(controlAllCountries);
@@ -169,7 +164,7 @@ const init = function () {
   NavView.addHandlerWhereAmI(controlWhereAmI);
   NavView.addHandlerFilterRegion(controlFilterByRegion);
   SearchView.addHandlerSearch(controlGetCountry);
-  CountryPageView.addHandlerBackBtn(showCountryCard);
+  CountryPageView.addHandlerBackBtn();
 };
 
 init();
@@ -179,7 +174,6 @@ init();
 // Render spinner/loader
 // Render error //
 // search get country //
-// request time out
 // Where am I now //
 // Fix bug: getcountry() map reinitialize //
 // Fix bug: Neighbour country card > click go to the country //
@@ -187,6 +181,6 @@ init();
 // Fix bug: Country card > Country deatil showing map "you are here now"//
 // Fix bug: Nav spaacing
 // Theme switch
-// API request timeout
-// Fix bug: Where AM I multiple negibhours second time
-// Change getbordercountries functions to API call
+// API request timeout //
+// Fix bug: Where AM I multiple negibhours second time //
+// Change/test getbordercountries functions to API call

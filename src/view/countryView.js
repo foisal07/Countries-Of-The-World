@@ -2,8 +2,8 @@ import View from "./View.js";
 
 export class CountryView extends View {
   _displayContainer = document.querySelector(".display-countries");
-  _countryCardContainer = document.querySelector(".countrycard__container");
-  _detailPageContainer = document.querySelector(".detailpage__container");
+  // _countryCardContainer = document.querySelector(".countrycard__container");
+  // _detailPageContainer = document.querySelector(".detailpage__container");
 
   addHandlerRenderCountryCard(handler) {
     window.addEventListener("load", handler);
@@ -24,10 +24,10 @@ export class CountryView extends View {
           .toLowerCase();
 
         // hide countries card
-        this._countryCardContainer.classList.add("hidden");
+        this._hideCountryCardContainer();
 
         // neighbour container country card clear detail page
-        this._detailPageContainer.innerHTML = "";
+        this._clearDetailPageContainer();
 
         // go top
         window.scroll({
