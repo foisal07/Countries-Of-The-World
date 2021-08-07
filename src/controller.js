@@ -11,30 +11,28 @@ import CountryPageView from "./view/countryPageView.js";
 import CountryNeighbourView from "./view/countryNeighbourView.js";
 import NavView from "./view/navView.js";
 import SearchView from "./view/countrySearchView.js";
+import HeaderView from "./view/headerView.js";
 import { AJAX } from "./helper.js";
 
 // import "core-js/stable";
 // import "regenerator-runtime/runtime";
 // import { async } from "regenerator-runtime";
 
-const body = document.body;
-const modeBtn = document.querySelector(".header_darkmode_btn");
-
-modeBtn.addEventListener("click", () => {
-  body.classList.toggle("dark");
-  body.classList.toggle("light");
-});
-
 // Display All Countries Card
-const controlAllCountries = async function () {
+const controlAllCountries = async function (sortingLetter = "a") {
   try {
     //get all countries data
     await model.getAllCountries(ALL__COUNTRIES__API);
 
     //render all countries card
-    model.state.countriesAll.forEach((country) =>
-      CountryView.renderCard(country)
-    );
+    // model.state.countriesAll.forEach((country) =>
+    //   CountryView.renderCard(country)
+    // );
+
+    model.state.countriesAll.forEach((country) => {
+      if (country.name.slice(0, 1).toLowerCase() === sortingLetter)
+        CountryView.renderCard(country);
+    });
   } catch (err) {
     console.error(`${err} Yo`);
   }
@@ -47,7 +45,7 @@ const controlGetCountry = async function (countryName) {
     const [country] = model.state.countriesAll.filter(
       (country) => country.name.toLowerCase() === countryName
     );
-    
+
     if (!country)
       throw new Error(
         ` Check spelling '${countryName.toUpperCase()}' isn't a country. You can also try to create country '${countryName.toUpperCase()}'for yourself 😛`
@@ -58,6 +56,12 @@ const controlGetCountry = async function (countryName) {
 
     // get bordering countries Alpha3Code
     const countryBorders = country.borders;
+
+    // get country alpha2code
+    const countryAlpha2Code = country.alpha2Code;
+
+    // get top cities
+    // model.getTopCitiesOfCountry(countryAlpha2Code)
 
     // get bordering countries
     // let borderCountry = await AJAX(
@@ -156,10 +160,12 @@ const renderMap = function (lat, lng, tooltip) {
   L.popup().setLatLng([lat, lng]).setContent(`${tooltip}`).openOn(mapView);
 };
 
+// model.getTopCitiesOfCountry()
 
 const init = function () {
   CountryView.addHandlerRenderCountryCard(controlAllCountries);
   CountryView.addHandlerCountryCard(controlGetCountry);
+  CountryView.addHandlerPagination(controlAllCountries);
   CountryNeighbourView.addHandlerCountryCard(controlGetCountry);
   NavView.addHandlerWhereAmI(controlWhereAmI);
   NavView.addHandlerFilterRegion(controlFilterByRegion);

@@ -1,3 +1,4 @@
+import { ACCUWEATHER__API__URL, ACCUWEATHER__API__KEY } from "./config.js";
 import { AJAX } from "./helper.js";
 
 export let state = {
@@ -30,6 +31,13 @@ export const getLatLng = async function (url) {
     throw err;
   }
 };
+
+// export const getTopCitiesOfCountry = async function (countryCode) {
+//   const data = await AJAX(
+//     `${ACCUWEATHER__API__URL}adminareas/${countryCode}?apikey=${ACCUWEATHER__API__KEY}`
+//   );
+//   console.log(data);
+// }
 
 // export const getCountry = async function (url, country) {
 //   try {

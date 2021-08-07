@@ -5,7 +5,7 @@ export default class View {
 
   _generateCountryCardMarkup(country) {
     return `
-    <div class="country-card" data-country-name="${country.name}">
+    <div class="country-card dark" data-country-name="${country.name}">
         <div class="country-card__flag">
             <img src="${country.flag}" alt="${country.name}" />
         </div>
@@ -151,5 +151,9 @@ export default class View {
 
   _clearDetailPageContainer() {
     this._detailPageContainer.innerHTML = "";
+  }
+  
+  _clearCountryCardContainer() {
+    this._displayContainer.innerHTML = "";
   }
 }

@@ -12,7 +12,6 @@ export const AJAX = async function (url) {
   try {
     const res = await Promise.race([fetch(url), timeout(TIMEOUT__SEC)]);
     const data = await res.json();
-    console.log(data);
     return data;
   } catch (err) {
     throw err;
