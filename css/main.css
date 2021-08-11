@@ -38,7 +38,7 @@ body {
   justify-content: center;
 }
 
-.button {
+.button, .pagination--button {
   background: #2B3743;
   font-size: 0.85rem;
   color: white;
@@ -47,7 +47,7 @@ body {
   border-radius: 5px;
 }
 
-.button:hover {
+.button:hover, .pagination--button:hover {
   transition: 0.3s ease-in;
   box-shadow: rgba(78, 82, 85, 0.15) 0px 8px 24px;
 }
@@ -96,6 +96,23 @@ li {
 .light {
   background: #fafafa;
   color: #202d36;
+}
+
+/* Fading animation */
+.fade {
+  -webkit-animation-name: fade;
+  -webkit-animation-duration: 1.5s;
+  animation-name: fade;
+  animation-duration: 1.5s;
+}
+
+@keyframes fade {
+  from {
+    opacity: 0.4;
+  }
+  to {
+    opacity: 1;
+  }
 }
 
 .header {
@@ -293,5 +310,42 @@ div#map {
 
 .error__message {
   margin-bottom: 2rem;
+}
+
+.pagination__container {
+  margin-bottom: 7rem;
+}
+
+.pagination {
+  position: relative;
+  overflow: hidden;
+  width: 317px;
+  height: 55px;
+}
+
+.slide {
+  position: absolute;
+  width: 275px;
+  padding-left: 48px;
+  padding-top: 14px;
+  transition: transform 1s;
+}
+
+.sliderBtn {
+  position: absolute;
+  width: 10px;
+  z-index: 10;
+}
+
+.btnNext {
+  right: 0px;
+}
+
+.btnPrev {
+  left: 0;
+}
+
+.pagination--button {
+  padding: 1rem;
 }
 /*# sourceMappingURL=main.css.map */

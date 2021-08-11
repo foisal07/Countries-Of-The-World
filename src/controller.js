@@ -7,6 +7,7 @@ import {
 } from "./config.js";
 import * as model from "../src/model.js";
 import CountryView from "./view/countryView.js";
+import CountryPaginationView from "./view/paginationView.js";
 import CountryPageView from "./view/countryPageView.js";
 import CountryNeighbourView from "./view/countryNeighbourView.js";
 import NavView from "./view/navView.js";
@@ -57,10 +58,10 @@ const controlGetCountry = async function (countryName) {
     // get bordering countries Alpha3Code
     const countryBorders = country.borders;
 
-    // get country alpha2code
-    const countryAlpha2Code = country.alpha2Code;
-
     // get top cities
+
+    // get country alpha2code
+    // const countryAlpha2Code = country.alpha2Code;
     // model.getTopCitiesOfCountry(countryAlpha2Code)
 
     // get bordering countries
@@ -69,6 +70,7 @@ const controlGetCountry = async function (countryName) {
     //     .map((countrycode) => countrycode.toLowerCase())
     //     .join(";")}`
     // );
+
     getBorderingCountries(model.state.countriesAll, countryBorders);
 
     // render country detail page
@@ -78,7 +80,10 @@ const controlGetCountry = async function (countryName) {
     borderCountry = [];
 
     // display country location on map
-    renderMap(...countryLatLng, countryName);
+    renderMap(
+      ...countryLatLng,
+      countryName.charAt(0).toUpperCase() + countryName.slice(1)
+    );
   } catch (err) {
     CountryPageView.renderError(err);
   }
@@ -138,7 +143,7 @@ const getBorderingCountries = function (countriesAll, countryBorders) {
 };
 
 // Create Display Map
-const renderMap = function (lat, lng, tooltip) {
+const renderMap = function (lat, lng, popupMsg) {
   // Create leaflet map
   const mapView = L.map("map").setView([lat, lng], 5);
 
@@ -157,7 +162,7 @@ const renderMap = function (lat, lng, tooltip) {
   ).addTo(mapView);
 
   // Leaflet map marker
-  L.popup().setLatLng([lat, lng]).setContent(`${tooltip}`).openOn(mapView);
+  L.popup().setLatLng([lat, lng]).setContent(`${popupMsg}`).openOn(mapView);
 };
 
 // model.getTopCitiesOfCountry()
@@ -165,12 +170,13 @@ const renderMap = function (lat, lng, tooltip) {
 const init = function () {
   CountryView.addHandlerRenderCountryCard(controlAllCountries);
   CountryView.addHandlerCountryCard(controlGetCountry);
-  CountryView.addHandlerPagination(controlAllCountries);
+  CountryPaginationView.addHandlerPagination(controlAllCountries);
   CountryNeighbourView.addHandlerCountryCard(controlGetCountry);
   NavView.addHandlerWhereAmI(controlWhereAmI);
   NavView.addHandlerFilterRegion(controlFilterByRegion);
   SearchView.addHandlerSearch(controlGetCountry);
   CountryPageView.addHandlerBackBtn();
+  CountryPaginationView.addHandlerSlides();
 };
 
 init();

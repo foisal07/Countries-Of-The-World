@@ -6,7 +6,7 @@ export default class View {
   _generateCountryCardMarkup(country) {
     return `
     <div class="country-card dark" data-country-name="${country.name}">
-        <div class="country-card__flag">
+        <div class="country-card__flag fade">
             <img src="${country.flag}" alt="${country.name}" />
         </div>
         <div class="country-card__info">
@@ -29,7 +29,7 @@ export default class View {
 
   _generateCountryPageMarkup(country, borderCountry, city) {
     return `
-    <div class="country-detail">
+    <div class="country-detail fade">
         <div class="country-detail__flag">
             <img src="${country.flag}" alt="${country.name}"/>
         </div>
@@ -37,7 +37,7 @@ export default class View {
         <div class="country-detail__info">
             <div class="btn__container">
                 <button class ='button button--med button--back'>
-                  All Country
+                  <i class="icon fa fa-arrow-left"></i>
                 </button>
             </div>
 
@@ -152,7 +152,7 @@ export default class View {
   _clearDetailPageContainer() {
     this._detailPageContainer.innerHTML = "";
   }
-  
+
   _clearCountryCardContainer() {
     this._displayContainer.innerHTML = "";
   }
