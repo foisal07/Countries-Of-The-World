@@ -2,6 +2,7 @@ import View from "./View.js";
 
 export class CountryView extends View {
   _displayContainer = document.querySelector(".display-countries");
+  _paginationContainer = document.querySelector(".pagination__container");
 
   addHandlerRenderCountryCard(handler) {
     window.addEventListener("load", handler());
@@ -27,6 +28,9 @@ export class CountryView extends View {
         // neighbour container country card clear detail page
         this._clearDetailPageContainer();
 
+        // clear pagination
+        this._hidePaginationContainer();
+        
         // go top
         window.scroll({
           top: 0,

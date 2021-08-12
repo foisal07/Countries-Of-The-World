@@ -177,6 +177,7 @@ const init = function () {
   SearchView.addHandlerSearch(controlGetCountry);
   CountryPageView.addHandlerBackBtn();
   CountryPaginationView.addHandlerSlides();
+  HeaderView.addHandlerThemeButton()
 };
 
 init();

@@ -8,10 +8,30 @@
     grid-template-columns: repeat(2, 1fr);
     grid-template-rows: 1fr;
     align-items: center;
-
-    width: 80.3125rem;
+    width: 19rem;
     height: 3rem;
-    padding: 1rem;
+    padding: 0.5rem;
+    font-size: 0.79rem;
+
+    @include breakpoint-up(semismall) {
+      width: 25rem;
+    }
+
+    @include breakpoint-up(medium) {
+      width: 40.625rem;
+    }
+
+    @include breakpoint-up(xmedium) {
+      width: 50rem;
+    }
+
+    @include breakpoint-up(large) {
+      width: 62.5rem;
+    }
+
+    @include breakpoint-up(xlarge) {
+      width: 80.3125rem;
+    }
   }
 
   &__logo {

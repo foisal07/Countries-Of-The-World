@@ -2,6 +2,7 @@ export default class View {
   _displayContainer;
   _countryCardsContainer = document.querySelector(".countrycard__container");
   _detailPageContainer = document.querySelector(".detailpage__container");
+  _paginationContainer = document.querySelector(".pagination__container");
 
   _generateCountryCardMarkup(country) {
     return `
@@ -148,12 +149,20 @@ export default class View {
   _showCountryCardContainer() {
     this._countryCardsContainer.classList.remove("hidden");
   }
+  
+  _clearCountryCardContainer() {
+    this._displayContainer.innerHTML = "";
+  }
 
   _clearDetailPageContainer() {
     this._detailPageContainer.innerHTML = "";
   }
 
-  _clearCountryCardContainer() {
-    this._displayContainer.innerHTML = "";
+  _hidePaginationContainer() {
+    this._paginationContainer.classList.add("hidden");
+  }
+
+  _showPaginationContainer() {
+    this._paginationContainer.classList.remove("hidden");
   }
 }

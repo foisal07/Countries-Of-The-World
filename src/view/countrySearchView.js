@@ -23,6 +23,9 @@ class SearchView extends View {
 
         // clear search field
         this._navSearchCountryInput.value = "";
+        
+        // hide pagination container
+        this._hidePaginationContainer();
 
         handler(searchedCountry);
       }.bind(this)

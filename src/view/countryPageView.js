@@ -16,7 +16,10 @@ class CountryPageView extends View {
         // show country card container
         this._showCountryCardContainer();
 
-        // handler();
+        // show pagination container
+        this._showPaginationContainer();
+
+        handler();
       }.bind(this)
     );
   }

@@ -1,17 +1,37 @@
-.countrycard__container{
+.countrycard__container {
   margin-bottom: 7rem;
+  
+  @include breakpoint-down(small) {
+    margin-bottom: 3rem;
+  }
 }
 .display-countries {
   margin-top: 3rem;
-  width: 80.3125rem;
+  width: 20rem;
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  grid-gap: 4.6875rem;
+  grid-template-columns: 1fr;
+  grid-gap: 2rem;
+  justify-items: center;
+
+  @include breakpoint-up(medium) {
+    width: 40.625rem;
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @include breakpoint-up(large) {
+    width: 62.5rem;
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  @include breakpoint-up(xlarge) {
+    width: 80.3125rem;
+    grid-template-columns: repeat(4, 1fr);
+  }
 }
 
 .country-card {
   background: $dark-blue;
-  max-width: 270px;
+  width: 270px;
   border-radius: 5px;
   box-shadow: rgba(78, 82, 85, 0.15) 0px 8px 24px;
 

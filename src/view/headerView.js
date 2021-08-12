@@ -11,7 +11,7 @@ class HeaderView {
 
         this._countryCard.classList.toggle("dark");
         this._countryCard.classList.toggle("light");
-      //   handler();
+        handler();
     });
   }
 }

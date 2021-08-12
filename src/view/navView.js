@@ -1,8 +1,6 @@
 import View from "./View.js";
 
 class NavView extends View {
-  // _countryCardConatiner = document.querySelector(".countrycard__container");
-  // _detailPageContainer = document.querySelector(".detailpage__container");
   _navContainer = document.querySelector(".nav");
   _whereAmIBtn = document.querySelector(".nav__whereami_btn");
   _displayContainer = document.querySelector(".display-countries");
@@ -19,11 +17,12 @@ class NavView extends View {
 
         // hide countries card
         this._hideCountryCardContainer();
-        // this._countryCardConatiner.classList.add("hidden");
 
         // clear detail page
         this._clearDetailPageContainer();
-        // this._detailPageContainer.innerHTML = "";
+
+        // hide pagination container
+        this._hidePaginationContainer();
 
         //render tracked country
         handler();

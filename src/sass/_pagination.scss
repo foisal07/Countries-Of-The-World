@@ -1,5 +1,8 @@
 .pagination__container {
   margin-bottom: 7rem;
+  @include breakpoint-down(small) {
+    margin-bottom: 3rem;
+  }
 }
 
 .pagination {

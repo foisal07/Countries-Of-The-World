@@ -3,9 +3,11 @@
   //Styles Go Here
 }
 
-//640px, 1024px, 1400px
+//400px, 640px, 800px, 1024px, 1400px
 $breakpoints-up: (
+  "semismall": "25em",
   "medium": "40em",
+  "xmedium": "50em",
   "large": "64em",
   "xlarge": "87.5em",
 );
