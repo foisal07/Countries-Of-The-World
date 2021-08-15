@@ -31,16 +31,17 @@ export default class View {
   _generateCountryPageMarkup(country, borderCountry, city) {
     return `
     <div class="country-detail fade">
+
         <div class="country-detail__flag">
-            <img src="${country.flag}" alt="${country.name}"/>
+          <div class="btn__container">
+            <button class ='button--back'>
+              <i class="icon fa fa-long-arrow-left" aria-hidden="true"></i>
+            </button>
+          </div>
+          <img src="${country.flag}" alt="${country.name}"/>
         </div>
 
         <div class="country-detail__info">
-            <div class="btn__container">
-                <button class ='button button--med button--back'>
-                  <i class="icon fa fa-arrow-left"></i>
-                </button>
-            </div>
 
             <div class="country-detail__info__name">
                 <h1>${
@@ -97,21 +98,26 @@ export default class View {
             </div>
         </div>
     </div>
-    <h2>On Map</h2>
-    <div class="country-map" id="map">
 
+    <div class='map__container'>
+      <h2>On Map</h2>
+      <div class="country-map" id="map">
+      </div>
     </div>
-    <h2>The Neighbours</h2>
+
     <div class="neighbour__container">
-    ${
-      borderCountry.length > 0
-        ? borderCountry
-            .map((country) => {
-              return this._generateCountryCardMarkup(country);
-            })
-            .join(" ")
-        : "No land borders"
-    }
+      <h2>The Neighbours</h2>
+      <div class="country__neighbours">
+      ${
+        borderCountry.length > 0
+          ? borderCountry
+              .map((country) => {
+                return this._generateCountryCardMarkup(country);
+              })
+              .join(" ")
+          : "No land borders"
+      }
+      </div>
     </div>`;
   }
 
@@ -149,7 +155,7 @@ export default class View {
   _showCountryCardContainer() {
     this._countryCardsContainer.classList.remove("hidden");
   }
-  
+
   _clearCountryCardContainer() {
     this._displayContainer.innerHTML = "";
   }

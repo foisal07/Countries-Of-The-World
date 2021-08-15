@@ -1,14 +1,27 @@
 .country-detail {
-  margin-top: 4.6875rem;
-  width: 80rem;
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  justify-items: center;
-  margin-bottom: 7rem;
+  grid-template-columns: 1fr;
+  grid-row-gap: 2.5rem;
+  width: 19rem;
+  margin: 2rem 1rem 0 1rem;
 
-  @include breakpoint-down(small) {
+  @include breakpoint-up(medium) {
+    width: 40rem;
+    margin: 4.6875rem 0;
     grid-template-columns: 1fr;
-    grid-gap: 3rem;
+    grid-row-gap: 2.5rem;
+  }
+
+  @include breakpoint-up(large) {
+    width: 62.5rem;
+    margin: 4.6875rem 0;
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @include breakpoint-up(xlarge) {
+    width: 80.3125rem;
+    grid-template-columns: repeat(2, 1fr);
+    margin: 4.6875rem 0 7rem 0;
   }
 
   &__flag {
@@ -17,16 +30,20 @@
       object-fit: cover;
       width: 100%;
       height: 100%;
-
-      @include breakpoint-down(small) {
-        width: 90%;
-      }
     }
   }
 
   &__info {
-    margin-left: 7rem;
-    margin-bottom: 2.5rem;
+    margin: 3rem 0rem;
+    align-self: center;
+
+    @include breakpoint-up(large) {
+      margin-left: 5rem;
+    }
+
+    @include breakpoint-up(xlarge) {
+      margin-left: 7rem;
+    }
 
     &__name {
       font-size: 1.5rem;
@@ -34,29 +51,58 @@
 
     &__detail {
       display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      column-gap: 7.9375rem;
-      margin-top: 2.75rem;
+      grid-template-columns: 1fr;
+      margin-top: 2rem;
+
+      @include breakpoint-up(medium) {
+        grid-template-columns: repeat(2, 1fr);
+        column-gap: 2rem;
+      }
+
+      @include breakpoint-up(large) {
+        grid-template-columns: repeat(2, 1fr);
+        column-gap: 5rem;
+      }
+
+      @include breakpoint-up(xlarge) {
+        grid-template-columns: repeat(2, 1fr);
+        column-gap: 7.9375rem;
+      }
     }
   }
 }
 
 .btn__container {
   display: grid;
-  justify-content: end;
-  padding-bottom: 3.5rem;
+  justify-content: start;
+  align-content: center;
+  padding-bottom: 1rem;
+  font-size: 1.5rem;
 }
 
-.neighbour__container {
-  @extend .display-countries;
-  margin-bottom: 10rem;
+// Map
+.map__container {
+  margin: 2rem 1rem;
+
+  @include breakpoint-up(medium) {
+    margin: 3rem 0.5rem 7rem 0.5rem;
+  }
+
+  @include breakpoint-up(large) {
+    margin: 3rem 0.5rem 7rem 0.5rem;
+  }
+
+  @include breakpoint-up(xlarge) {
+    margin: 3rem 0.5rem 7rem 0.5rem;
+  }
 }
 
 div#map {
-  height: 60vh;
-  width: 67vw;
-  margin-top: 3rem;
-  margin-bottom: 7rem;
+  display: grid;
+  grid-template-columns: 1fr;
+  width: 100%;
+  height: 70vh;
+  margin: 4.6875rem 0;
 }
 
 .leaflet-popup-content-wrapper,
@@ -64,6 +110,16 @@ div#map {
   background-image: linear-gradient(315deg, #ee9617 0%, #fe5858 74%);
 }
 
+// Neighbours
+.neighbour__container {
+  margin: 4.6875rem 0.5rem 4.6875rem 0.5rem;
+}
+
+.country__neighbours {
+  @extend .display-countries;
+}
+
+// Error message
 .error {
   display: grid;
   justify-items: center;
