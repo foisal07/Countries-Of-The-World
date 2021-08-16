@@ -1,0 +1,27 @@
+{
+  "name": "countriesoftheworld",
+  "version": "1.0.0",
+  "description": "A web app to get all countries info",
+  "default": "index.html",
+  "scripts": {
+    "start": "parcel index.html",
+    "build": "parcel build index.html --dist-dir ./dist"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/foisal07/Countries-Of-Our-World-REST-Country-API-.git"
+  },
+  "author": "Foisal Ahmed",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/foisal07/Countries-Of-Our-World-REST-Country-API-/issues"
+  },
+  "homepage": "https://github.com/foisal07/Countries-Of-Our-World-REST-Country-API-#readme",
+  "devDependencies": {
+    "parcel": "^2.0.0-rc.0"
+  },
+  "dependencies": {
+    "core-js-pure": "^3.16.1",
+    "leaflet": "^1.7.1"
+  }
+}

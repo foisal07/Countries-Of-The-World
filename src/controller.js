@@ -10,24 +10,21 @@ import NavView from "./view/navView.js";
 import SearchView from "./view/countrySearchView.js";
 import HeaderView from "./view/headerView.js";
 
-// import "core-js/stable";
-// import "regenerator-runtime/runtime";
-
 // Display All Countries Card
 const controlAllCountries = async function (sortingLetter = "a") {
   try {
     //get all countries data
     await model.getAllCountries(ALL__COUNTRIES__API);
 
-    //render all countries card
-    // model.state.countriesAll.forEach((country) =>
-    //   CountryView.renderCard(country)
-    // );
-
+    //render countries card start with A
     model.state.countriesAll.forEach((country) => {
       if (country.name.slice(0, 1).toLowerCase() === sortingLetter)
         CountryView.renderCard(country);
     });
+
+    // model.state.countriesAll.forEach((country) =>
+    //   CountryView.renderCard(country)
+    // );
   } catch (err) {
     console.error(`${err} Yo`);
   }
@@ -51,20 +48,6 @@ const controlGetCountry = async function (countryName) {
 
     // get bordering countries Alpha3Code
     const countryBorders = country.borders;
-
-    // get top cities
-
-    // get country alpha2code
-    // const countryAlpha2Code = country.alpha2Code;
-    // model.getTopCitiesOfCountry(countryAlpha2Code)
-
-    // get bordering countries
-    // let borderCountry = await AJAX(
-    //   `https://restcountries.eu/rest/v2/alpha?codes=${countryBorders
-    //     .map((countrycode) => countrycode.toLowerCase())
-    //     .join(";")}`
-    // );
-
     getBorderingCountries(model.state.countriesAll, countryBorders);
 
     // render country detail page
@@ -158,8 +141,6 @@ const renderMap = function (lat, lng, popupMsg) {
   // Leaflet map marker
   L.popup().setLatLng([lat, lng]).setContent(`${popupMsg}`).openOn(mapView);
 };
-
-// model.getTopCitiesOfCountry()
 
 const init = function () {
   CountryView.addHandlerRenderCountryCard(controlAllCountries);

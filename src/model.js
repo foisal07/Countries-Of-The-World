@@ -1,11 +1,10 @@
 import { ACCUWEATHER__API__URL, ACCUWEATHER__API__KEY } from "./config.js";
 import { AJAX } from "./helper.js";
 
-export let state = {
+export const state = {
   countriesAll: [],
   ipTrackedCountry: {},
   latlng: [],
-  city: {},
 };
 
 export const getAllCountries = async function (url) {
@@ -25,7 +24,6 @@ export const getLatLng = async function (url) {
     // Get lat lng
     const data = await AJAX(`${url}${ip}`);
     state.ipTrackedCountry = data.location.country;
-    state.city = data.location.city;
     state.latlng = [data.location.lat, data.location.lng];
   } catch (err) {
     throw err;

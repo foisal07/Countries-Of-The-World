@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Font awesome -->
+    <link href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.css" rel="stylesheet" type="text/css">
+
+    <!-- Google fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;600;800&display=swap" rel="stylesheet">
+
+    <!-- Leaflet -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A==" crossorigin="">
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js" integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA==" crossorigin=""></script>
+
+    <link rel="stylesheet" href="/index.acbd36d5.css">
+    <script src="/index.f7e7bf39.js" defer=""></script>
+
+    <title>Countries Of The World</title>
+  </head>
+  <body class="dark">
+    <!-- Header Section -->
+    <section class="header">
+      <div class="header__container">
+        <div class="header__logo">
+          <span class="icon icon--logo"><i class="fa fa-globe"></i> </span>
+          <strong>Countries Of The World</strong>
+        </div>
+        <div class="header__darkmode">
+          <button class="header_darkmode_btn">Light Theme</button>
+        </div>
+      </div>
+    </section>
+
+    <!--Nav Section -->
+    <section class="grid-container">
+      <section class="nav">
+        <div class="button button--input nav__searchCountry">
+          <form class="search">
+            <span class="icon">
+              <i class="fa fa-search"></i>
+            </span>
+            <input class="nav__searchCountry__input" type="text" placeholder="Search for a country ...">
+          </form>
+        </div>
+
+        <div class="nav__where-am-i">
+          <button class="button button--orange nav__whereami_btn">
+            <strong>Where Am I Now?</strong>
+          </button>
+        </div>
+
+        <div class="nav__filterRegion">
+          <button class="button nav_filterRegion_btn">
+            Filter by Region
+            <span class="icon"><i class="fa fa-angle-down"></i></span>
+          </button>
+          <div class="nav__filterRegion__dropdwon">
+            <a class="region" data-region="Asia" href="">Asia</a>
+            <a class="region" data-region="Europe" href="">Europe</a>
+            <a class="region" data-region="Africa" href="">Africa</a>
+            <a class="region" data-region="Americas" href="">America</a>
+            <a class="region" data-region="Oceania" href="">Oceania</a>
+          </div>
+        </div>
+      </section>
+    </section>
+
+    <!--Display-->
+    <section class="grid-container">
+      <!--Display country cards  -->
+      <div class="countrycard__container">
+        <div class="display-countries">
+          <!-- <div class="country-card">
+            <div class="country-card__flag">
+              <img src="https://restcountries.eu/data/bgd.svg" alt="" />
+            </div>
+            <div class="country-card__info">
+              <div class="country-card__info__name">
+                <strong><h4>Bangladesh</h4></strong>
+              </div>
+              <ul class="country-card__info__detail">
+                <li>
+                  Population:
+                  <strong>1.6M</strong>
+                </li>
+                <li>
+                  Language:
+                  <strong>Bangla</strong>
+                </li>
+                <li>
+                  Region:
+                  <strong>Asia</strong>
+                </li>
+              </ul>
+            </div>
+          </div> -->
+        </div>
+      </div>
+      <!-- Display country details -->
+      <div class="detailpage__container">
+        <!-- <div class="country-detail">
+          <div class="country-detail__flag">
+            <img src="${country.flag}" alt="Bangladesh" />
+          </div>
+
+          <div class="country-detail__info">
+            <div class="btn__container">
+              <button class="button button--med button--back">
+                <span class="icon"><i class="fa fa-angle-left"></i></span>
+                Back
+              </button>
+            </div>
+
+            <div class="country-detail__info__name">
+              <h1>Bangladesh</h1>
+            </div>
+
+            <div class="country-detail__info__detail">
+              <div class="column-one">
+                <li><strong>Native Name: </strong> Bangladesh</li>
+                <li>
+                  <strong>Population: </strong>161.1M
+                </li>
+                <li><strong>Region: </strong>Asia</li>
+                <li><strong>Sub Region: </strong>South Asia</li>
+              </div>
+
+              <div class="column-two">
+                <li><strong>Capital: </strong>Dhaka</li>
+                <li>
+                  <strong>Currencies: </strong> Bangladeshi Taka
+                </li>
+                <li>
+                  <strong>Language: </strong> Bangla
+                </li>
+                <li>
+                  <strong>Top Level Domain: </strong> .bd
+                </li>
+              </div>
+            </div>
+          </div>
+        </div>
+        <h2>On Map</h2>
+        <div class="country-map" id="map"
+        ></div>
+        <h2>The Neighbours</h2>
+        <div class="countries-neighbour display-countries">
+
+        </div> -->
+      </div>
+    </section>
+
+    <!-- Pagination -->
+    <section class="grid-container">
+      <div class="pagination__container">
+        <div class="pagination">
+          <div class="slide">
+            <a href="" class="letter pagination--button">A</a>
+            <a href="" class="letter pagination--button">B</a>
+            <a href="" class="letter pagination--button">C</a>
+            <a href="" class="letter pagination--button">D</a>
+            <a href="" class="letter pagination--button">E</a>
+          </div>
+
+          <div class="slide">
+            <a href="" class="letter pagination--button">F</a>
+            <a href="" class="letter pagination--button">G</a>
+            <a href="" class="letter pagination--button">H</a>
+            <a href="" class="letter pagination--button">I</a>
+            <a href="" class="letter pagination--button">J</a>
+          </div>
+
+          <div class="slide">
+            <a href="" class="letter pagination--button">K</a>
+            <a href="" class="letter pagination--button">L</a>
+            <a href="" class="letter pagination--button">M</a>
+            <a href="" class="letter pagination--button">N</a>
+            <a href="" class="letter pagination--button">O</a>
+          </div>
+
+          <div class="slide">
+            <a href="" class="letter pagination--button">P</a>
+            <a href="" class="letter pagination--button">Q</a>
+            <a href="" class="letter pagination--button">R</a>
+            <a href="" class="letter pagination--button">S</a>
+            <a href="" class="letter pagination--button">T</a>
+          </div>
+
+          <div class="slide">
+            <a href="" class="letter pagination--button">U</a>
+            <a href="" class="letter pagination--button">V</a>
+            <a href="" class="letter pagination--button">W</a>
+            <a href="" class="letter pagination--button">Y</a>
+            <a href="" class="letter pagination--button">Z</a>
+          </div>
+
+          <div>
+            <a class="sliderBtn btnPrev pagination--button" href=""><i class="fa fa-angle-left" aria-hidden="true"></i></a>
+          </div>
+
+          <div>
+            <a class="sliderBtn btnNext pagination--button" href=""><i class="fa fa-angle-right" aria-hidden="true"></i></a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </body>
+</html>
