@@ -3,7 +3,7 @@ import View from "./View.js";
 class CountryPageView extends View {
   _displayContainer = document.querySelector(".detailpage__container");
 
-  addHandlerBackBtn(handler) {
+  addHandlerBackBtn() {
     this._displayContainer.addEventListener(
       "click",
       function (e) {
@@ -18,8 +18,6 @@ class CountryPageView extends View {
 
         // show pagination container
         this._showPaginationContainer();
-
-        handler();
       }.bind(this)
     );
   }

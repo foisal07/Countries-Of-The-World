@@ -1,11 +1,7 @@
-import {
-  ALL__COUNTRIES__API,
-  COUNTRY__API,
-  REGION__COUNTRIES__API,
-  BORDER__COUNTIRES__API,
-  TRACK__IP__API,
-} from "./config.js";
+import { ALL__COUNTRIES__API, TRACK__IP__API } from "./config.js";
+
 import * as model from "../src/model.js";
+
 import CountryView from "./view/countryView.js";
 import CountryPaginationView from "./view/paginationView.js";
 import CountryPageView from "./view/countryPageView.js";
@@ -13,11 +9,9 @@ import CountryNeighbourView from "./view/countryNeighbourView.js";
 import NavView from "./view/navView.js";
 import SearchView from "./view/countrySearchView.js";
 import HeaderView from "./view/headerView.js";
-import { AJAX } from "./helper.js";
 
 // import "core-js/stable";
 // import "regenerator-runtime/runtime";
-// import { async } from "regenerator-runtime";
 
 // Display All Countries Card
 const controlAllCountries = async function (sortingLetter = "a") {
@@ -177,23 +171,7 @@ const init = function () {
   SearchView.addHandlerSearch(controlGetCountry);
   CountryPageView.addHandlerBackBtn();
   CountryPaginationView.addHandlerSlides();
-  HeaderView.addHandlerThemeButton()
+  HeaderView.addHandlerThemeButton();
 };
 
 init();
-
-// Search functionalities //
-// Back button //
-// Render spinner/loader
-// Render error //
-// search get country //
-// Where am I now //
-// Fix bug: getcountry() map reinitialize //
-// Fix bug: Neighbour country card > click go to the country //
-// Fix bug: Change neighbour country when clicked multiple countries //
-// Fix bug: Country card > Country deatil showing map "you are here now"//
-// Fix bug: Nav spaacing
-// Theme switch
-// API request timeout //
-// Fix bug: Where AM I multiple negibhours second time //
-// Change/test getbordercountries functions to API call

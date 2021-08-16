@@ -7,7 +7,7 @@ export default class View {
   _generateCountryCardMarkup(country) {
     return `
     <div class="country-card dark" data-country-name="${country.name}">
-        <div class="country-card__flag fade">
+        <div class="country-card__flag">
             <img src="${country.flag}" alt="${country.name}" />
         </div>
         <div class="country-card__info">
