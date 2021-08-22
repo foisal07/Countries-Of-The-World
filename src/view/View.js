@@ -122,7 +122,9 @@ export default class View {
   }
 
   renderCard(data) {
-    const markup = this._generateCountryCardMarkup(data);
+    const markup = data
+      .map((country) => this._generateCountryCardMarkup(country))
+      .join("");
     this._displayContainer.insertAdjacentHTML("beforeend", markup);
   }
 

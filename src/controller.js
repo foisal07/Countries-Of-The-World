@@ -17,14 +17,11 @@ const controlAllCountries = async function (sortingLetter = "a") {
     await model.getAllCountries(ALL__COUNTRIES__API);
 
     //render countries card start with A
-    model.state.countriesAll.forEach((country) => {
-      if (country.name.slice(0, 1).toLowerCase() === sortingLetter)
-        CountryView.renderCard(country);
-    });
+    const countryFilterByLetter = model.state.countriesAll.filter(
+      (country) => country.name.slice(0, 1).toLowerCase() === sortingLetter
+    );
 
-    // model.state.countriesAll.forEach((country) =>
-    //   CountryView.renderCard(country)
-    // );
+    CountryView.renderCard(countryFilterByLetter);
   } catch (err) {
     console.error(`${err} Yo`);
   }
