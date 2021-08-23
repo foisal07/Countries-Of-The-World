@@ -10,18 +10,18 @@ import NavView from "./view/navView.js";
 import SearchView from "./view/countrySearchView.js";
 import HeaderView from "./view/headerView.js";
 
-// Display All Countries Card
+// Display Countries Card
 const controlAllCountries = async function (sortingLetter = "a") {
   try {
     //get all countries data
     await model.getAllCountries(ALL__COUNTRIES__API);
 
     //render countries card start with A
-    const countryFilterByLetter = model.state.countriesAll.filter(
+    const countriesFilterByLetter = model.state.countriesAll.filter(
       (country) => country.name.slice(0, 1).toLowerCase() === sortingLetter
     );
 
-    CountryView.renderCard(countryFilterByLetter);
+    CountryView.renderCard(countriesFilterByLetter);
   } catch (err) {
     console.error(`${err} Yo`);
   }
@@ -97,12 +97,40 @@ const controlWhereAmI = async function () {
 
 // Display Filtered Countries By Region
 const controlFilterByRegion = function (region) {
+  
+  if (region.toLowerCase() === "population") controlSort();
+
+  // get regional country
+  const countriesFilterByRegion = model.state.countriesAll.filter(
+    (country) => country.region === region
+  );
+
   // render regional country card
-  model.state.countriesAll.forEach((country) => {
-    if (country.region === region) {
-      CountryView.renderCard(country);
-    }
-  });
+  CountryView.renderCard(countriesFilterByRegion);
+};
+
+// Display Filtered Countries By Population
+const controlSort = function (sortBy) {
+
+  const countiresSorted = model.state.countriesAll
+    .map((country) => [country])
+    .sort((a, b) => b[0].population - a[0].population);
+
+  // const countiresArr = model.state.countriesAll.map((country) => [country]);
+  // const countiresSorted = function (countries, sortBy) {
+  //   return countries.sort((a, b) => b[0].sortBy - a[0].sortBy);
+  // };
+  // countiresSorted(countiresArr, sortBy);
+
+  console.log(countiresSorted);
+
+  const topCountries = countiresSorted
+    .slice(0, 11)
+    .map((country) => country[0]);
+
+  console.log(topCountries);
+
+  CountryView.renderCard(topCountries);
 };
 
 //Get negighbouring country
