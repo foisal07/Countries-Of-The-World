@@ -12,12 +12,19 @@ export default class View {
         </div>
         <div class="country-card__info">
             <div class="country-card__info__name">
+                
                 <strong><h4>${country.name}</h4></strong>
+                
             </div>
             <ul class="country-card__info__detail">
                 <li> Population: <strong>${(
                   country.population / 1000000
                 ).toFixed(2)} M</strong></li>
+                <li>Area: <strong>${Math.round(
+                  country.area * 0.386102
+                )} Sqm (approx)
+                    </strong>
+                </li>
                 <li>Language: <strong>${country.languages
                   .map((lang) => lang.name)
                   .join(" , ")}</strong></li>

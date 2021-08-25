@@ -37,9 +37,9 @@ class NavView extends View {
       function (e) {
         e.preventDefault();
 
-        const region = e.target.closest(".region");
-        if (!region) return;
-        const regionName = region.getAttribute("data-region");
+        const filter = e.target.closest(".filterBy");
+        if (!filter) return;
+        const filterBy = filter.getAttribute("data-filterBy");
 
         // show countrycard container
         this._showCountryCardContainer();
@@ -50,8 +50,11 @@ class NavView extends View {
         // clear detail page
         this._clearDetailPageContainer();
 
+        // hide pagination container
+        this._hidePaginationContainer();
+
         //render regional countries
-        handler(regionName);
+        handler(filterBy);
       }.bind(this)
     );
   }

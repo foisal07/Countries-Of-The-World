@@ -95,41 +95,38 @@ const controlWhereAmI = async function () {
   }
 };
 
-// Display Filtered Countries By Region
-const controlFilterByRegion = function (region) {
-  
-  if (region.toLowerCase() === "population") controlSort();
+// Display Filtered Countries
+const controlFilterByRegion = function (filterBy) {
+  if (filterBy === "population") controlSort(filterBy);
+  if (filterBy === "area") controlSort(filterBy);
 
-  // get regional country
+  // filter regional country
   const countriesFilterByRegion = model.state.countriesAll.filter(
-    (country) => country.region === region
+    (country) => country.region === filterBy
   );
 
   // render regional country card
   CountryView.renderCard(countriesFilterByRegion);
 };
 
-// Display Filtered Countries By Population
+// Display Filtered Countries By Population, Area
 const controlSort = function (sortBy) {
+  // passing compare object population, area etc
+  const compareFunction = function (sortBy) {
+    return (a, b) => b[0][sortBy] - a[0][sortBy];
+  };
 
+  // sort countries
   const countiresSorted = model.state.countriesAll
     .map((country) => [country])
-    .sort((a, b) => b[0].population - a[0].population);
+    .sort(compareFunction(sortBy));
 
-  // const countiresArr = model.state.countriesAll.map((country) => [country]);
-  // const countiresSorted = function (countries, sortBy) {
-  //   return countries.sort((a, b) => b[0].sortBy - a[0].sortBy);
-  // };
-  // countiresSorted(countiresArr, sortBy);
-
-  console.log(countiresSorted);
-
+  // filter top ten countries
   const topCountries = countiresSorted
-    .slice(0, 11)
+    .slice(0, 10)
     .map((country) => country[0]);
 
-  console.log(topCountries);
-
+  //render top ten filtered countries
   CountryView.renderCard(topCountries);
 };
 
