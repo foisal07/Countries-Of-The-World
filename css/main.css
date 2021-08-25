@@ -365,6 +365,10 @@ li {
   align-self: center;
 }
 
+.country-card__icons:hover {
+  cursor: pointer;
+}
+
 .country-card__icons .icon {
   width: 20px;
   height: 20px;

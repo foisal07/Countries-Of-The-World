@@ -30,7 +30,7 @@ export class CountryView extends View {
 
         // clear pagination
         this._hidePaginationContainer();
-        
+
         // go top
         window.scroll({
           top: 0,

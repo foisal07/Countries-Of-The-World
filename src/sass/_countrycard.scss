@@ -58,6 +58,10 @@
     justify-content: space-between;
     align-self: center;
 
+    &:hover {
+      cursor: pointer;
+    }
+
     .icon {
       width: 20px;
       height: 20px;

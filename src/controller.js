@@ -3,6 +3,7 @@ import { ALL__COUNTRIES__API, TRACK__IP__API } from "./config.js";
 import * as model from "../src/model.js";
 
 import CountryView from "./view/countryView.js";
+import IconView from "./view/bookmarkView.js";
 import CountryPaginationView from "./view/paginationView.js";
 import CountryPageView from "./view/countryPageView.js";
 import CountryNeighbourView from "./view/countryNeighbourView.js";
@@ -31,7 +32,7 @@ const controlAllCountries = async function (sortingLetter = "a") {
 const controlGetCountry = async function (countryName) {
   try {
     // get country
-    const [country] = model.state.countriesAll.filter(
+    const country = model.state.countriesAll.find(
       (country) => country.name.toLowerCase() === countryName
     );
 
@@ -45,6 +46,7 @@ const controlGetCountry = async function (countryName) {
 
     // get bordering countries Alpha3Code
     const countryBorders = country.borders;
+
     getBorderingCountries(model.state.countriesAll, countryBorders);
 
     // render country detail page
@@ -70,7 +72,7 @@ const controlWhereAmI = async function () {
     await model.getLatLng(TRACK__IP__API);
 
     // get country
-    const [country] = model.state.countriesAll.filter(
+    const country = model.state.countriesAll.find(
       (country) => country.alpha2Code === model.state.ipTrackedCountry
     );
 
@@ -99,7 +101,7 @@ const controlWhereAmI = async function () {
 const controlFilterByRegion = function (filterBy) {
   if (filterBy === "population") controlSort(filterBy);
   if (filterBy === "area") controlSort(filterBy);
-  if (filterBy === "favourite") console.log("favourite");
+  if (filterBy === "favourite") CountryView.renderCard(bookmarkedCountry);
 
   // filter regional country
   const countriesFilterByRegion = model.state.countriesAll.filter(
@@ -131,16 +133,36 @@ const controlSort = function (sortBy) {
   CountryView.renderCard(topCountries);
 };
 
+// Bookmarked country
+let bookmarkedCountry = [];
+
+const bookmarkCountry = function (countryName) {
+  const country = model.state.countriesAll.find(
+    (country) => country.name.toLowerCase() === countryName
+  );
+  bookmarkedCountry.push(country);
+};
+
 //Get negighbouring country
 let borderCountry = [];
 
+// const getBorderingCountries = function (countriesAll, countryBorders) {
+//   countryBorders.forEach((countryCode) => {
+//     countriesAll.filter((country) => {
+//       if (country.alpha3Code === countryCode) borderCountry.push(country);
+//     });
+//   });
+// };
+
 const getBorderingCountries = function (countriesAll, countryBorders) {
-  countryBorders.forEach((countryCode) => {
-    countriesAll.forEach((country) => {
-      if (country.alpha3Code === countryCode) borderCountry.push(country);
+  // countryBorders.forEach((countryCode) => {
+    countriesAll.filter((country) => {
+      country.alpha3Code === countryCode;
     });
-  });
+  // });
 };
+
+// console.log(getBorderingCountries());
 
 // Create Display Map
 const renderMap = function (lat, lng, popupMsg) {
@@ -168,6 +190,7 @@ const renderMap = function (lat, lng, popupMsg) {
 const init = function () {
   CountryView.addHandlerRenderCountryCard(controlAllCountries);
   CountryView.addHandlerCountryCard(controlGetCountry);
+  IconView.addHandlerBookmark(bookmarkCountry);
   CountryPaginationView.addHandlerPagination(controlAllCountries);
   CountryNeighbourView.addHandlerCountryCard(controlGetCountry);
   NavView.addHandlerWhereAmI(controlWhereAmI);
