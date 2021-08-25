@@ -99,6 +99,7 @@ const controlWhereAmI = async function () {
 const controlFilterByRegion = function (filterBy) {
   if (filterBy === "population") controlSort(filterBy);
   if (filterBy === "area") controlSort(filterBy);
+  if (filterBy === "favourite") console.log("favourite");
 
   // filter regional country
   const countriesFilterByRegion = model.state.countriesAll.filter(

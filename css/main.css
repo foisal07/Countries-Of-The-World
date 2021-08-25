@@ -355,6 +355,19 @@ li {
 .country-card__info__name {
   padding-bottom: 25px;
   font-size: 1.2rem;
+  display: grid;
+  grid-template-columns: 2fr 0.7fr;
+}
+
+.country-card__icons {
+  display: flex;
+  justify-content: space-between;
+  align-self: center;
+}
+
+.country-card__icons .icon {
+  width: 20px;
+  height: 20px;
 }
 
 .country-card:hover {
@@ -425,6 +438,8 @@ li:not(:last-child) {
 
 .country-detail__info__name {
   font-size: 1.5rem;
+  display: grid;
+  grid-template-columns: 2fr 0.3fr;
 }
 
 .country-detail__info__detail {

@@ -1,6 +1,6 @@
 .countrycard__container {
   margin-bottom: 7rem;
-  
+
   @include breakpoint-down(small) {
     margin-bottom: 3rem;
   }
@@ -48,6 +48,19 @@
     &__name {
       padding-bottom: 25px;
       font-size: $font-med;
+      display: grid;
+      grid-template-columns: 2fr 0.7fr;
+    }
+  }
+
+  &__icons {
+    display: flex;
+    justify-content: space-between;
+    align-self: center;
+
+    .icon {
+      width: 20px;
+      height: 20px;
     }
   }
 

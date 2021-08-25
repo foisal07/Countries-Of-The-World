@@ -12,9 +12,8 @@ export default class View {
         </div>
         <div class="country-card__info">
             <div class="country-card__info__name">
-                
                 <strong><h4>${country.name}</h4></strong>
-                
+                ${this._generateIcons()}            
             </div>
             <ul class="country-card__info__detail">
                 <li> Population: <strong>${(
@@ -56,6 +55,7 @@ export default class View {
                     ? `You are now in ${city}, ${country.name}`
                     : `${country.name}`
                 }</h1>
+                ${this._generateIcons()} 
             </div>
 
             <div class="country-detail__info__detail">
@@ -102,6 +102,7 @@ export default class View {
                         }
                     </li>
                 </div>
+                
             </div>
         </div>
     </div>
@@ -126,6 +127,22 @@ export default class View {
       }
       </div>
     </div>`;
+  }
+
+  _generateIcons() {
+    return `<div class = 'country-card__icons'> 
+                <div class = 'icon' data-icon='bookmark'>
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-2 w-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+                  </svg>
+                </div>
+                <div class ='icon' data-icon='traveled'>
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
+                  </svg>
+                </div>
+              </div>
+    `;
   }
 
   renderCard(data) {
