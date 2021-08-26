@@ -2,7 +2,7 @@ import { ACCUWEATHER__API__URL, ACCUWEATHER__API__KEY } from "./config.js";
 import { AJAX } from "./helper.js";
 
 export const state = {
-  countriesAll: {},
+  countriesAll: [],
   ipTrackedCountry: {},
   latlng: [],
   city: {},

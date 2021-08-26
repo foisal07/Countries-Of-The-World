@@ -102,6 +102,7 @@ const controlFilterByRegion = function (filterBy) {
   if (filterBy === "population") controlSort(filterBy);
   if (filterBy === "area") controlSort(filterBy);
   if (filterBy === "favourite") CountryView.renderCard(bookmarkedCountry);
+  if (filterBy === "island") renderIslandcountries();
 
   // filter regional country
   const countriesFilterByRegion = model.state.countriesAll.filter(
@@ -143,24 +144,32 @@ const bookmarkCountry = function (countryName) {
   bookmarkedCountry.push(country);
 };
 
+//Get Island Countries
+const renderIslandcountries = () => {
+  const islandCountries = model.state.countriesAll.filter(
+    (country) => country.borders.length === 0
+  );
+  CountryView.renderCard(islandCountries);
+};
+
 //Get negighbouring country
 let borderCountry = [];
 
-// const getBorderingCountries = function (countriesAll, countryBorders) {
-//   countryBorders.forEach((countryCode) => {
-//     countriesAll.filter((country) => {
-//       if (country.alpha3Code === countryCode) borderCountry.push(country);
-//     });
-//   });
-// };
-
 const getBorderingCountries = function (countriesAll, countryBorders) {
-  // countryBorders.forEach((countryCode) => {
+  countryBorders.forEach((countryCode) => {
     countriesAll.filter((country) => {
-      country.alpha3Code === countryCode;
+      if (country.alpha3Code === countryCode) borderCountry.push(country);
     });
-  // });
+  });
 };
+
+// const getBorderingCountries = function (countriesAll, countryBorders) {
+//   // countryBorders.forEach((countryCode) => {
+//     countriesAll.filter((country) => {
+//       country.alpha3Code === countryCode;
+//     });
+//   // });
+// };
 
 // console.log(getBorderingCountries());
 
