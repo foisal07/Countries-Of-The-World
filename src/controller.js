@@ -3,7 +3,7 @@ import { ALL__COUNTRIES__API, TRACK__IP__API } from "./config.js";
 import * as model from "../src/model.js";
 
 import CountryView from "./view/countryView.js";
-import IconView from "./view/bookmarkView.js";
+import SaveView from "./view/saveView.js";
 import CountryPaginationView from "./view/paginationView.js";
 import CountryPageView from "./view/countryPageView.js";
 import CountryNeighbourView from "./view/countryNeighbourView.js";
@@ -15,21 +15,17 @@ import HeaderView from "./view/headerView.js";
 const controlAllCountries = async function (sortingLetter = "a") {
   try {
     //get all countries data
-    await model.getAllCountries(ALL__COUNTRIES__API);
+    await model.getAllCountries(ALL__COUNTRIES__API, sortingLetter);
 
     //render countries card start with A
-    const countriesFilterByLetter = model.state.countriesAll.filter(
-      (country) => country.name.slice(0, 1).toLowerCase() === sortingLetter
-    );
-
-    CountryView.renderCard(countriesFilterByLetter);
+    CountryView.renderCard(model.state.countriesFilterByLetter);
   } catch (err) {
     console.error(`${err} Yo`);
   }
 };
 
 //Display Country Detail Page
-const controlGetCountry = async function (countryName) {
+const controlCountryDetails = async function (countryName) {
   try {
     // get country
     const country = model.state.countriesAll.find(
@@ -65,6 +61,17 @@ const controlGetCountry = async function (countryName) {
   }
 };
 
+//Get negighbouring country
+let borderCountry = [];
+
+const getBorderingCountries = function (countriesAll, countryBorders) {
+  countryBorders.forEach((countryCode) => {
+    countriesAll.filter((country) => {
+      if (country.alpha3Code === countryCode) borderCountry.push(country);
+    });
+  });
+};
+
 // Display Current Country
 const controlWhereAmI = async function () {
   try {
@@ -98,80 +105,49 @@ const controlWhereAmI = async function () {
 };
 
 // Display Filtered Countries
-const controlFilterByRegion = function (filterBy) {
-  if (filterBy === "population") controlSort(filterBy);
-  if (filterBy === "area") controlSort(filterBy);
-  if (filterBy === "favourite") CountryView.renderCard(bookmarkedCountry);
-  if (filterBy === "island") renderIslandcountries();
+const controlFilterBy = function (filterBy) {
+  // render countries card by population ascending
+  if (filterBy === "population") {
+    model.sortCountries(filterBy);
+    CountryView.renderCard(model.state.sortedCountries);
+  }
 
-  // filter regional country
-  const countriesFilterByRegion = model.state.countriesAll.filter(
-    (country) => country.region === filterBy
-  );
+  // render countries card by area size ascending
+  if (filterBy === "area") {
+    model.sortCountries(filterBy);
+    CountryView.renderCard(model.state.sortedCountries);
+  }
+
+  // render favourite countries card
+  if (filterBy === "favourite")
+    CountryView.renderCard(model.state.bookmarkedCountry);
+
+  // render traveled countries card
+  if (filterBy === "traveled") {
+    console.log(model.state.traveledCountry);
+    CountryView.renderCard(model.state.traveledCountry);
+  }
+
+  // render island countries card
+  if (filterBy === "island") {
+    model.getIslandcountries();
+    CountryView.renderCard(model.state.islandCountries);
+  }
 
   // render regional country card
-  CountryView.renderCard(countriesFilterByRegion);
+  model.getCountriesFilterByRegion(filterBy);
+  CountryView.renderCard(model.state.regionalCountries);
 };
 
-// Display Filtered Countries By Population, Area
-const controlSort = function (sortBy) {
-  // passing compare object population, area etc
-  const compareFunction = function (sortBy) {
-    return (a, b) => b[0][sortBy] - a[0][sortBy];
-  };
+// Save/Delete Countries From Favourite, Traveled List
+const controlSaveCountry = function (countryCode, iconClicked) {
+  // save country
+  model.saveCountry(countryCode, iconClicked);
 
-  // sort countries
-  const countiresSorted = model.state.countriesAll
-    .map((country) => [country])
-    .sort(compareFunction(sortBy));
+  // update icon
 
-  // filter top ten countries
-  const topCountries = countiresSorted
-    .slice(0, 10)
-    .map((country) => country[0]);
-
-  //render top ten filtered countries
-  CountryView.renderCard(topCountries);
+  // persist data
 };
-
-// Bookmarked country
-let bookmarkedCountry = [];
-
-const bookmarkCountry = function (countryName) {
-  const country = model.state.countriesAll.find(
-    (country) => country.name.toLowerCase() === countryName
-  );
-  bookmarkedCountry.push(country);
-};
-
-//Get Island Countries
-const renderIslandcountries = () => {
-  const islandCountries = model.state.countriesAll.filter(
-    (country) => country.borders.length === 0
-  );
-  CountryView.renderCard(islandCountries);
-};
-
-//Get negighbouring country
-let borderCountry = [];
-
-const getBorderingCountries = function (countriesAll, countryBorders) {
-  countryBorders.forEach((countryCode) => {
-    countriesAll.filter((country) => {
-      if (country.alpha3Code === countryCode) borderCountry.push(country);
-    });
-  });
-};
-
-// const getBorderingCountries = function (countriesAll, countryBorders) {
-//   // countryBorders.forEach((countryCode) => {
-//     countriesAll.filter((country) => {
-//       country.alpha3Code === countryCode;
-//     });
-//   // });
-// };
-
-// console.log(getBorderingCountries());
 
 // Create Display Map
 const renderMap = function (lat, lng, popupMsg) {
@@ -197,17 +173,17 @@ const renderMap = function (lat, lng, popupMsg) {
 };
 
 const init = function () {
-  CountryView.addHandlerRenderCountryCard(controlAllCountries);
-  CountryView.addHandlerCountryCard(controlGetCountry);
-  IconView.addHandlerBookmark(bookmarkCountry);
-  CountryPaginationView.addHandlerPagination(controlAllCountries);
-  CountryNeighbourView.addHandlerCountryCard(controlGetCountry);
-  NavView.addHandlerWhereAmI(controlWhereAmI);
-  NavView.addHandlerFilterRegion(controlFilterByRegion);
-  SearchView.addHandlerSearch(controlGetCountry);
-  CountryPageView.addHandlerBackBtn();
-  CountryPaginationView.addHandlerSlides();
   HeaderView.addHandlerThemeButton();
+  SearchView.addHandlerSearch(controlCountryDetails);
+  NavView.addHandlerWhereAmI(controlWhereAmI);
+  NavView.addHandlerFilter(controlFilterBy);
+  CountryView.addHandlerRenderCountryCard(controlAllCountries);
+  CountryView.addHandlerCountryCard(controlCountryDetails);
+  SaveView.addHandlerSaveCountry(controlSaveCountry);
+  CountryPageView.addHandlerBackBtn();
+  CountryNeighbourView.addHandlerCountryCard(controlCountryDetails);
+  CountryPaginationView.addHandlerPagination(controlAllCountries);
+  CountryPaginationView.addHandlerSlides();
 };
 
 init();

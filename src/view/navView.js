@@ -31,7 +31,7 @@ class NavView extends View {
   }
 
   // Handler region
-  addHandlerFilterRegion(handler) {
+  addHandlerFilter(handler) {
     this._navContainer.addEventListener(
       "click",
       function (e) {
