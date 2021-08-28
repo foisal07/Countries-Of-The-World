@@ -460,6 +460,8 @@ var _configJs = require("./config.js");
 var _modelJs = require("../src/model.js");
 var _countryViewJs = require("./view/countryView.js");
 var _countryViewJsDefault = parcelHelpers.interopDefault(_countryViewJs);
+var _saveViewJs = require("./view/saveView.js");
+var _saveViewJsDefault = parcelHelpers.interopDefault(_saveViewJs);
 var _paginationViewJs = require("./view/paginationView.js");
 var _paginationViewJsDefault = parcelHelpers.interopDefault(_paginationViewJs);
 var _countryPageViewJs = require("./view/countryPageView.js");
@@ -472,27 +474,22 @@ var _countrySearchViewJs = require("./view/countrySearchView.js");
 var _countrySearchViewJsDefault = parcelHelpers.interopDefault(_countrySearchViewJs);
 var _headerViewJs = require("./view/headerView.js");
 var _headerViewJsDefault = parcelHelpers.interopDefault(_headerViewJs);
-// Display All Countries Card
+// Display Countries Card
 const controlAllCountries = async function(sortingLetter = "a") {
     try {
         //get all countries data
-        await _modelJs.getAllCountries(_configJs.ALL__COUNTRIES__API);
+        await _modelJs.getAllCountries(_configJs.ALL__COUNTRIES__API, sortingLetter);
         //render countries card start with A
-        _modelJs.state.countriesAll.forEach((country)=>{
-            if (country.name.slice(0, 1).toLowerCase() === sortingLetter) _countryViewJsDefault.default.renderCard(country);
-        });
-    // model.state.countriesAll.forEach((country) =>
-    //   CountryView.renderCard(country)
-    // );
+        _countryViewJsDefault.default.renderCard(_modelJs.state.countriesFilterByLetter);
     } catch (err) {
         console.error(`${err} Yo`);
     }
 };
 //Display Country Detail Page
-const controlGetCountry = async function(countryName) {
+const controlCountryDetails = async function(countryName) {
     try {
         // get country
-        const [country] = _modelJs.state.countriesAll.filter((country1)=>country1.name.toLowerCase() === countryName
+        const country = _modelJs.state.countriesAll.find((country1)=>country1.name.toLowerCase() === countryName
         );
         if (!country) throw new Error(` Check spelling '${countryName.toUpperCase()}' isn't a country. You can also try to create country '${countryName.toUpperCase()}'for yourself 😛`);
         // get country lat lng
@@ -510,13 +507,22 @@ const controlGetCountry = async function(countryName) {
         _countryPageViewJsDefault.default.renderError(err);
     }
 };
+//Get negighbouring country
+let borderCountry = [];
+const getBorderingCountries = function(countriesAll, countryBorders) {
+    countryBorders.forEach((countryCode)=>{
+        countriesAll.filter((country)=>{
+            if (country.alpha3Code === countryCode) borderCountry.push(country);
+        });
+    });
+};
 // Display Current Country
 const controlWhereAmI = async function() {
     try {
         // get country [lat,lng]
         await _modelJs.getLatLng(_configJs.TRACK__IP__API);
         // get country
-        const [country] = _modelJs.state.countriesAll.filter((country1)=>country1.alpha2Code === _modelJs.state.ipTrackedCountry
+        const country = _modelJs.state.countriesAll.find((country1)=>country1.alpha2Code === _modelJs.state.ipTrackedCountry
         );
         if (!country) throw new Error("You're a Jason Bourne 😛 couldn't find you at the moment");
         // get country borders
@@ -531,21 +537,40 @@ const controlWhereAmI = async function() {
         _countryPageViewJsDefault.default.renderError(err);
     }
 };
-// Display Filtered Countries By Region
-const controlFilterByRegion = function(region) {
+// Display Filtered Countries
+const controlFilterBy = function(filterBy) {
+    // render countries card by population ascending
+    if (filterBy === "population") {
+        _modelJs.sortCountries(filterBy);
+        _countryViewJsDefault.default.renderCard(_modelJs.state.sortedCountries);
+    }
+    // render countries card by area size ascending
+    if (filterBy === "area") {
+        _modelJs.sortCountries(filterBy);
+        _countryViewJsDefault.default.renderCard(_modelJs.state.sortedCountries);
+    }
+    // render favourite countries card
+    if (filterBy === "favourite") _countryViewJsDefault.default.renderCard(_modelJs.state.bookmarkedCountry);
+    // render traveled countries card
+    if (filterBy === "traveled") {
+        console.log(_modelJs.state.traveledCountry);
+        _countryViewJsDefault.default.renderCard(_modelJs.state.traveledCountry);
+    }
+    // render island countries card
+    if (filterBy === "island") {
+        _modelJs.getIslandcountries();
+        _countryViewJsDefault.default.renderCard(_modelJs.state.islandCountries);
+    }
     // render regional country card
-    _modelJs.state.countriesAll.forEach((country)=>{
-        if (country.region === region) _countryViewJsDefault.default.renderCard(country);
-    });
+    _modelJs.getCountriesFilterByRegion(filterBy);
+    _countryViewJsDefault.default.renderCard(_modelJs.state.regionalCountries);
 };
-//Get negighbouring country
-let borderCountry = [];
-const getBorderingCountries = function(countriesAll, countryBorders) {
-    countryBorders.forEach((countryCode)=>{
-        countriesAll.forEach((country)=>{
-            if (country.alpha3Code === countryCode) borderCountry.push(country);
-        });
-    });
+// Save/Delete Countries From Favourite, Traveled List
+const controlSaveCountry = function(countryCode, iconClicked) {
+    // save country
+    _modelJs.saveCountry(countryCode, iconClicked);
+// update icon
+// persist data
 };
 // Create Display Map
 const renderMap = function(lat, lng, popupMsg) {
@@ -569,20 +594,21 @@ const renderMap = function(lat, lng, popupMsg) {
     ]).setContent(`${popupMsg}`).openOn(mapView);
 };
 const init = function() {
-    _countryViewJsDefault.default.addHandlerRenderCountryCard(controlAllCountries);
-    _countryViewJsDefault.default.addHandlerCountryCard(controlGetCountry);
-    _paginationViewJsDefault.default.addHandlerPagination(controlAllCountries);
-    _countryNeighbourViewJsDefault.default.addHandlerCountryCard(controlGetCountry);
-    _navViewJsDefault.default.addHandlerWhereAmI(controlWhereAmI);
-    _navViewJsDefault.default.addHandlerFilterRegion(controlFilterByRegion);
-    _countrySearchViewJsDefault.default.addHandlerSearch(controlGetCountry);
-    _countryPageViewJsDefault.default.addHandlerBackBtn();
-    _paginationViewJsDefault.default.addHandlerSlides();
     _headerViewJsDefault.default.addHandlerThemeButton();
+    _countrySearchViewJsDefault.default.addHandlerSearch(controlCountryDetails);
+    _navViewJsDefault.default.addHandlerWhereAmI(controlWhereAmI);
+    _navViewJsDefault.default.addHandlerFilter(controlFilterBy);
+    _countryViewJsDefault.default.addHandlerRenderCountryCard(controlAllCountries);
+    _countryViewJsDefault.default.addHandlerCountryCard(controlCountryDetails);
+    _saveViewJsDefault.default.addHandlerSaveCountry(controlSaveCountry);
+    _countryPageViewJsDefault.default.addHandlerBackBtn();
+    _countryNeighbourViewJsDefault.default.addHandlerCountryCard(controlCountryDetails);
+    _paginationViewJsDefault.default.addHandlerPagination(controlAllCountries);
+    _paginationViewJsDefault.default.addHandlerSlides();
 };
 init();
 
-},{"./config.js":"4dfwK","../src/model.js":"wvpmA","./view/countryView.js":"4zmMg","./view/paginationView.js":"94if7","./view/countryPageView.js":"9ytWy","./view/countryNeighbourView.js":"90S4e","./view/navView.js":"4vPbm","./view/countrySearchView.js":"19HPl","./view/headerView.js":"bBf5H","@parcel/transformer-js/src/esmodule-helpers.js":"JacNc"}],"4dfwK":[function(require,module,exports) {
+},{"./config.js":"4dfwK","../src/model.js":"wvpmA","./view/countryView.js":"4zmMg","./view/saveView.js":"1ChBU","./view/paginationView.js":"94if7","./view/countryPageView.js":"9ytWy","./view/countryNeighbourView.js":"90S4e","./view/navView.js":"4vPbm","./view/countrySearchView.js":"19HPl","./view/headerView.js":"bBf5H","@parcel/transformer-js/src/esmodule-helpers.js":"JacNc"}],"4dfwK":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "ACCUWEATHER__API__KEY", ()=>ACCUWEATHER__API__KEY
@@ -652,18 +678,36 @@ parcelHelpers.export(exports, "getAllCountries", ()=>getAllCountries
 );
 parcelHelpers.export(exports, "getLatLng", ()=>getLatLng
 );
-var _configJs = require("./config.js");
+parcelHelpers.export(exports, "sortCountries", ()=>sortCountries
+);
+parcelHelpers.export(exports, "getIslandcountries", ()=>getIslandcountries
+);
+parcelHelpers.export(exports, "getCountriesFilterByRegion", ()=>getCountriesFilterByRegion
+);
+parcelHelpers.export(exports, "saveCountry", ()=>saveCountry
+);
 var _helperJs = require("./helper.js");
 const state = {
     countriesAll: [],
+    countriesFilterByLetter: [],
     ipTrackedCountry: {
     },
-    latlng: []
+    latlng: [],
+    city: {
+    },
+    sortedCountries: [],
+    islandCountries: [],
+    regionalCountries: [],
+    bookmarkedCountry: [],
+    traveledCountry: []
 };
-const getAllCountries = async function(url) {
+const getAllCountries = async function(url, sortingLetter) {
     try {
         const data = await _helperJs.AJAX(url);
         state.countriesAll = data;
+        // filter countries by starting letter
+        state.countriesFilterByLetter = state.countriesAll.filter((country)=>country.name.slice(0, 1).toLowerCase() === sortingLetter
+        );
     } catch (err) {
         throw err;
     }
@@ -675,6 +719,7 @@ const getLatLng = async function(url) {
         // Get lat lng
         const data = await _helperJs.AJAX(`${url}${ip}`);
         state.ipTrackedCountry = data.location.country;
+        state.city = data.location.city;
         state.latlng = [
             data.location.lat,
             data.location.lng
@@ -682,43 +727,41 @@ const getLatLng = async function(url) {
     } catch (err) {
         throw err;
     }
+};
+const sortCountries = function(sortBy) {
+    // passing compare object population, area
+    const compareFunction = function(sortBy1) {
+        return (a, b)=>b[0][sortBy1] - a[0][sortBy1]
+        ;
+    };
+    // sort countries
+    const countiresSorted = state.countriesAll.map((country)=>[
+            country
+        ]
+    ).sort(compareFunction(sortBy));
+    // filter top ten countries
+    state.sortedCountries = countiresSorted.slice(0, 10).map((country)=>country[0]
+    );
+};
+const getIslandcountries = ()=>{
+    state.islandCountries = state.countriesAll.filter((country)=>country.borders.length === 0
+    );
+};
+const getCountriesFilterByRegion = (filterBy)=>{
+    state.regionalCountries = state.countriesAll.filter((country)=>country.region === filterBy
+    );
+};
+const saveCountry = function(countryCode, iconClicked) {
+    const country = state.countriesAll.find((country1)=>country1.alpha3Code === countryCode
+    );
+    if (iconClicked === "bookmark") state.bookmarkedCountry.push(country);
+    if (iconClicked === "traveled") state.traveledCountry.push(country);
 }; // export const getTopCitiesOfCountry = async function (countryCode) {
  //   const data = await AJAX(
  //     `${ACCUWEATHER__API__URL}adminareas/${countryCode}?apikey=${ACCUWEATHER__API__KEY}`
  //   );
  //   console.log(data);
  // }
- // export const getCountry = async function (url, country) {
- //   try {
- //     const data = await AJAX(`${url}${country}`);
- //     const [coun] = data;
- //     console.log(coun);
- //     state.searchedCountry = coun;
- //     const [...borders] = coun.borders;
- //     console.log(borders);
- //     state.borders = coun.borders;
- //     // Returns Array of promise
- //     //     const borderCoutnriesData = state.borders.map(async (countryCode) => {
- //     //       const res = await AJAX(
- //     //         `https://restcountries.eu/rest/v2/alpha/${countryCode}`
- //     //       );
- //     //       return res;
- //     //     });
- //     //     state.borderCoutnries = await Promise.all(borderCoutnriesData);
- //     //     // console.log(state.borderCoutnries);
- //     //     // state.borders.forEach(async (countryCode) => {
- //     //     //   const res = await AJAX(
- //     //     //     `https://restcountries.eu/rest/v2/alpha/${countryCode}`
- //     //     //   );
- //     //     // state.borderCoutnries.push(res);
- //     //     // Reverse Geo code API
- //     //     // https://geocode.xyz/${lat},${lng}?geoit=json
- //     //     });
- //     //     console.log(state.borderCoutnries);
- //   } catch (err) {
- //     console.log(err);
- //   }
- // };
  // export const getCountriesByRegion = async function (url, region) {
  //   try {
  //     const data = await AJAX(`${url}${region}`);
@@ -729,35 +772,12 @@ const getLatLng = async function(url) {
  // };
  // export const getBorderCountries = async function (url, borders) {
  //   try {
- //     const borderCoutnriesData = borders.map(async (countryCode) => {
- //       const res = await AJAX(
- //         `${url}${countryCode}`
- //       );
- //       console.log(res);
- //       return res;
- //     });
- //     state.borderCoutnries = await Promise.all(borderCoutnriesData);
- //     console.log(state.borderCoutnries);
- //     // borders.forEach(async (country) => {
- //     //   const data = await AJAX(`${url}${country}`);
- //     //   state.borderCountries.push(data);
- //     // });
  //   } catch (err) {
  //     console.log(err);
  //   }
  // };
- // state.countriesAsia = data.filter((country) => country.region === "Asia");
- // state.countriesEurope = data.filter((country) => country.region === "Europe");
- // state.countriesAfrica = data.filter((country) => country.region === "Africa");
- // state.countriesOceania = data.filter(
- //   (country) => country.region === "Oceania"
- // );
- // state.countriesAmericas = data.filter(
- //   (country) => country.region === "Americas"
- // );
- // state.country;
 
-},{"./config.js":"4dfwK","./helper.js":"8vfmt","@parcel/transformer-js/src/esmodule-helpers.js":"JacNc"}],"8vfmt":[function(require,module,exports) {
+},{"./helper.js":"8vfmt","@parcel/transformer-js/src/esmodule-helpers.js":"JacNc"}],"8vfmt":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "AJAX", ()=>AJAX
@@ -832,17 +852,21 @@ class View {
     _detailPageContainer = document.querySelector(".detailpage__container");
     _paginationContainer = document.querySelector(".pagination__container");
     _generateCountryCardMarkup(country) {
-        return `\n    <div class="country-card dark" data-country-name="${country.name}">\n        <div class="country-card__flag">\n            <img src="${country.flag}" alt="${country.name}" />\n        </div>\n        <div class="country-card__info">\n            <div class="country-card__info__name">\n                <strong><h4>${country.name}</h4></strong>\n            </div>\n            <ul class="country-card__info__detail">\n                <li> Population: <strong>${(country.population / 1000000).toFixed(2)} M</strong></li>\n                <li>Language: <strong>${country.languages.map((lang)=>lang.name
+        return `\n    <div class="country-card dark" data-country-name="${country.name}">\n        <div class="country-card__flag">\n            <img src="${country.flag}" alt="${country.name}" />\n        </div>\n        <div class="country-card__info">\n            <div class="country-card__info__name">\n                <strong><h4>${country.name}</h4></strong>\n                ${this._generateIcons(country.alpha3Code)}            \n            </div>\n            <ul class="country-card__info__detail">\n                <li> Population: <strong>${(country.population / 1000000).toFixed(2)} M</strong></li>\n                <li>Area: <strong>${Math.round(country.area * 0.386102)} Sqm (approx)\n                    </strong>\n                </li>\n                <li>Language: <strong>${country.languages.map((lang)=>lang.name
         ).join(" , ")}</strong></li>\n                <li>Region: <strong>${country.region}</strong></li>\n            </ul>\n        </div>\n    </div>\n    `;
     }
     _generateCountryPageMarkup(country, borderCountry, city) {
-        return `\n    <div class="country-detail fade">\n\n        <div class="country-detail__flag">\n          <div class="btn__container">\n            <button class ='button--back'>\n              <i class="icon fa fa-long-arrow-left" aria-hidden="true"></i>\n            </button>\n          </div>\n          <img src="${country.flag}" alt="${country.name}"/>\n        </div>\n\n        <div class="country-detail__info">\n\n            <div class="country-detail__info__name">\n                <h1>${city ? `You are now in ${city}, ${country.name}` : `${country.name}`}</h1>\n            </div>\n\n            <div class="country-detail__info__detail">\n\n                <div class="column-one">\n                    <li>\n                        <strong>Native Name: </strong> ${country.nativeName}\n                    </li>\n                    <li>\n                        <strong>Population: </strong>${(country.population / 1000000).toFixed(2)} M\n                    </li>\n                    <li>\n                        <strong>Area: </strong>${Math.round(country.area * 0.386102)} Sqm (approx)\n                    </li>\n                    <li>\n                        <strong>Region: </strong>${country.region}\n                    </li>\n                    <li>\n                        <strong>Sub Region: </strong>${country.subregion}\n                    </li>\n                </div>\n\n                <div class="column-two">\n                    <li>\n                        <strong>Capital: </strong>${country.capital}\n                    </li>\n                    <li>\n                        <strong>Currencies: </strong>${country.currencies[0].name} (${country.currencies[0].symbol})\n                    </li>\n                    <li>\n                        <strong>Language: </strong>${country.languages.map((lang)=>lang.name
-        ).join(" , ")}\n                    </li>\n                    <li>\n                        <strong>Country Domain: </strong>${country.topLevelDomain}\n                    </li>\n                </div>\n            </div>\n        </div>\n    </div>\n\n    <div class='map__container'>\n      <h2>On Map</h2>\n      <div class="country-map" id="map">\n      </div>\n    </div>\n\n    <div class="neighbour__container">\n      <h2>The Neighbours</h2>\n      <div class="country__neighbours">\n      ${borderCountry.length > 0 ? borderCountry.map((country)=>{
+        return `\n    <div class="country-detail fade">\n\n        <div class="country-detail__flag">\n          <div class="btn__container">\n            <button class ='button--back'>\n              <i class="icon fa fa-long-arrow-left" aria-hidden="true"></i>\n            </button>\n          </div>\n          <img src="${country.flag}" alt="${country.name}"/>\n        </div>\n\n        <div class="country-detail__info">\n\n            <div class="country-detail__info__name">\n                <h1>${city ? `You are now in ${city}, ${country.name}` : `${country.name}`}</h1>\n                ${this._generateIcons(country.alpha3Code)} \n            </div>\n\n            <div class="country-detail__info__detail">\n\n                <div class="column-one">\n                    <li>\n                        <strong>Native Name: </strong> ${country.nativeName}\n                    </li>\n                    <li>\n                        <strong>Population: </strong>${(country.population / 1000000).toFixed(2)} M\n                    </li>\n                    <li>\n                        <strong>Area: </strong>${Math.round(country.area * 0.386102)} Sqm (approx)\n                    </li>\n                    <li>\n                        <strong>Region: </strong>${country.region}\n                    </li>\n                    <li>\n                        <strong>Sub Region: </strong>${country.subregion}\n                    </li>\n                </div>\n\n                <div class="column-two">\n                    <li>\n                        <strong>Capital: </strong>${country.capital}\n                    </li>\n                    <li>\n                        <strong>Currencies: </strong>${country.currencies[0].name} (${country.currencies[0].symbol})\n                    </li>\n                    <li>\n                        <strong>Language: </strong>${country.languages.map((lang)=>lang.name
+        ).join(" , ")}\n                    </li>\n                    <li>\n                        <strong>Country Domain: </strong>${country.topLevelDomain}\n                    </li>\n                </div>\n                \n            </div>\n        </div>\n    </div>\n\n    <div class='map__container'>\n      <h2>On Map</h2>\n      <div class="country-map" id="map">\n      </div>\n    </div>\n\n    <div class="neighbour__container">\n      <h2>The Neighbours</h2>\n      <div class="country__neighbours">\n      ${borderCountry.length > 0 ? borderCountry.map((country)=>{
             return this._generateCountryCardMarkup(country);
         }).join(" ") : "No land borders"}\n      </div>\n    </div>`;
     }
+    _generateIcons(countryalphacode) {
+        return `<div class = 'country-card__icons' data-countryCode = ${countryalphacode}> \n                <div class = 'icon' data-icon='bookmark'>\n                  <svg xmlns="http://www.w3.org/2000/svg" class="h-2 w-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">\n                    <path id ='icon--bookmark' stroke-linecap="round" class=''stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />\n                  </svg>\n                </div>\n                <div class ='icon' data-icon='traveled'>\n                  <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">\n                  <path id ='icon--traveled' stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />\n                  </svg>\n                </div>\n              </div>\n    `;
+    }
     renderCard(data) {
-        const markup = this._generateCountryCardMarkup(data);
+        const markup = data.map((country)=>this._generateCountryCardMarkup(country)
+        ).join("");
         this._displayContainer.insertAdjacentHTML("beforeend", markup);
     }
     renderPage(data, borderCountry, city) {
@@ -874,7 +898,33 @@ class View {
 }
 exports.default = View;
 
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"JacNc"}],"94if7":[function(require,module,exports) {
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"JacNc"}],"1ChBU":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+var _viewJs = require("./View.js");
+var _viewJsDefault = parcelHelpers.interopDefault(_viewJs);
+class SaveView extends _viewJsDefault.default {
+    _displayContainer = document.querySelector(".display-countries");
+    addHandlerSaveCountry(handler) {
+        this._displayContainer.addEventListener("click", (function(e) {
+            e.preventDefault();
+            console.log(e);
+            //get clicked icon and country
+            const icon = e.target.closest(".icon");
+            if (!icon) return;
+            const iconClicked = icon.getAttribute("data-icon");
+            const country = e.target.closest(".country-card__icons");
+            const countryCode = country.getAttribute("data-countryCode");
+            console.log(iconClicked, countryCode);
+            document.getElementById(`icon--${iconClicked}`).style.fill = "orange";
+            //save current country
+            handler(countryCode, iconClicked);
+        }).bind(this));
+    }
+}
+exports.default = new SaveView();
+
+},{"./View.js":"35FB2","@parcel/transformer-js/src/esmodule-helpers.js":"JacNc"}],"94if7":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 var _viewJs = require("./View.js");
@@ -989,20 +1039,22 @@ class NavView extends _viewJsDefault.default {
         }).bind(this));
     }
     // Handler region
-    addHandlerFilterRegion(handler) {
+    addHandlerFilter(handler) {
         this._navContainer.addEventListener("click", (function(e) {
             e.preventDefault();
-            const region = e.target.closest(".region");
-            if (!region) return;
-            const regionName = region.getAttribute("data-region");
+            const filter = e.target.closest(".filterBy");
+            if (!filter) return;
+            const filterBy = filter.getAttribute("data-filterBy");
             // show countrycard container
             this._showCountryCardContainer();
             // clear country cards
             this._displayContainer.innerHTML = "";
             // clear detail page
             this._clearDetailPageContainer();
+            // hide pagination container
+            this._hidePaginationContainer();
             //render regional countries
-            handler(regionName);
+            handler(filterBy);
         }).bind(this));
     }
 }

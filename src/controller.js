@@ -119,8 +119,10 @@ const controlFilterBy = function (filterBy) {
   }
 
   // render favourite countries card
-  if (filterBy === "favourite")
+  if (filterBy === "favourite") {
+    console.log(model.state.bookmarkedCountry);
     CountryView.renderCard(model.state.bookmarkedCountry);
+  }
 
   // render traveled countries card
   if (filterBy === "traveled") {
@@ -140,11 +142,36 @@ const controlFilterBy = function (filterBy) {
 };
 
 // Save/Delete Countries From Favourite, Traveled List
-const controlSaveCountry = function (countryCode, iconClicked) {
-  // save country
-  model.saveCountry(countryCode, iconClicked);
+const controlStoreCountry = function (countryCode, iconClicked) {
+  // Check is country stored
+  let countryIndex;
+
+  // search bookmarked country
+  if (iconClicked === "favourite")
+    countryIndex = model.state.bookmarkedCountry.findIndex(
+      (country) => country.alpha3Code === countryCode
+    );
+
+  // search traveled country
+  if (iconClicked === "traveled")
+    countryIndex = model.state.traveledCountry.findIndex(
+      (country) => country.alpha3Code === countryCode
+    );
+
+  // save/delete country
+  // Index === -1 country doesn't exist in bookmark, traveled
+  if (countryIndex > -1) {
+    // Delete country
+    model.deleteCountry(countryIndex, iconClicked);
+  } else {
+    // save country
+    model.saveCountry(countryCode, iconClicked);
+  }
 
   // update icon
+  // document.getElementById(`icon--${iconClicked}`).style.fill = "orange";
+
+  // update country view
 
   // persist data
 };
@@ -178,8 +205,8 @@ const init = function () {
   NavView.addHandlerWhereAmI(controlWhereAmI);
   NavView.addHandlerFilter(controlFilterBy);
   CountryView.addHandlerRenderCountryCard(controlAllCountries);
-  CountryView.addHandlerCountryCard(controlCountryDetails);
-  SaveView.addHandlerSaveCountry(controlSaveCountry);
+  // CountryView.addHandlerCountryCard(controlCountryDetails);
+  SaveView.addHandlerSaveCountry(controlStoreCountry);
   CountryPageView.addHandlerBackBtn();
   CountryNeighbourView.addHandlerCountryCard(controlCountryDetails);
   CountryPaginationView.addHandlerPagination(controlAllCountries);

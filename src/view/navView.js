@@ -45,7 +45,7 @@ class NavView extends View {
         this._showCountryCardContainer();
 
         // clear country cards
-        this._displayContainer.innerHTML = "";
+        this._clearCountryCardContainer();
 
         // clear detail page
         this._clearDetailPageContainer();
