@@ -379,6 +379,10 @@ li {
   scale: 1.1;
 }
 
+.icon__container {
+  position: absolute;
+}
+
 li:not(:last-child) {
   padding-bottom: 10px;
 }

@@ -120,13 +120,11 @@ const controlFilterBy = function (filterBy) {
 
   // render favourite countries card
   if (filterBy === "favourite") {
-    console.log(model.state.bookmarkedCountry);
     CountryView.renderCard(model.state.bookmarkedCountry);
   }
 
   // render traveled countries card
   if (filterBy === "traveled") {
-    console.log(model.state.traveledCountry);
     CountryView.renderCard(model.state.traveledCountry);
   }
 
@@ -159,10 +157,17 @@ const controlStoreCountry = function (countryCode, iconClicked) {
     );
 
   // save/delete country
-  // Index === -1 country doesn't exist in bookmark, traveled
+  // Index === -1 country doesn't exist in arr favourite, traveled
   if (countryIndex > -1) {
     // Delete country
     model.deleteCountry(countryIndex, iconClicked);
+
+    //re-render countries
+    CountryView._clearCountryCardContainer();
+    if (iconClicked === "favourite")
+      CountryView.renderCard(model.state.bookmarkedCountry);
+    if (iconClicked === "traveled")
+      CountryView.renderCard(model.state.traveledCountry);
   } else {
     // save country
     model.saveCountry(countryCode, iconClicked);
@@ -170,8 +175,6 @@ const controlStoreCountry = function (countryCode, iconClicked) {
 
   // update icon
   // document.getElementById(`icon--${iconClicked}`).style.fill = "orange";
-
-  // update country view
 
   // persist data
 };

@@ -3,11 +3,16 @@ import View from "./View.js";
 class SaveView extends View {
   _displayContainer = document.querySelector(".display-countries");
 
+  // addHandlerIcons(handler) {
+  //   window.addEventListener("DOMContentLoaded", this.addHandlerSaveCountry(handler));
+  // }
+
   addHandlerSaveCountry(handler) {
     this._displayContainer.addEventListener(
       "click",
       function (e) {
         e.preventDefault();
+        e.stopPropagation();
 
         //get clicked icon and country
         const icon = e.target.closest(".icon");
@@ -16,7 +21,7 @@ class SaveView extends View {
         const country = e.target.closest(".country-card__icons");
         const countryCode = country.getAttribute("data-countryCode");
 
-        // document.getElementById(`icon--${iconClicked}`).style.fill = "orange";
+        document.getElementById(`icon--${iconClicked}`).style.fill = "orange";
 
         //save current country
         handler(countryCode, iconClicked);

@@ -11,7 +11,7 @@ class CountryPageView extends View {
         if (!backBtn) return;
 
         // clear detail page
-        this._displayContainer.innerHTML = "";
+        this._clearCountryCardContainer();
 
         // show country card container
         this._showCountryCardContainer();

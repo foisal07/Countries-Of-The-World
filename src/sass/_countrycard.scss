@@ -5,6 +5,7 @@
     margin-bottom: 3rem;
   }
 }
+
 .display-countries {
   margin-top: 3rem;
   width: 20rem;
@@ -72,6 +73,10 @@
     cursor: pointer;
     scale: 1.1;
   }
+}
+
+.icon__container {
+  position: absolute;
 }
 
 li:not(:last-child) {
