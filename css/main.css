@@ -378,8 +378,10 @@ li {
   scale: 1.1;
 }
 
-.icon__container {
-  position: absolute;
+.country-card__icons {
+  display: flex;
+  justify-content: space-between;
+  align-self: center;
 }
 
 li:not(:last-child) {

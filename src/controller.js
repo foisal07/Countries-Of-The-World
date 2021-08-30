@@ -173,13 +173,16 @@ const controlStoreCountry = function (countryCode, iconClicked) {
 
     //re-render countries
     if (iconClicked === "favourite") {
+      document.getElementById(`icon--${iconClicked}`).style.fill = "";
       FavouriteCountryView.renderCard(model.state.favouriteCountry);
     }
     if (iconClicked === "traveled") {
+      document.getElementById(`icon--${iconClicked}`).style.fill = "";
       TraveledCountryView.renderCard(model.state.traveledCountry);
     }
   } else {
     // save country
+    document.getElementById(`icon--${iconClicked}`).style.fill = "orange";
     model.saveCountry(countryCode, iconClicked);
   }
 
@@ -217,8 +220,8 @@ const init = function () {
   CountryView.addHandlerRenderCountryCard(controlAllCountries);
   CountryView.addHandlerCountryCard(controlCountryDetails);
   CountryView.addHandlerStoreCountry(controlStoreCountry);
-  FavouriteCountryView.addHandlerStoreCountry(controlStoreCountry);
   FavouriteCountryView.addHandlerCountryCard(controlCountryDetails);
+  FavouriteCountryView.addHandlerStoreCountry(controlStoreCountry);
   TraveledCountryView.addHandlerStoreCountry(controlStoreCountry);
   TraveledCountryView.addHandlerCountryCard(controlCountryDetails);
   CountryPageView.addHandlerBackBtn();

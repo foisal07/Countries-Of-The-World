@@ -46,6 +46,7 @@
     padding: 35px 25px 45px 25px;
 
     &__name {
+      // position: relative;
       padding-bottom: 25px;
       font-size: $font-med;
       display: grid;
@@ -74,8 +75,13 @@
   }
 }
 
-.icon__container {
-  position: absolute;
+.country-card__icons {
+  display: flex;
+  justify-content: space-between;
+  align-self: center;
+  // position: absolute;
+  // top: 0;
+  // right: 0;
 }
 
 li:not(:last-child) {

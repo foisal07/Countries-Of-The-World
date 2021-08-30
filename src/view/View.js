@@ -3,6 +3,7 @@ export default class View {
   _countryCardsContainer = document.querySelector(".countrycard__container");
   _detailPageContainer = document.querySelector(".detailpage__container");
   _paginationContainer = document.querySelector(".pagination__container");
+  _iconContainer = document.querySelector(".country-card__icons");
 
   _generateCountryCardMarkup(country) {
     return `
@@ -146,7 +147,6 @@ export default class View {
   }
 
   renderCard(data) {
-    console.log(data);
     const markup = data
       .map((country) => this._generateCountryCardMarkup(country))
       .join("");
@@ -217,7 +217,6 @@ export default class View {
       "click",
       function (e) {
         e.preventDefault();
-        e.stopPropagation();
 
         //get clicked icon and country
         const icon = e.target.closest(".icon");
@@ -228,6 +227,9 @@ export default class View {
 
         //save/delete current country
         handler(countryCode, iconClicked);
+
+        // stop bubling event to country card to not execute render country detail 
+        e.stopPropagation();
       }.bind(this)
     );
   }
