@@ -10,6 +10,8 @@ import CountryNeighbourView from "./view/countryNeighbourView.js";
 import NavView from "./view/navView.js";
 import SearchView from "./view/countrySearchView.js";
 import HeaderView from "./view/headerView.js";
+import FavouriteCountryView from "./view/favouriteCountryView.js";
+import TraveledCountryView from "./view/traveledCountryView.js";
 
 // Display Countries Card
 const controlAllCountries = async function (sortingLetter = "a") {
@@ -120,12 +122,14 @@ const controlFilterBy = function (filterBy) {
 
   // render favourite countries card
   if (filterBy === "favourite") {
-    CountryView.renderCard(model.state.bookmarkedCountry);
+    TraveledCountryView._clearCountryCardContainer();
+    FavouriteCountryView.renderCard(model.state.favouriteCountry);
   }
 
   // render traveled countries card
   if (filterBy === "traveled") {
-    CountryView.renderCard(model.state.traveledCountry);
+    FavouriteCountryView._clearCountryCardContainer();
+    TraveledCountryView.renderCard(model.state.traveledCountry);
   }
 
   // render island countries card
@@ -146,7 +150,7 @@ const controlStoreCountry = function (countryCode, iconClicked) {
 
   // search bookmarked country
   if (iconClicked === "favourite")
-    countryIndex = model.state.bookmarkedCountry.findIndex(
+    countryIndex = model.state.favouriteCountry.findIndex(
       (country) => country.alpha3Code === countryCode
     );
 
@@ -156,6 +160,7 @@ const controlStoreCountry = function (countryCode, iconClicked) {
       (country) => country.alpha3Code === countryCode
     );
 
+  console.log(model.state.favouriteCountry);
   // save/delete country
   // Index === -1 country doesn't exist in arr favourite, traveled
   if (countryIndex > -1) {
@@ -163,18 +168,24 @@ const controlStoreCountry = function (countryCode, iconClicked) {
     model.deleteCountry(countryIndex, iconClicked);
 
     //re-render countries
-    CountryView._clearCountryCardContainer();
-    if (iconClicked === "favourite")
-      CountryView.renderCard(model.state.bookmarkedCountry);
-    if (iconClicked === "traveled")
-      CountryView.renderCard(model.state.traveledCountry);
+    if (iconClicked === "favourite") {
+      FavouriteCountryView._clearCountryCardContainer();
+      TraveledCountryView._clearCountryCardContainer();
+      console.log(model.state.favouriteCountry);
+      FavouriteCountryView.renderCard(model.state.favouriteCountry);
+    }
+
+    if (iconClicked === "traveled") {
+      FavouriteCountryView._clearCountryCardContainer();
+      TraveledCountryView._clearCountryCardContainer();
+      TraveledCountryView.renderCard(model.state.traveledCountry);
+    }
   } else {
     // save country
     model.saveCountry(countryCode, iconClicked);
   }
 
   // update icon
-  // document.getElementById(`icon--${iconClicked}`).style.fill = "orange";
 
   // persist data
 };
@@ -210,6 +221,8 @@ const init = function () {
   CountryView.addHandlerRenderCountryCard(controlAllCountries);
   // CountryView.addHandlerCountryCard(controlCountryDetails);
   SaveView.addHandlerSaveCountry(controlStoreCountry);
+  FavouriteCountryView.addHandlerSaveCountry(controlStoreCountry);
+  TraveledCountryView.addHandlerSaveCountry(controlStoreCountry);
   CountryPageView.addHandlerBackBtn();
   CountryNeighbourView.addHandlerCountryCard(controlCountryDetails);
   CountryPaginationView.addHandlerPagination(controlAllCountries);

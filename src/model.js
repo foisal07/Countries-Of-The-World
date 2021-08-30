@@ -9,7 +9,7 @@ export const state = {
   sortedCountries: [],
   islandCountries: [],
   regionalCountries: [],
-  bookmarkedCountry: [],
+  favouriteCountry: [],
   traveledCountry: [],
 };
 
@@ -81,14 +81,14 @@ export const saveCountry = function (countryCode, iconClicked) {
   const country = state.countriesAll.find(
     (country) => country.alpha3Code === countryCode
   );
-  if (iconClicked === "favourite") state.bookmarkedCountry.push(country);
+  if (iconClicked === "favourite") state.favouriteCountry.push(country);
   if (iconClicked === "traveled") state.traveledCountry.push(country);
 };
 
 // Delete Country
 export const deleteCountry = function (countryIndex, iconClicked) {
   if (iconClicked === "favourite") {
-    state.bookmarkedCountry.splice(countryIndex, 1);
+    state.favouriteCountry.splice(countryIndex, 1);
   }
 
   if (iconClicked === "traveled") state.traveledCountry.splice(countryIndex, 1);

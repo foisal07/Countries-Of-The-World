@@ -146,6 +146,7 @@ export default class View {
   }
 
   renderCard(data) {
+    console.log(data);
     const markup = data
       .map((country) => this._generateCountryCardMarkup(country))
       .join("");
@@ -172,6 +173,26 @@ export default class View {
       </div>
     `;
     this._displayContainer.insertAdjacentHTML("afterbegin", markup);
+  }
+
+  addHandlerSaveCountry(handler) {
+    this._displayContainer.addEventListener(
+      "click",
+      function (e) {
+        e.preventDefault();
+        // e.stopPropagation();
+
+        //get clicked icon and country
+        const icon = e.target.closest(".icon");
+        if (!icon) return;
+        const iconClicked = icon.getAttribute("data-icon");
+        const country = e.target.closest(".country-card__icons");
+        const countryCode = country.getAttribute("data-countryCode");
+
+        //save/delete current country
+        handler(countryCode, iconClicked);
+      }.bind(this)
+    );
   }
 
   _hideCountryCardContainer() {
