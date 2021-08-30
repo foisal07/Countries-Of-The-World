@@ -145,7 +145,11 @@ const controlFilterBy = function (filterBy) {
 };
 
 // Save/Delete Countries From Favourite, Traveled List
-const controlStoreCountry = function (countryCode, iconClicked) {
+const controlStoreCountry = function (
+  countryCode,
+  iconClicked,
+  displayContainerClass
+) {
   // Check is country stored
   let countryIndex;
 
@@ -167,22 +171,34 @@ const controlStoreCountry = function (countryCode, iconClicked) {
     // delete country from storage
     model.deleteCountry(countryIndex, iconClicked);
 
-    // clear display container
-    FavouriteCountryView._clearCountryCardContainer();
-    TraveledCountryView._clearCountryCardContainer();
+    
+    
+    
 
     //re-render countries
-    if (iconClicked === "favourite") {
-      document.getElementById(`icon--${iconClicked}`).style.fill = "";
+    if (
+      iconClicked === "favourite" &&
+      displayContainerClass === "favourite__countries"
+    ) {
+      // document.getElementById(`icon--${iconClicked}`).style.fill = "";
+      // clear display container
+      FavouriteCountryView._clearCountryCardContainer();
+      // re-render
       FavouriteCountryView.renderCard(model.state.favouriteCountry);
     }
-    if (iconClicked === "traveled") {
-      document.getElementById(`icon--${iconClicked}`).style.fill = "";
+    if (
+      iconClicked === "traveled" &&
+      displayContainerClass === "traveled__countries"
+    ) {
+      // document.getElementById(`icon--${iconClicked}`).style.fill = "";
+      // clear display container
+      TraveledCountryView._clearCountryCardContainer();
+      // re-render
       TraveledCountryView.renderCard(model.state.traveledCountry);
     }
   } else {
     // save country
-    document.getElementById(`icon--${iconClicked}`).style.fill = "orange";
+    // document.getElementById(`icon--${iconClicked}`).style.fill = "orange";
     model.saveCountry(countryCode, iconClicked);
   }
 

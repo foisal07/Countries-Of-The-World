@@ -99,7 +99,13 @@ export const saveCountry = function (countryCode, iconClicked) {
     (country) => country.alpha3Code === countryCode
   );
 
-  if (iconClicked === "favourite") state.favouriteCountry.push(country);
+  // state.countriesAll = state.countriesAll
+  //   .filter((c) => c === country)
+  //   .map((country) => country);
+
+  if (iconClicked === "favourite") {
+    state.favouriteCountry.push(country);
+  }
   if (iconClicked === "traveled") state.traveledCountry.push(country);
 
   persistData(iconClicked);

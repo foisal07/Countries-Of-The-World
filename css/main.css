@@ -304,7 +304,7 @@ li {
   }
 }
 
-.display-countries, .country__neighbours {
+.display-countries, .favourite__countries, .traveled__countries, .country__neighbours {
   width: 20rem;
   display: grid;
   grid-template-columns: 1fr;
@@ -313,21 +313,21 @@ li {
 }
 
 @media (min-width: 40em) {
-  .display-countries, .country__neighbours {
+  .display-countries, .favourite__countries, .traveled__countries, .country__neighbours {
     width: 40.625rem;
     grid-template-columns: repeat(2, 1fr);
   }
 }
 
 @media (min-width: 64em) {
-  .display-countries, .country__neighbours {
+  .display-countries, .favourite__countries, .traveled__countries, .country__neighbours {
     width: 62.5rem;
     grid-template-columns: repeat(3, 1fr);
   }
 }
 
 @media (min-width: 87.5em) {
-  .display-countries, .country__neighbours {
+  .display-countries, .favourite__countries, .traveled__countries, .country__neighbours {
     width: 80.3125rem;
     grid-template-columns: repeat(4, 1fr);
   }

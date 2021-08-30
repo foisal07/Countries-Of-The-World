@@ -217,6 +217,7 @@ export default class View {
       "click",
       function (e) {
         e.preventDefault();
+        console.log(e);
 
         //get clicked icon and country
         const icon = e.target.closest(".icon");
@@ -225,8 +226,13 @@ export default class View {
         const country = e.target.closest(".country-card__icons");
         const countryCode = country.getAttribute("data-countryCode");
 
+        // get display container class
+        const displayContainerClass = this._displayContainer.className;
+
         //save/delete current country
-        handler(countryCode, iconClicked);
+        handler(countryCode, iconClicked, displayContainerClass);
+
+        console.log();
 
         // stop bubling event to country card to not execute render country detail 
         e.stopPropagation();
