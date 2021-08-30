@@ -46,7 +46,7 @@ export const getLatLng = async function (url) {
 
 // Sort countries by population and area
 export const sortCountries = function (sortBy) {
-  // passing compare object population, area
+  // passing compare object (population, area etc.)
   const compareFunction = function (sortBy) {
     return (a, b) => b[0][sortBy] - a[0][sortBy];
   };
@@ -76,44 +76,53 @@ export const getCountriesFilterByRegion = (filterBy) => {
   );
 };
 
+// Persits data
+const persistData = function (iconClicked) {
+  // persit favourtie country data
+  if (iconClicked === "favourite")
+    localStorage.setItem(
+      "favouriteCountry",
+      JSON.stringify(state.favouriteCountry)
+    );
+
+  // persit favourtie country data
+  if (iconClicked === "traveled")
+    localStorage.setItem(
+      "traveledCountry",
+      JSON.stringify(state.traveledCountry)
+    );
+};
+
 // Save Country
 export const saveCountry = function (countryCode, iconClicked) {
   const country = state.countriesAll.find(
     (country) => country.alpha3Code === countryCode
   );
+
   if (iconClicked === "favourite") state.favouriteCountry.push(country);
   if (iconClicked === "traveled") state.traveledCountry.push(country);
+
+  persistData(iconClicked);
 };
 
 // Delete Country
 export const deleteCountry = function (countryIndex, iconClicked) {
-  if (iconClicked === "favourite") {
+  if (iconClicked === "favourite")
     state.favouriteCountry.splice(countryIndex, 1);
-  }
 
   if (iconClicked === "traveled") state.traveledCountry.splice(countryIndex, 1);
+
+  persistData(iconClicked);
 };
 
-// export const getTopCitiesOfCountry = async function (countryCode) {
-//   const data = await AJAX(
-//     `${ACCUWEATHER__API__URL}adminareas/${countryCode}?apikey=${ACCUWEATHER__API__KEY}`
-//   );
-//   console.log(data);
-// }
+const init = function () {
+  const storageFavouriteCountry = localStorage.getItem("favouriteCountry");
+  if (storageFavouriteCountry)
+    state.favouriteCountry = JSON.parse(storageFavouriteCountry);
 
-// export const getCountriesByRegion = async function (url, region) {
-//   try {
-//     const data = await AJAX(`${url}${region}`);
-//     state.countriesByRegion = data;
-//   } catch (err) {
-//     console.log(err);
-//   }
-// };
+  const storageTraveledCountry = localStorage.getItem("traveledCountry");
+  if (storageTraveledCountry)
+    state.traveledCountry = JSON.parse(storageTraveledCountry);
+};
+init();
 
-// export const getBorderCountries = async function (url, borders) {
-//   try {
-
-//   } catch (err) {
-//     console.log(err);
-//   }
-// };

@@ -130,7 +130,7 @@ const controlFilterBy = function (filterBy) {
 
   // render traveled countries card
   if (filterBy === "traveled") {
-    //each time generate new travel country view
+    //each time generate new traveled country view
     FavouriteCountryView._clearCountryCardContainer();
     TraveledCountryView._clearCountryCardContainer();
     TraveledCountryView.renderCard(model.state.traveledCountry);
@@ -221,11 +221,12 @@ const init = function () {
   NavView.addHandlerWhereAmI(controlWhereAmI);
   NavView.addHandlerFilter(controlFilterBy);
   CountryView.addHandlerRenderCountryCard(controlAllCountries);
-  // CountryView.addHandlerCountryCard(controlCountryDetails);
+  CountryView.addHandlerCountryCard(controlCountryDetails);
   SaveView.addHandlerSaveCountry(controlStoreCountry);
   FavouriteCountryView.addHandlerSaveCountry(controlStoreCountry);
   TraveledCountryView.addHandlerSaveCountry(controlStoreCountry);
   CountryPageView.addHandlerBackBtn();
+  CountryPageView.addHandlerSaveCountry(controlStoreCountry);
   CountryNeighbourView.addHandlerCountryCard(controlCountryDetails);
   CountryPaginationView.addHandlerPagination(controlAllCountries);
   CountryPaginationView.addHandlerSlides();
