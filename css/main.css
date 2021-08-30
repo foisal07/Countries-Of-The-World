@@ -295,7 +295,7 @@ li {
 }
 
 .countrycard__container {
-  margin-bottom: 7rem;
+  margin: 3rem 0 7rem 0;
 }
 
 @media (max-width: 39.9375em) {
@@ -305,7 +305,6 @@ li {
 }
 
 .display-countries, .country__neighbours {
-  margin-top: 3rem;
   width: 20rem;
   display: grid;
   grid-template-columns: 1fr;
@@ -392,13 +391,13 @@ li:not(:last-child) {
   grid-template-columns: 1fr;
   grid-row-gap: 2.5rem;
   width: 19rem;
-  margin: 2rem 1rem 0 1rem;
+  margin: 3rem 1rem 2rem 1rem;
 }
 
 @media (min-width: 40em) {
   .country-detail {
     width: 40rem;
-    margin: 4.6875rem 0;
+    margin: 3rem 0;
     grid-template-columns: 1fr;
     grid-row-gap: 2.5rem;
   }
@@ -407,7 +406,7 @@ li:not(:last-child) {
 @media (min-width: 64em) {
   .country-detail {
     width: 62.5rem;
-    margin: 4.6875rem 0;
+    margin: 3rem 0;
     grid-template-columns: repeat(2, 1fr);
   }
 }
@@ -416,7 +415,7 @@ li:not(:last-child) {
   .country-detail {
     width: 80.3125rem;
     grid-template-columns: repeat(2, 1fr);
-    margin: 4.6875rem 0 7rem 0;
+    margin: 3rem 0 7rem 0;
   }
 }
 

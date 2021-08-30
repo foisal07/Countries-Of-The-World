@@ -1,5 +1,5 @@
 .countrycard__container {
-  margin-bottom: 7rem;
+  margin: 3rem 0 7rem 0;
 
   @include breakpoint-down(small) {
     margin-bottom: 3rem;
@@ -7,7 +7,6 @@
 }
 
 .display-countries {
-  margin-top: 3rem;
   width: 20rem;
   display: grid;
   grid-template-columns: 1fr;

@@ -117,6 +117,7 @@ export const deleteCountry = function (countryIndex, iconClicked) {
 
 const init = function () {
   const storageFavouriteCountry = localStorage.getItem("favouriteCountry");
+
   if (storageFavouriteCountry)
     state.favouriteCountry = JSON.parse(storageFavouriteCountry);
 
@@ -124,5 +125,5 @@ const init = function () {
   if (storageTraveledCountry)
     state.traveledCountry = JSON.parse(storageTraveledCountry);
 };
-init();
 
+init();

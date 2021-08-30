@@ -3,7 +3,6 @@ import { ALL__COUNTRIES__API, TRACK__IP__API } from "./config.js";
 import * as model from "../src/model.js";
 
 import CountryView from "./view/countryView.js";
-import SaveView from "./view/saveView.js";
 import CountryPaginationView from "./view/paginationView.js";
 import CountryPageView from "./view/countryPageView.js";
 import CountryNeighbourView from "./view/countryNeighbourView.js";
@@ -108,6 +107,10 @@ const controlWhereAmI = async function () {
 
 // Display Filtered Countries
 const controlFilterBy = function (filterBy) {
+  // clear display container
+  FavouriteCountryView._clearCountryCardContainer();
+  TraveledCountryView._clearCountryCardContainer();
+
   // render countries card by population ascending
   if (filterBy === "population") {
     model.sortCountries(filterBy);
@@ -122,17 +125,11 @@ const controlFilterBy = function (filterBy) {
 
   // render favourite countries card
   if (filterBy === "favourite") {
-    //each time generate new favourite country view
-    FavouriteCountryView._clearCountryCardContainer();
-    TraveledCountryView._clearCountryCardContainer();
     FavouriteCountryView.renderCard(model.state.favouriteCountry);
   }
 
   // render traveled countries card
   if (filterBy === "traveled") {
-    //each time generate new traveled country view
-    FavouriteCountryView._clearCountryCardContainer();
-    TraveledCountryView._clearCountryCardContainer();
     TraveledCountryView.renderCard(model.state.traveledCountry);
   }
 
@@ -167,19 +164,18 @@ const controlStoreCountry = function (countryCode, iconClicked) {
   // save/delete country
   // Index === -1 country doesn't exist in arr favourite, traveled
   if (countryIndex > -1) {
-    // Delete country
+    // delete country from storage
     model.deleteCountry(countryIndex, iconClicked);
+
+    // clear display container
+    FavouriteCountryView._clearCountryCardContainer();
+    TraveledCountryView._clearCountryCardContainer();
 
     //re-render countries
     if (iconClicked === "favourite") {
-      FavouriteCountryView._clearCountryCardContainer();
-      TraveledCountryView._clearCountryCardContainer();
       FavouriteCountryView.renderCard(model.state.favouriteCountry);
     }
-
     if (iconClicked === "traveled") {
-      FavouriteCountryView._clearCountryCardContainer();
-      TraveledCountryView._clearCountryCardContainer();
       TraveledCountryView.renderCard(model.state.traveledCountry);
     }
   } else {
@@ -188,8 +184,6 @@ const controlStoreCountry = function (countryCode, iconClicked) {
   }
 
   // update icon
-
-  // persist data
 };
 
 // Create Display Map
@@ -222,11 +216,13 @@ const init = function () {
   NavView.addHandlerFilter(controlFilterBy);
   CountryView.addHandlerRenderCountryCard(controlAllCountries);
   CountryView.addHandlerCountryCard(controlCountryDetails);
-  SaveView.addHandlerSaveCountry(controlStoreCountry);
-  FavouriteCountryView.addHandlerSaveCountry(controlStoreCountry);
-  TraveledCountryView.addHandlerSaveCountry(controlStoreCountry);
+  CountryView.addHandlerStoreCountry(controlStoreCountry);
+  FavouriteCountryView.addHandlerStoreCountry(controlStoreCountry);
+  FavouriteCountryView.addHandlerCountryCard(controlCountryDetails);
+  TraveledCountryView.addHandlerStoreCountry(controlStoreCountry);
+  TraveledCountryView.addHandlerCountryCard(controlCountryDetails);
   CountryPageView.addHandlerBackBtn();
-  CountryPageView.addHandlerSaveCountry(controlStoreCountry);
+  CountryPageView.addHandlerStoreCountry(controlStoreCountry);
   CountryNeighbourView.addHandlerCountryCard(controlCountryDetails);
   CountryPaginationView.addHandlerPagination(controlAllCountries);
   CountryPaginationView.addHandlerSlides();

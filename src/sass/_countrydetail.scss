@@ -3,25 +3,25 @@
   grid-template-columns: 1fr;
   grid-row-gap: 2.5rem;
   width: 19rem;
-  margin: 2rem 1rem 0 1rem;
+  margin: 3rem 1rem 2rem 1rem;
 
   @include breakpoint-up(medium) {
     width: 40rem;
-    margin: 4.6875rem 0;
+    margin: 3rem 0;
     grid-template-columns: 1fr;
     grid-row-gap: 2.5rem;
   }
 
   @include breakpoint-up(large) {
     width: 62.5rem;
-    margin: 4.6875rem 0;
+    margin: 3rem 0;
     grid-template-columns: repeat(2, 1fr);
   }
 
   @include breakpoint-up(xlarge) {
     width: 80.3125rem;
     grid-template-columns: repeat(2, 1fr);
-    margin: 4.6875rem 0 7rem 0;
+    margin: 3rem 0 7rem 0;
   }
 
   &__flag {
