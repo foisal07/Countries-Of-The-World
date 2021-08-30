@@ -122,13 +122,17 @@ const controlFilterBy = function (filterBy) {
 
   // render favourite countries card
   if (filterBy === "favourite") {
+    //each time generate new favourite country view
+    FavouriteCountryView._clearCountryCardContainer();
     TraveledCountryView._clearCountryCardContainer();
     FavouriteCountryView.renderCard(model.state.favouriteCountry);
   }
 
   // render traveled countries card
   if (filterBy === "traveled") {
+    //each time generate new travel country view
     FavouriteCountryView._clearCountryCardContainer();
+    TraveledCountryView._clearCountryCardContainer();
     TraveledCountryView.renderCard(model.state.traveledCountry);
   }
 
@@ -160,7 +164,6 @@ const controlStoreCountry = function (countryCode, iconClicked) {
       (country) => country.alpha3Code === countryCode
     );
 
-  console.log(model.state.favouriteCountry);
   // save/delete country
   // Index === -1 country doesn't exist in arr favourite, traveled
   if (countryIndex > -1) {
@@ -171,7 +174,6 @@ const controlStoreCountry = function (countryCode, iconClicked) {
     if (iconClicked === "favourite") {
       FavouriteCountryView._clearCountryCardContainer();
       TraveledCountryView._clearCountryCardContainer();
-      console.log(model.state.favouriteCountry);
       FavouriteCountryView.renderCard(model.state.favouriteCountry);
     }
 
