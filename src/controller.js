@@ -154,8 +154,6 @@ const controlStoreCountry = function (
   // Check is country stored
   let countryIndex;
 
-  console.log(model.state.favouriteCountry);
-
   // search favourite country
   if (iconClicked === "favourite")
     countryIndex = model.state.favouriteCountry.findIndex(
@@ -173,6 +171,11 @@ const controlStoreCountry = function (
   if (countryIndex > -1) {
     // delete country from storage
     model.deleteCountry(countryIndex, iconClicked, countryCode);
+
+    //unfill icon
+    document.getElementById(
+      `${countryCode}__icon--${iconClicked}`
+    ).style.fill = "";
 
     //re-render countries
     if (
@@ -196,6 +199,11 @@ const controlStoreCountry = function (
   } else {
     // save country
     model.saveCountry(countryCode, iconClicked);
+
+    //fill icon
+    document.getElementById(
+      `${countryCode}__icon--${iconClicked}`
+    ).style.fill = "orange";
   }
 };
 

@@ -138,12 +138,12 @@ export default class View {
     return `<div class = 'country-card__icons' data-countryCode = ${countryalphacode}> 
                 <div class = 'icon' data-icon='favourite'>
                   <svg xmlns="http://www.w3.org/2000/svg" class="h-2 w-2" fill='none' viewBox="0 0 24 24" stroke="currentColor">
-                    <path id ='icon--favourite' stroke-linecap="round" class=''stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+                    <path id ='${countryalphacode}__icon--favourite' stroke-linecap="round" class=''stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
                   </svg>
                 </div>
                 <div class ='icon' data-icon='traveled'>
                   <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6"  viewBox="0 0 24 24" stroke="currentColor">
-                  <path id ='icon--traveled' fill='none' stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
+                  <path id = '${countryalphacode}__icon--traveled' fill='none' stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
                   </svg>
                 </div>
               </div>
@@ -152,9 +152,9 @@ export default class View {
 
   // ${`${traveled} : fill = 'orange' ? fill ='none'`}
 
-  renderCard(data, favourite = false ) {
+  renderCard(data, favourite = false) {
     const markup = data
-      .map((country) => this._generateCountryCardMarkup(country,favourite))
+      .map((country) => this._generateCountryCardMarkup(country, favourite))
       .join("");
     this._displayContainer.insertAdjacentHTML("beforeend", markup);
   }
@@ -237,7 +237,7 @@ export default class View {
         //save/delete current country
         handler(countryCode, iconClicked, displayContainerClass);
 
-        // stop bubling event to country card to not execute render country detail
+        //stop bubling event to country card to not execute render country detail
         e.stopPropagation();
       }.bind(this)
     );

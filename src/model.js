@@ -107,8 +107,6 @@ export const saveCountry = function (countryCode, iconClicked) {
   //marked country as favourite
   state.countriesAll[index].favourtie = true;
 
-  console.log(state.countriesAll);
-
   if (iconClicked === "favourite") state.favouriteCountry.push(country);
 
   if (iconClicked === "traveled") state.traveledCountry.push(country);
