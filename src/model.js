@@ -99,20 +99,37 @@ export const saveCountry = function (countryCode, iconClicked) {
     (country) => country.alpha3Code === countryCode
   );
 
-  // state.countriesAll = state.countriesAll
-  //   .filter((c) => c === country)
-  //   .map((country) => country);
+  // find the country in state.countriesAll
+  const index = state.countriesAll.findIndex(
+    (c) => c.alpha3Code === countryCode
+  );
 
-  if (iconClicked === "favourite") {
-    state.favouriteCountry.push(country);
-  }
+  //marked country as favourite
+  state.countriesAll[index].favourtie = true;
+
+  console.log(state.countriesAll);
+
+  if (iconClicked === "favourite") state.favouriteCountry.push(country);
+
   if (iconClicked === "traveled") state.traveledCountry.push(country);
 
   persistData(iconClicked);
 };
 
 // Delete Country
-export const deleteCountry = function (countryIndex, iconClicked) {
+export const deleteCountry = function (countryIndex, iconClicked, countryCode) {
+
+  // find the country index state.countriesAll
+  const index = state.countriesAll.findIndex(
+    (c) => c.alpha3Code === countryCode
+  );
+
+  //unmark country as favourite
+  state.countriesAll[index].favourtie = false;
+
+  console.log(state.countriesAll);
+
+  console.log(state.countriesAll);
   if (iconClicked === "favourite")
     state.favouriteCountry.splice(countryIndex, 1);
 

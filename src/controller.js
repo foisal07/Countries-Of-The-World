@@ -18,6 +18,7 @@ const controlAllCountries = async function (sortingLetter = "a") {
     //get all countries data
     await model.getAllCountries(ALL__COUNTRIES__API, sortingLetter);
 
+    console.log(model.state.countriesFilterByLetter);
     //render countries card start with A
     CountryView.renderCard(model.state.countriesFilterByLetter);
   } catch (err) {
@@ -153,7 +154,9 @@ const controlStoreCountry = function (
   // Check is country stored
   let countryIndex;
 
-  // search bookmarked country
+  console.log(model.state.favouriteCountry);
+
+  // search favourite country
   if (iconClicked === "favourite")
     countryIndex = model.state.favouriteCountry.findIndex(
       (country) => country.alpha3Code === countryCode
@@ -166,21 +169,16 @@ const controlStoreCountry = function (
     );
 
   // save/delete country
-  // Index === -1 country doesn't exist in arr favourite, traveled
+  // Index === -1 country doesn't exist in favourite, traveled arr
   if (countryIndex > -1) {
     // delete country from storage
-    model.deleteCountry(countryIndex, iconClicked);
-
-    
-    
-    
+    model.deleteCountry(countryIndex, iconClicked, countryCode);
 
     //re-render countries
     if (
       iconClicked === "favourite" &&
       displayContainerClass === "favourite__countries"
     ) {
-      // document.getElementById(`icon--${iconClicked}`).style.fill = "";
       // clear display container
       FavouriteCountryView._clearCountryCardContainer();
       // re-render
@@ -190,7 +188,6 @@ const controlStoreCountry = function (
       iconClicked === "traveled" &&
       displayContainerClass === "traveled__countries"
     ) {
-      // document.getElementById(`icon--${iconClicked}`).style.fill = "";
       // clear display container
       TraveledCountryView._clearCountryCardContainer();
       // re-render
@@ -198,11 +195,8 @@ const controlStoreCountry = function (
     }
   } else {
     // save country
-    // document.getElementById(`icon--${iconClicked}`).style.fill = "orange";
     model.saveCountry(countryCode, iconClicked);
   }
-
-  // update icon
 };
 
 // Create Display Map

@@ -5,7 +5,7 @@ export default class View {
   _paginationContainer = document.querySelector(".pagination__container");
   _iconContainer = document.querySelector(".country-card__icons");
 
-  _generateCountryCardMarkup(country) {
+  _generateCountryCardMarkup(country, favourite, traveled) {
     return `
     <div class="country-card dark" data-country-name="${country.name}">
         <div class="country-card__flag">
@@ -14,7 +14,11 @@ export default class View {
         <div class="country-card__info">
             <div class="country-card__info__name">
                 <strong><h4>${country.name}</h4></strong>
-                ${this._generateIcons(country.alpha3Code)}            
+                ${this._generateIcons(
+                  country.alpha3Code,
+                  favourite,
+                  traveled
+                )}            
             </div>
             <ul class="country-card__info__detail">
                 <li> Population: <strong>${(
@@ -130,25 +134,27 @@ export default class View {
     </div>`;
   }
 
-  _generateIcons(countryalphacode) {
+  _generateIcons(countryalphacode, favourite, traveled) {
     return `<div class = 'country-card__icons' data-countryCode = ${countryalphacode}> 
                 <div class = 'icon' data-icon='favourite'>
-                  <svg xmlns="http://www.w3.org/2000/svg" class="h-2 w-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-2 w-2" fill='none' viewBox="0 0 24 24" stroke="currentColor">
                     <path id ='icon--favourite' stroke-linecap="round" class=''stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
                   </svg>
                 </div>
                 <div class ='icon' data-icon='traveled'>
-                  <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path id ='icon--traveled' stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6"  viewBox="0 0 24 24" stroke="currentColor">
+                  <path id ='icon--traveled' fill='none' stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
                   </svg>
                 </div>
               </div>
     `;
   }
 
-  renderCard(data) {
+  // ${`${traveled} : fill = 'orange' ? fill ='none'`}
+
+  renderCard(data, favourite = false ) {
     const markup = data
-      .map((country) => this._generateCountryCardMarkup(country))
+      .map((country) => this._generateCountryCardMarkup(country,favourite))
       .join("");
     this._displayContainer.insertAdjacentHTML("beforeend", markup);
   }
@@ -217,7 +223,6 @@ export default class View {
       "click",
       function (e) {
         e.preventDefault();
-        console.log(e);
 
         //get clicked icon and country
         const icon = e.target.closest(".icon");
@@ -232,9 +237,7 @@ export default class View {
         //save/delete current country
         handler(countryCode, iconClicked, displayContainerClass);
 
-        console.log();
-
-        // stop bubling event to country card to not execute render country detail 
+        // stop bubling event to country card to not execute render country detail
         e.stopPropagation();
       }.bind(this)
     );
