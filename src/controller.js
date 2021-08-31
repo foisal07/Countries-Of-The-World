@@ -115,17 +115,20 @@ const controlFilterBy = function (filterBy) {
   // render countries card by population ascending
   if (filterBy === "population") {
     model.sortCountries(filterBy);
+    console.log(model.state.sortedCountries);
     CountryView.renderCard(model.state.sortedCountries);
   }
 
   // render countries card by area size ascending
   if (filterBy === "area") {
     model.sortCountries(filterBy);
+    console.log(model.state.sortedCountries);
     CountryView.renderCard(model.state.sortedCountries);
   }
 
   // render favourite countries card
   if (filterBy === "favourite") {
+    console.log(model.state.favouriteCountry);
     FavouriteCountryView.renderCard(model.state.favouriteCountry);
   }
 
@@ -137,11 +140,13 @@ const controlFilterBy = function (filterBy) {
   // render island countries card
   if (filterBy === "island") {
     model.getIslandcountries();
+    console.log(model.state.islandCountries);
     CountryView.renderCard(model.state.islandCountries);
   }
 
   // render regional country card
   model.getCountriesFilterByRegion(filterBy);
+  console.log(model.state.regionalCountries);
   CountryView.renderCard(model.state.regionalCountries);
 };
 
@@ -173,9 +178,8 @@ const controlStoreCountry = function (
     model.deleteCountry(countryIndex, iconClicked, countryCode);
 
     //unfill icon
-    document.getElementById(
-      `${countryCode}__icon--${iconClicked}`
-    ).style.fill = "";
+    document.getElementById(`${countryCode}__icon--${iconClicked}`).style.fill =
+      "";
 
     //re-render countries
     if (
@@ -187,6 +191,7 @@ const controlStoreCountry = function (
       // re-render
       FavouriteCountryView.renderCard(model.state.favouriteCountry);
     }
+
     if (
       iconClicked === "traveled" &&
       displayContainerClass === "traveled__countries"
@@ -198,12 +203,12 @@ const controlStoreCountry = function (
     }
   } else {
     // save country
+    console.log(model.state.countriesAll);
     model.saveCountry(countryCode, iconClicked);
 
     //fill icon
-    document.getElementById(
-      `${countryCode}__icon--${iconClicked}`
-    ).style.fill = "orange";
+    document.getElementById(`${countryCode}__icon--${iconClicked}`).style.fill =
+      "orange";
   }
 };
 

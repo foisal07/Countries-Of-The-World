@@ -124,10 +124,7 @@ export const deleteCountry = function (countryIndex, iconClicked, countryCode) {
 
   //unmark country as favourite
   state.countriesAll[index].favourtie = false;
-
-  console.log(state.countriesAll);
-
-  console.log(state.countriesAll);
+  
   if (iconClicked === "favourite")
     state.favouriteCountry.splice(countryIndex, 1);
 
