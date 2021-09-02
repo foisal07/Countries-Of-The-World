@@ -17,8 +17,7 @@ const controlAllCountries = async function (sortingLetter = "a") {
   try {
     //get all countries data
     await model.getAllCountries(ALL__COUNTRIES__API, sortingLetter);
-
-    console.log(model.state.countriesFilterByLetter);
+    
     //render countries card start with A
     CountryView.renderCard(model.state.countriesFilterByLetter);
   } catch (err) {

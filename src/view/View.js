@@ -6,6 +6,7 @@ export default class View {
   _iconContainer = document.querySelector(".country-card__icons");
 
   _generateCountryCardMarkup(country) {
+    console.log(country.favourtie);
     return `
     <div class="country-card dark" data-country-name="${country.name}">
         <div class="country-card__flag">
@@ -16,7 +17,8 @@ export default class View {
                 <strong><h4>${country.name}</h4></strong>
                 ${this._generateIcons(
                   country.alpha3Code,
-                  country.favourite
+                  country.favourtie,
+                  country.traveled
                 )}            
             </div>
             <ul class="country-card__info__detail">
@@ -138,12 +140,14 @@ export default class View {
   }
 
   _generateIcons(countryalphacode, favourite, traveled) {
+    console.log(favourite);
+    console.log(traveled);
     return `  <div class = 'country-card__icons' data-countryCode = ${countryalphacode}> 
                 <div class = 'icon' data-icon='favourite'>
                   <svg xmlns="http://www.w3.org/2000/svg" class="h-2 w-2" viewBox="0 0 24 24" stroke="currentColor">
                     <path id ='${countryalphacode}__icon--favourite' ${this._fillColor(
       favourite
-    )} stroke-linecap="round" class=''stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+    )}  stroke-linecap="round" class=''stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
                   </svg>
                 </div>
                 <div class ='icon' data-icon='traveled'>

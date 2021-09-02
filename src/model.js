@@ -17,16 +17,19 @@ export const state = {
 export const getAllCountries = async function (url, sortingLetter) {
   try {
     const data = await AJAX(url);
-    state.countriesAll = data;
-
-    // filter countries by starting letter
-    state.countriesFilterByLetter = state.countriesAll.filter(
-      (country) => country.name.slice(0, 1).toLowerCase() === sortingLetter
-    );
+    state.countriesAll = data;   
   } catch (err) {
     throw err;
   }
 };
+
+// Filter countries by starting letter
+export const getCountriesFilterByLetter = async function(sortingLetter) {
+state.countriesFilterByLetter = state.countriesAll.filter(
+  (country) => country.name.slice(0, 1).toLowerCase() === sortingLetter
+);
+};
+
 
 // Get Lat Lng From IP Adress
 export const getLatLng = async function (url) {
@@ -91,6 +94,9 @@ const persistData = function (iconClicked) {
       "traveledCountry",
       JSON.stringify(state.traveledCountry)
     );
+
+  // update state all countries with save, delete countries
+  localStorage.setItem("allCountry", JSON.stringify(state.countriesAll));
 };
 
 // Save Country
@@ -104,41 +110,59 @@ export const saveCountry = function (countryCode, iconClicked) {
     (c) => c.alpha3Code === countryCode
   );
 
-  //marked country as favourite
-  state.countriesAll[index].favourtie = true;
+  if (iconClicked === "favourite") {
+    // store country to favourite
+    state.favouriteCountry.push(country);
+    //marked country as favourite
+    state.countriesAll[index].favourtie = true;
+  }
 
-  if (iconClicked === "favourite") state.favouriteCountry.push(country);
-
-  if (iconClicked === "traveled") state.traveledCountry.push(country);
+  if (iconClicked === "traveled") {
+    // store country to traveled
+    state.traveledCountry.push(country);
+    //marked country as traveled
+    state.countriesAll[index].traveled = true;
+  }
 
   persistData(iconClicked);
 };
 
 // Delete Country
 export const deleteCountry = function (countryIndex, iconClicked, countryCode) {
-
   // find the country index state.countriesAll
   const index = state.countriesAll.findIndex(
     (c) => c.alpha3Code === countryCode
   );
 
-  //unmark country as favourite
-  state.countriesAll[index].favourtie = false;
-  
-  if (iconClicked === "favourite")
+  if (iconClicked === "favourite") {
+    // delete country from favourite
     state.favouriteCountry.splice(countryIndex, 1);
+    //unmark country as favourite
+    state.countriesAll[index].favourtie = false;
+  }
 
-  if (iconClicked === "traveled") state.traveledCountry.splice(countryIndex, 1);
+  if (iconClicked === "traveled") {
+    // delete country from traveled
+    state.traveledCountry.splice(countryIndex, 1);
+    //unmark country as favourite
+    state.countriesAll[index].traveled = false;
+  }
 
   persistData(iconClicked);
 };
 
 const init = function () {
+  // load all countries with user updated
+  const storageAllCountry = localStorage.getItem("allCountry");
+  state.countriesAll = JSON.parse(storageAllCountry);
+
+  // load favourited countries
   const storageFavouriteCountry = localStorage.getItem("favouriteCountry");
 
   if (storageFavouriteCountry)
     state.favouriteCountry = JSON.parse(storageFavouriteCountry);
 
+  // load traveled countries
   const storageTraveledCountry = localStorage.getItem("traveledCountry");
   if (storageTraveledCountry)
     state.traveledCountry = JSON.parse(storageTraveledCountry);
