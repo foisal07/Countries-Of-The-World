@@ -24,6 +24,13 @@ class CountryPaginationView extends View {
         //clear container
         this._clearCountryCardContainer();
 
+        // go top
+        window.scroll({
+          top: 0,
+          left: 0,
+          behavior: "smooth",
+        });
+
         // display matched letter countires
         handler(sortingLetter);
       }.bind(this)

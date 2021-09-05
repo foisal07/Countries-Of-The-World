@@ -3,9 +3,9 @@ import View from "./View.js";
 export class CountryView extends View {
   _displayContainer = document.querySelector(".display-countries");
 
-  addHandlerRenderCountryCard(handler) {
-    window.addEventListener("load", handler());
-  }
+  // addHandlerRenderCountryCard(handler) {
+  //   window.addEventListener("load", handler());
+  // }
 
   // addHandlerCountryCard(handler) {
   //   // handler country card

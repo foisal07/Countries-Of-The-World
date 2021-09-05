@@ -42,7 +42,7 @@ class NavView extends View {
         const filterBy = filter.getAttribute("data-filterBy");
 
         // show countrycard container
-        this._showCountryCardContainer();
+        // this._showCountryCardContainer();
 
         // clear country cards
         this._clearCountryCardContainer();

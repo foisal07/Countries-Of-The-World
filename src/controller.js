@@ -13,16 +13,19 @@ import FavouriteCountryView from "./view/favouriteCountryView.js";
 import TraveledCountryView from "./view/traveledCountryView.js";
 
 // Display Countries Card
-const controlAllCountries = async function (sortingLetter = "a") {
+const controlAllCountries = async function () {
   try {
     //get all countries data
-    await model.getAllCountries(ALL__COUNTRIES__API, sortingLetter);
-    
-    //render countries card start with A
-    CountryView.renderCard(model.state.countriesFilterByLetter);
+    await model.getAllCountries(ALL__COUNTRIES__API);
   } catch (err) {
     console.error(`${err} Yo`);
   }
+};
+
+// Display Countries On Load Paginated By Letter
+const controlFilterCountries = async function (sortingLetter = "a") {
+  await model.getCountriesFilterByLetter(sortingLetter);
+  CountryView.renderCard(model.state.countriesFilterByLetter);
 };
 
 //Display Country Detail Page
@@ -145,7 +148,6 @@ const controlFilterBy = function (filterBy) {
 
   // render regional country card
   model.getCountriesFilterByRegion(filterBy);
-  console.log(model.state.regionalCountries);
   CountryView.renderCard(model.state.regionalCountries);
 };
 
@@ -202,7 +204,6 @@ const controlStoreCountry = function (
     }
   } else {
     // save country
-    console.log(model.state.countriesAll);
     model.saveCountry(countryCode, iconClicked);
 
     //fill icon
@@ -234,12 +235,14 @@ const renderMap = function (lat, lng, popupMsg) {
   L.popup().setLatLng([lat, lng]).setContent(`${popupMsg}`).openOn(mapView);
 };
 
-const init = function () {
+const init = async function () {
+  await controlAllCountries();
+  await controlFilterCountries();
   HeaderView.addHandlerThemeButton();
   SearchView.addHandlerSearch(controlCountryDetails);
   NavView.addHandlerWhereAmI(controlWhereAmI);
   NavView.addHandlerFilter(controlFilterBy);
-  CountryView.addHandlerRenderCountryCard(controlAllCountries);
+  // CountryView.addHandlerRenderCountryCard(controlAllCountries);
   CountryView.addHandlerCountryCard(controlCountryDetails);
   CountryView.addHandlerStoreCountry(controlStoreCountry);
   FavouriteCountryView.addHandlerCountryCard(controlCountryDetails);
@@ -249,7 +252,7 @@ const init = function () {
   CountryPageView.addHandlerBackBtn();
   CountryPageView.addHandlerStoreCountry(controlStoreCountry);
   CountryNeighbourView.addHandlerCountryCard(controlCountryDetails);
-  CountryPaginationView.addHandlerPagination(controlAllCountries);
+  CountryPaginationView.addHandlerPagination(controlFilterCountries);
   CountryPaginationView.addHandlerSlides();
 };
 

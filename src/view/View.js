@@ -6,7 +6,6 @@ export default class View {
   _iconContainer = document.querySelector(".country-card__icons");
 
   _generateCountryCardMarkup(country) {
-    console.log(country.favourtie);
     return `
     <div class="country-card dark" data-country-name="${country.name}">
         <div class="country-card__flag">
@@ -140,8 +139,6 @@ export default class View {
   }
 
   _generateIcons(countryalphacode, favourite, traveled) {
-    console.log(favourite);
-    console.log(traveled);
     return `  <div class = 'country-card__icons' data-countryCode = ${countryalphacode}> 
                 <div class = 'icon' data-icon='favourite'>
                   <svg xmlns="http://www.w3.org/2000/svg" class="h-2 w-2" viewBox="0 0 24 24" stroke="currentColor">

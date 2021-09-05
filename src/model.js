@@ -1,4 +1,5 @@
 import { AJAX } from "./helper.js";
+import { ALL__COUNTRIES__API } from "./config.js";
 
 export const state = {
   countriesAll: [],
@@ -13,23 +14,28 @@ export const state = {
   traveledCountry: [],
 };
 
+let storageAllCountry;
+
 // Get All Country Data
-export const getAllCountries = async function (url, sortingLetter) {
+export const getAllCountries = async function (url) {
   try {
-    const data = await AJAX(url);
-    state.countriesAll = data;   
+    if (storageAllCountry === null) {
+      const data = await AJAX(url);
+      state.countriesAll = data;
+    } else {
+      state.countriesAll = JSON.parse(storageAllCountry);
+    }
   } catch (err) {
     throw err;
   }
 };
 
 // Filter countries by starting letter
-export const getCountriesFilterByLetter = async function(sortingLetter) {
-state.countriesFilterByLetter = state.countriesAll.filter(
-  (country) => country.name.slice(0, 1).toLowerCase() === sortingLetter
-);
+export const getCountriesFilterByLetter = async function (sortingLetter) {
+  state.countriesFilterByLetter = state.countriesAll.filter(
+    (country) => country.name.slice(0, 1).toLowerCase() === sortingLetter
+  );
 };
-
 
 // Get Lat Lng From IP Adress
 export const getLatLng = async function (url) {
@@ -95,7 +101,7 @@ const persistData = function (iconClicked) {
       JSON.stringify(state.traveledCountry)
     );
 
-  // update state all countries with save, delete countries
+  // update state all countries with saved, deleted countries
   localStorage.setItem("allCountry", JSON.stringify(state.countriesAll));
 };
 
@@ -153,8 +159,9 @@ export const deleteCountry = function (countryIndex, iconClicked, countryCode) {
 
 const init = function () {
   // load all countries with user updated
-  const storageAllCountry = localStorage.getItem("allCountry");
-  state.countriesAll = JSON.parse(storageAllCountry);
+  storageAllCountry = localStorage.getItem("allCountry");
+  console.log(storageAllCountry);
+  if (storageAllCountry) state.countriesAll = JSON.parse(storageAllCountry);
 
   // load favourited countries
   const storageFavouriteCountry = localStorage.getItem("favouriteCountry");
