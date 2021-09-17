@@ -180,6 +180,7 @@ li {
   grid-column-gap: 1rem;
   justify-items: center;
   margin-top: 2rem;
+  position: relative;
 }
 
 @media (max-width: 39.9375em) {
@@ -292,6 +293,27 @@ li {
 
 .nav__filterRegion .icon {
   margin-left: 2.8rem;
+}
+
+.nav__autocompleteContainer {
+  position: absolute;
+  left: 0;
+  top: 70px;
+  z-index: 3;
+  background: #2B3743;
+  width: 20%;
+  padding: 1rem;
+  border-radius: 5px;
+  box-shadow: rgba(78, 82, 85, 0.15) 0px 8px 24px;
+}
+
+.nav__autocompleteContainer li:not(:first-child) {
+  padding-top: .8rem;
+}
+
+.nav__autocompleteContainer li a:hover {
+  transition: 0.5s ease-in;
+  color: orange;
 }
 
 .countrycard__container {

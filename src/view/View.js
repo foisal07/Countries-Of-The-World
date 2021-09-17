@@ -243,7 +243,7 @@ export default class View {
         //save/delete current country
         handler(countryCode, iconClicked, displayContainerClass);
 
-        //stop bubling event to country card to not execute render country detail
+        //stop bubling event to country card to stop executing render country detail
         e.stopPropagation();
       }.bind(this)
     );

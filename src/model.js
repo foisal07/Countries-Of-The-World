@@ -3,6 +3,7 @@ import { ALL__COUNTRIES__API } from "./config.js";
 
 export const state = {
   countriesAll: [],
+  countriesAllName: [],
   countriesFilterByLetter: [],
   ipTrackedCountry: {},
   latlng: [],
@@ -30,7 +31,12 @@ export const getAllCountries = async function (url) {
   }
 };
 
-// Filter countries by starting letter
+// Get all countries name
+export const getAllCountriesName = function () {
+  state.countriesAllName = state.countriesAll.map((country) => country.name.toLowerCase());
+};
+
+// Filter countries by first letter
 export const getCountriesFilterByLetter = async function (sortingLetter) {
   state.countriesFilterByLetter = state.countriesAll.filter(
     (country) => country.name.slice(0, 1).toLowerCase() === sortingLetter
@@ -158,9 +164,8 @@ export const deleteCountry = function (countryIndex, iconClicked, countryCode) {
 };
 
 const init = function () {
-  // load all countries with user updated
+  // load all countries with user updated data
   storageAllCountry = localStorage.getItem("allCountry");
-  console.log(storageAllCountry);
   if (storageAllCountry) state.countriesAll = JSON.parse(storageAllCountry);
 
   // load favourited countries
