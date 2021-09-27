@@ -1,5 +1,4 @@
 import { AJAX } from "./helper.js";
-import { ALL__COUNTRIES__API } from "./config.js";
 
 export const state = {
   countriesAll: [],
@@ -33,7 +32,9 @@ export const getAllCountries = async function (url) {
 
 // Get all countries name
 export const getAllCountriesName = function () {
-  state.countriesAllName = state.countriesAll.map((country) => country.name.toLowerCase());
+  state.countriesAllName = state.countriesAll.map((country) =>
+    country.name.toLowerCase()
+  );
 };
 
 // Filter countries by first letter
@@ -80,14 +81,14 @@ export const sortCountries = function (sortBy) {
 // Get Island Countries
 export const getIslandcountries = () => {
   state.islandCountries = state.countriesAll.filter(
-    (country) => country.borders.length === 0
+    (country) => country.borders === undefined
   );
 };
 
 // Get Countries Filter By Region
 export const getCountriesFilterByRegion = (filterBy) => {
   state.regionalCountries = state.countriesAll.filter(
-    (country) => country.region === filterBy
+    (country) => country.continent === filterBy
   );
 };
 

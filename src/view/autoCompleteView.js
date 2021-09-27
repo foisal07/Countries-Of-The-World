@@ -12,9 +12,9 @@ class AutoCompleteView extends View {
 
   render(data) {
     const markup =
-      data.length !== 0
-        ? data.map((country) => this._generateMarkup(country)).join("")
-        : "No match";
+      data.length === 0
+        ? "No match"
+        : data.map((country) => this._generateMarkup(country)).join("");
     this._displayContainer.insertAdjacentHTML("beforeend", markup);
   }
 

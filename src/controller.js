@@ -1,17 +1,15 @@
-import { ALL__COUNTRIES__API, TRACK__IP__API } from "./config.js";
-
 import * as model from "../src/model.js";
-
-import CountryView from "./view/countryView.js";
-import CountryPaginationView from "./view/paginationView.js";
-import CountryPageView from "./view/countryPageView.js";
-import CountryNeighbourView from "./view/countryNeighbourView.js";
-import NavView from "./view/navView.js";
-import SearchView from "./view/countrySearchView.js";
-import HeaderView from "./view/headerView.js";
-import FavouriteCountryView from "./view/favouriteCountryView.js";
-import TraveledCountryView from "./view/traveledCountryView.js";
+import { ALL__COUNTRIES__API, TRACK__IP__API } from "./config.js";
 import AutoCompleteView from "./view/autoCompleteView.js";
+import CountryNeighbourView from "./view/countryNeighbourView.js";
+import CountryPageView from "./view/countryPageView.js";
+import SearchView from "./view/countrySearchView.js";
+import CountryView from "./view/countryView.js";
+import FavouriteCountryView from "./view/favouriteCountryView.js";
+import HeaderView from "./view/headerView.js";
+import NavView from "./view/navView.js";
+import CountryPaginationView from "./view/paginationView.js";
+import TraveledCountryView from "./view/traveledCountryView.js";
 
 // Display Countries Card
 const controlAllCountries = async function () {
@@ -70,6 +68,7 @@ const controlCountryDetails = async function (countryName) {
 let borderCountry = [];
 
 const getBorderingCountries = function (countriesAll, countryBorders) {
+  if (countryBorders === undefined) return;
   countryBorders.forEach((countryCode) => {
     countriesAll.filter((country) => {
       if (country.alpha3Code === countryCode) borderCountry.push(country);

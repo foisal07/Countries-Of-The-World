@@ -9,7 +9,7 @@ export default class View {
     return `
     <div class="country-card dark" data-country-name="${country.name}">
         <div class="country-card__flag">
-            <img src="${country.flag}" alt="${country.name}" />
+            <img src="${country.flags[0]}" alt="${country.name}" />
         </div>
         <div class="country-card__info">
             <div class="country-card__info__name">
@@ -29,9 +29,7 @@ export default class View {
                 )} Sqm (approx)
                     </strong>
                 </li>
-                <li>Language: <strong>${country.languages
-                  .map((lang) => lang.name)
-                  .join(" , ")}</strong></li>
+
                 <li>Region: <strong>${country.region}</strong></li>
             </ul>
         </div>
@@ -49,7 +47,7 @@ export default class View {
               <i class="icon fa fa-long-arrow-left" aria-hidden="true"></i>
             </button>
           </div>
-          <img src="${country.flag}" alt="${country.name}"/>
+          <img src="${country.flags[0]}" alt="${country.name}"/>
         </div>
 
         <div class="country-detail__info">
@@ -121,15 +119,11 @@ export default class View {
     <div class="neighbour__container">
       <h2>The Neighbours</h2>
       <div class="country__neighbours">
-      ${
-        borderCountry.length > 0
-          ? borderCountry
-              .map((country) => {
-                return this._generateCountryCardMarkup(country);
-              })
-              .join(" ")
-          : "No land borders"
-      }
+      ${borderCountry
+        .map((country) => {
+          return this._generateCountryCardMarkup(country);
+        })
+        .join(" ")}
       </div>
     </div>`;
   }

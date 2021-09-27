@@ -40,9 +40,10 @@ class NavView extends View {
         const filter = e.target.closest(".filterBy");
         if (!filter) return;
         const filterBy = filter.getAttribute("data-filterBy");
+        console.log(filterBy);
 
         // show countrycard container
-        // this._showCountryCardContainer();
+        this._showCountryCardContainer();
 
         // clear country cards
         this._clearCountryCardContainer();
@@ -53,7 +54,7 @@ class NavView extends View {
         // hide pagination container
         this._hidePaginationContainer();
 
-        //render regional countries
+        //render filtered countries
         handler(filterBy);
       }.bind(this)
     );
