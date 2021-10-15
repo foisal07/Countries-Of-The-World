@@ -24,7 +24,7 @@ class AutoCompleteView extends View {
 
   addHandlerAutoCompleteCountry(handler) {
     this._displayContainer.addEventListener(
-      "click",
+      "keyup",
       function (e) {
         e.preventDefault();
 
@@ -38,14 +38,14 @@ class AutoCompleteView extends View {
         // clear detail page container
         this._clearDetailPageContainer();
 
-        // clear input
+        // clear input and autocomplet box
         this._navSearchCountryInput.innerHTML = "";
-
-        // display country detail page
-        handler(country);
 
         // hide country suggest container
         this._displayContainer.classList.add("hidden");
+
+        // display country detail page
+        handler(country);
       }.bind(this)
     );
   }
