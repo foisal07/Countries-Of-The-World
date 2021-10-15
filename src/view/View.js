@@ -6,10 +6,11 @@ export default class View {
   _iconContainer = document.querySelector(".country-card__icons");
 
   _generateCountryCardMarkup(country) {
+    console.log(country);
     return `
     <div class="country-card dark" data-country-name="${country.name}">
         <div class="country-card__flag">
-            <img src="${country.flags[0]}" alt="${country.name}" />
+            <img src="${country.flags.png}" alt="${country.name}" />
         </div>
         <div class="country-card__info">
             <div class="country-card__info__name">
@@ -47,7 +48,7 @@ export default class View {
               <i class="icon fa fa-long-arrow-left" aria-hidden="true"></i>
             </button>
           </div>
-          <img src="${country.flags[0]}" alt="${country.name}"/>
+          <img src="${country.flags.png}" alt="${country.name}"/>
         </div>
 
         <div class="country-detail__info">
@@ -80,9 +81,6 @@ export default class View {
                     <li>
                         <strong>Region: </strong>${country.region}
                     </li>
-                    <li>
-                        <strong>Sub Region: </strong>${country.subregion}
-                    </li>
                 </div>
 
                 <div class="column-two">
@@ -98,11 +96,6 @@ export default class View {
                         <strong>Language: </strong>${country.languages
                           .map((lang) => lang.name)
                           .join(" , ")}
-                    </li>
-                    <li>
-                        <strong>Country Domain: </strong>${
-                          country.topLevelDomain
-                        }
                     </li>
                 </div>
                 
@@ -136,20 +129,15 @@ export default class View {
     return `  <div class = 'country-card__icons' data-countryCode = ${countryalphacode}> 
                 <div class = 'icon' data-icon='favourite'>
                   <svg xmlns="http://www.w3.org/2000/svg" class="h-2 w-2" viewBox="0 0 24 24" stroke="currentColor">
-                    <path id ='${countryalphacode}__icon--favourite' ${this._fillColor(
-      favourite
-    )}  stroke-linecap="round" class=''stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+                    <path id ='${countryalphacode}__icon--favourite' ${this._fillColor(favourite)}  stroke-linecap="round" class=''stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
                   </svg>
                 </div>
                 <div class ='icon' data-icon='traveled'>
                   <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6"  viewBox="0 0 24 24" stroke="currentColor">
-                  <path id = '${countryalphacode}__icon--traveled' ${this._fillColor(
-      traveled
-    )} stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
+                  <path id = '${countryalphacode}__icon--traveled' ${this._fillColor(traveled)} stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
                   </svg>
                 </div>
-              </div>
-    `;
+              </div>`;
   }
 
   renderCard(data) {

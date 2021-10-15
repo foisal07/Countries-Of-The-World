@@ -88,7 +88,7 @@ export const getIslandcountries = () => {
 // Get Countries Filter By Region
 export const getCountriesFilterByRegion = (filterBy) => {
   state.regionalCountries = state.countriesAll.filter(
-    (country) => country.continent === filterBy
+    (country) => country.region.toLowerCase() === filterBy
   );
 };
 

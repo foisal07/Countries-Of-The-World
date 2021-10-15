@@ -88,7 +88,9 @@ li:not(:last-child) {
   padding-bottom: 10px;
 }
 
-.favourite__countries, .traveled__countries{
-  @extend .display-countries
+.favourite__countries,
+.traveled__countries {
+  @extend .display-countries;
 }
+
 

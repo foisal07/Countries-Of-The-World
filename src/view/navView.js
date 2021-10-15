@@ -39,8 +39,7 @@ class NavView extends View {
 
         const filter = e.target.closest(".filterBy");
         if (!filter) return;
-        const filterBy = filter.getAttribute("data-filterBy");
-        console.log(filterBy);
+        const filterBy = filter.getAttribute("data-filterBy").toLowerCase();
 
         // show countrycard container
         this._showCountryCardContainer();
